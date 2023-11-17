@@ -10,6 +10,7 @@
 
 # angular cache
 .angular
+.nx
 
 # dependencies
 /node_modules
