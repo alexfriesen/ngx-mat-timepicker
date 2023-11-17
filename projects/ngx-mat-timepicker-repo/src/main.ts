@@ -1,8 +1,7 @@
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { NgxMatTimepickerAppModule } from "./app/app.module";
-
+import { NgxMatTimepickerAppModule } from './app/app.module';
 
 platformBrowserDynamic()
-    .bootstrapModule(NgxMatTimepickerAppModule)
-    .catch(err => console.error(err));
+  .bootstrapModule(NgxMatTimepickerAppModule)
+  .catch((err) => console.error(err));

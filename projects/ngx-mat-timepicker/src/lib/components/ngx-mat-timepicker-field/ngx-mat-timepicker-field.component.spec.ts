@@ -160,7 +160,7 @@ describe("NgxMatTimepickerFieldComponent", () => {
         });
 
         it("should set 12-hours format", () => {
-            // @ts-expect-error
+            // @ts-expect-error: for testing purposes
             component.format = 14;
             expect(component.format).toBe(12);
         });

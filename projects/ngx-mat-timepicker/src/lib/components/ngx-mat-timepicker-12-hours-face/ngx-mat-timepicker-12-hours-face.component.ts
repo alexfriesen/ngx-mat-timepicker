@@ -24,7 +24,6 @@ export class NgxMatTimepicker12HoursFaceComponent extends NgxMatTimepickerHoursF
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        // tslint:disable-next-line:no-string-literal
         if (changes["period"] && changes["period"].currentValue) {
             this.hoursList = NgxMatTimepickerUtils.disableHours(this.hoursList, {
                 min: this.minTime,

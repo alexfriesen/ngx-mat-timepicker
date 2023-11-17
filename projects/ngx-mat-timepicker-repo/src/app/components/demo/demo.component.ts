@@ -1,57 +1,55 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { FormsModule } from "@angular/forms";
-import { MatMenuModule } from "@angular/material/menu";
-import { MatButtonModule } from "@angular/material/button";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatIconModule } from "@angular/material/icon";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-//
-import { CodeViewerComponent } from "../code-viewer/code-viewer.component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { catchError, map, of, switchMap, timer } from 'rxjs';
+import { ajax, AjaxResponse } from 'rxjs/ajax';
+
 import {
   NgxMatTimepickerComponent,
   NgxMatTimepickerLocaleService,
   NgxMatTimepickerToggleComponent,
   NgxMatTimepickerFieldComponent,
   NgxMatTimepickerDirective,
-} from "ngx-mat-timepicker";
-//
-import { NgxMatTimepickerLocaleKey } from "../../shared/ngx-mat-timepicker-locale-key.enum";
-//
-import { catchError, map, of, switchMap, timer } from "rxjs";
-import { ajax, AjaxResponse } from "rxjs/ajax";
-import { DateTime } from "ts-luxon";
-import TypeWriter from "typewriter-effect/dist/core.js";
-import pkg from "../../../../../../package.json";
+} from 'ngx-mat-timepicker';
+
+import pkg from '../../../../../../package.json';
+import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
+import { NgxMatTimepickerLocaleKey } from '../../shared/ngx-mat-timepicker-locale-key.enum';
+import TypeWriter from 'typewriter-effect/dist/core.js';
+import { DateTime } from 'ts-luxon';
 
 interface NgxMatTimepickerTheme {
   description: string;
   value: string;
 }
 
-const pkgName = "ngx-mat-timepicker";
+const pkgName = 'ngx-mat-timepicker';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: "app-demo",
-  templateUrl: "demo.component.html",
-  styleUrls: ["demo.component.scss"],
+  selector: 'app-demo',
+  templateUrl: 'demo.component.html',
+  styleUrls: ['demo.component.scss'],
   standalone: true,
   imports: [
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatMenuModule,
     FormsModule,
-    CodeViewerComponent,
+    MatButtonModule,
+    MatDatepickerModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatMenuModule,
+    MatToolbarModule,
     NgxMatTimepickerDirective,
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
-    MatDatepickerModule,
     NgxMatTimepickerToggleComponent,
+    CodeViewerComponent,
   ],
 })
 export class NgxMatTimepickerDemoComponent implements OnInit {
@@ -64,33 +62,33 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
   }
 
   get buildRef(): string {
-    return `${pkg.version}-build-${pkg.build}`;
+    return `${pkg.version}-build-dev`;
   }
 
   githubLink: string = `https://github.com/tonysamperi/${pkgName}`;
-  latestVersion: string = "";
-  maxTime: DateTime = DateTime.local().startOf("day").set({
+  latestVersion: string = '';
+  maxTime: DateTime = DateTime.local().startOf('day').set({
     hour: 16,
     minute: 0,
   });
   messages: {
-    opts?: { delay?: number | "natural"; loop?: boolean };
+    opts?: { delay?: number | 'natural'; loop?: boolean };
     text: string;
   }[] = [];
   minTime: DateTime = this.maxTime.set({ hour: 14 });
   myLocaleKeys: NgxMatTimepickerLocaleKey[];
   myLocales: Record<keyof typeof NgxMatTimepickerLocaleKey, string> = {
-    en: "en-GB",
-    it: "it-IT",
-    es: "es-ES",
-    fr: "fr-FR",
+    en: 'en-GB',
+    it: 'it-IT',
+    es: 'es-ES',
+    fr: 'fr-FR',
   };
   myLocalesReversed: Record<string, NgxMatTimepickerLocaleKey> =
     Object.fromEntries(Object.entries(this.myLocales).map((a) => a.reverse()));
   npmLink: string = `https://www.npmjs.com/package/${pkgName}`;
-  @ViewChild("pickerH") pickerFreeInput: NgxMatTimepickerComponent;
+  @ViewChild('pickerH') pickerFreeInput: NgxMatTimepickerComponent;
   selectedTheme: NgxMatTimepickerTheme;
-  selectedTimes: Record<"A" | "B" | "C" | "D" | "E" | "F" | "G" | "H", string> =
+  selectedTimes: Record<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H', string> =
     {
       A: void 0,
       B: void 0,
@@ -103,8 +101,8 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
     };
   showInput: boolean = !0;
   themes: NgxMatTimepickerTheme[] = [
-    { value: "", description: "Light" },
-    { value: "dark-theme", description: "Dark" },
+    { value: '', description: 'Light' },
+    { value: 'dark-theme', description: 'Dark' },
   ];
   timeRegex: RegExp = /([0-9]|1\d):[0-5]\d (AM|PM)/;
   year: number = new Date().getFullYear();
@@ -114,12 +112,12 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
   constructor(private _localeOverrideSrv: NgxMatTimepickerLocaleService) {}
 
   debug(): void {
-    console.info("focused input!");
+    console.info('focused input!');
   }
 
   ngOnInit(): void {
     this.myLocaleKeys = Object.keys(
-      this.myLocales
+      this.myLocales,
     ) as NgxMatTimepickerLocaleKey[];
     this.selectedTheme = this.themes[0];
     ajax
@@ -127,7 +125,7 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
       .pipe(
         map((raw: AjaxResponse<any>) => {
           return raw.response?.version;
-        })
+        }),
       )
       .subscribe({
         next: (version: string) => {
@@ -135,15 +133,15 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
         },
       });
 
-    this._getMessages("[mtp-messages]");
+    this._getMessages('[mtp-messages]');
   }
 
   onTimeSet($event: string): void {
-    console.info("TIME UPDATED", $event);
+    console.info('TIME UPDATED', $event);
   }
 
   selectedTimeFreeInputChanged($event: string): void {
-    console.info("TIME CHANGED");
+    console.info('TIME CHANGED');
     this.pickerFreeInput.updateTime($event);
   }
 
@@ -152,18 +150,18 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
       this._nextLocale = this.myLocaleKeys.indexOf(localeKey) - 1;
     }
     this._localeOverrideSrv.updateLocale(
-      this.myLocales[this.myLocaleKeys[++this._nextLocale]]
+      this.myLocales[this.myLocaleKeys[++this._nextLocale]],
     );
     this._nextLocale >= this.myLocaleKeys.length - 1 && (this._nextLocale = -1);
   }
 
   updateTheme(theme: NgxMatTimepickerTheme): void {
     this.selectedTheme = theme;
-    document.body.classList.toggle("dark-theme", !!theme.value);
+    document.body.classList.toggle('dark-theme', !!theme.value);
   }
 
   updateTime($event: string, targetProp: string): void {
-    console.info("TIME SET", $event);
+    console.info('TIME SET', $event);
     (this as any)[targetProp] = $event;
   }
 
@@ -172,7 +170,7 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
   private _getMessages(wrapperSelector: string): void {
     if (!document.querySelector(wrapperSelector)) {
       console.warn(
-        `No results for selector ${wrapperSelector}, skipping messages!`
+        `No results for selector ${wrapperSelector}, skipping messages!`,
       );
 
       return;
@@ -185,7 +183,7 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
 
           return timer(150);
         }),
-        catchError(() => of([]))
+        catchError(() => of([])),
       )
       .subscribe({
         next: () => {
@@ -193,11 +191,11 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
             const tw = new TypeWriter(
               `${wrapperSelector} li:nth-child(${i + 1})`,
               {
-                strings: !!opts.loop ? [text] : void 0,
+                strings: opts.loop ? [text] : void 0,
                 autoStart: !!opts.loop,
                 loop: !!opts.loop,
-                delay: opts.delay || "natural",
-              }
+                delay: opts.delay || 'natural',
+              },
             );
             if (!opts.loop) {
               tw.typeString(text).stop().start();

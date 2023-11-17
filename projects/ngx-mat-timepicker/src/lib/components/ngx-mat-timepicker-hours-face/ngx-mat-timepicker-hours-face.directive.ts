@@ -8,6 +8,7 @@ import {NgxMatTimepickerUtils} from "../../utils/ngx-mat-timepicker.utils";
 import {DateTime} from "ts-luxon";
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: "[ngxMatTimepickerHoursFace]",
     standalone: true
 })

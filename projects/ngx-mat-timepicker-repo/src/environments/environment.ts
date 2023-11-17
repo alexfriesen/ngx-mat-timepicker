@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const NGX_MAT_TIMEPICKER_ENVIRONMENT = {
-    production: false,
-    isDemo: !0
+  production: false,
+  isDemo: !0,
 };
 
 /*

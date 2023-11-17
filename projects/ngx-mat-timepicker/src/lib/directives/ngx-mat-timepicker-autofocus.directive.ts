@@ -1,29 +1,39 @@
-import {Directive, ElementRef, Inject, Input, OnChanges, OnDestroy, Optional} from "@angular/core";
-import {DOCUMENT} from "@angular/common";
+import {
+  Directive,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  inject,
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({
-    selector: "[ngxMatTimepickerAutofocus]",
-    standalone: true
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[ngxMatTimepickerAutofocus]',
+  standalone: true,
 })
-export class NgxMatTimepickerAutofocusDirective implements OnChanges, OnDestroy {
+export class NgxMatTimepickerAutofocusDirective
+  implements OnChanges, OnDestroy
+{
+  private readonly _element = inject(ElementRef);
+  private readonly _document = inject(DOCUMENT, { optional: true });
 
-    @Input("ngxMatTimepickerAutofocus") isFocusActive: boolean;
+  @Input('ngxMatTimepickerAutofocus') isFocusActive: boolean;
 
-    private _activeElement: HTMLElement;
+  private _activeElement = this._document?.activeElement as HTMLElement;
 
-    constructor(private _element: ElementRef, @Optional() @Inject(DOCUMENT) private _document: any) {
-        this._activeElement = this._document.activeElement;
+  ngOnChanges() {
+    if (this.isFocusActive) {
+      // To avoid ExpressionChangedAfterItHasBeenCheckedError;
+      setTimeout(() =>
+        this._element.nativeElement.focus({ preventScroll: true }),
+      );
     }
+  }
 
-    ngOnChanges() {
-        if (this.isFocusActive) {
-            // To avoid ExpressionChangedAfterItHasBeenCheckedError;
-            setTimeout(() => this._element.nativeElement.focus({preventScroll: true}));
-        }
-    }
-
-    ngOnDestroy() {
-        // To avoid ExpressionChangedAfterItHasBeenCheckedError;
-        setTimeout(() => this._activeElement.focus({preventScroll: true}));
-    }
+  ngOnDestroy() {
+    // To avoid ExpressionChangedAfterItHasBeenCheckedError;
+    setTimeout(() => this._activeElement.focus({ preventScroll: true }));
+  }
 }

@@ -166,7 +166,7 @@
       <p>
         using <span class="mat-color-primary">default</span> palette (primary)
       </p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -211,12 +211,12 @@
 &lt;ngx-mat-timepicker #pickerA>&lt;/ngx-mat-timepicker&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Picker with 24h format</h2>
       <p>using <span class="mat-color-accent">accent</span> palette</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -255,12 +255,12 @@
                     #pickerB>&lt;/ngx-mat-timepicker&gt;
                 </code>
             </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>ngx-mat-timepicker-field</h2>
       <p>using <span class="mat-color-warn">warn</span> palette</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -289,7 +289,7 @@
                            [defaultTime]="'23:11'"&gt;&lt;/ngx-mat-timepicker-field&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Input with *ngIf</h2>
@@ -303,7 +303,7 @@
           to destroy the ngx-mat-timepicker as well. Not anymore.</small
         >
       </p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -329,7 +329,7 @@
             (click)="showInput = !showInput"
             color="primary"
           >
-            {{ showInput ? "Destroy" : "Restore" }} input
+            {{ showInput ? 'Destroy' : 'Restore' }} input
           </button>
           <div class="ngx-mtp-box-bordered">
             <small>ngx-mat-timepicker is here</small>
@@ -363,12 +363,12 @@
 &lt;/div&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Append to input</h2>
       <p>using appendToInput</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -412,12 +412,12 @@
 &lt;/div&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Open programmatically</h2>
       <p>use external button to open the picker</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -467,14 +467,14 @@
 					 #pickerE&gt;&lt;/ngx-mat-timepicker&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>ngx-mat-timepicker-toggle</h2>
       <p>
         use component in material stile (instead of using mat-icon + matSuffix)
       </p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -528,12 +528,12 @@
 					 #pickerF&gt;&lt;/ngx-mat-timepicker&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Min and Max validation</h2>
       <p>add config to have min and/or max hour</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -599,12 +599,12 @@
 			  #pickerG&gt;&lt;/ngx-mat-timepicker&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
     <div>
       <h2>Allow input completition</h2>
       <p>Don't link input to picker</p>
-      <code-viewer>
+      <app-code-viewer>
         <div
           class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column"
         >
@@ -621,7 +621,7 @@
               "
               placeholder="12:00"
             />
-            @if (inputModel.hasError("pattern")) {
+            @if (inputModel.hasError('pattern')) {
               <mat-error>Expected format: H:mm AM|PM</mat-error>
             }
           </mat-form-field>
@@ -660,7 +660,7 @@
 	      			#pickerH&gt;&lt;/ngx-mat-timepicker&gt;
                     </code>
                 </pre>
-      </code-viewer>
+      </app-code-viewer>
     </div>
   </form>
 </div>

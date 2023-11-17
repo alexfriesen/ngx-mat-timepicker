@@ -1,24 +1,24 @@
-import { Component, ViewChild } from "@angular/core";
-import { FormControl, Validators, FormsModule } from "@angular/forms";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { CodeViewerComponent } from "../code-viewer/code-viewer.component";
-import { MatButtonModule } from "@angular/material/button";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatIconModule } from "@angular/material/icon";
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, Validators, FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 //
 import {
   NgxMatTimepickerComponent,
   NgxMatTimepickerDirective,
   NgxMatTimepickerLocaleService,
   NgxMatTimepickerFieldComponent,
-} from "ngx-mat-timepicker";
+} from 'ngx-mat-timepicker';
 //
-import { NgxMatTimepickerDemoComponent } from "../demo/demo.component";
+import { NgxMatTimepickerDemoComponent } from '../demo/demo.component';
 
 @Component({
-  selector: "app-dialog",
+  selector: 'app-dialog',
   template: `
     <div mat-dialog-title>Dialog Title</div>
     <div mat-dialog-content>
@@ -51,14 +51,13 @@ import { NgxMatTimepickerDemoComponent } from "../demo/demo.component";
   ],
 })
 export class NgxMatTimepickerTestDialogComponent {
-  date: string = "2:00";
+  date: string = '2:00';
 }
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: "app-test",
-  templateUrl: "test.component.html",
-  styleUrls: ["test.component.scss"],
+  selector: 'app-test',
+  templateUrl: 'test.component.html',
+  styleUrls: ['test.component.scss'],
   standalone: true,
   imports: [
     MatToolbarModule,
@@ -69,15 +68,15 @@ export class NgxMatTimepickerTestDialogComponent {
   ],
 })
 export class NgxMatTimepickerTestComponent extends NgxMatTimepickerDemoComponent {
-  formControlItem: FormControl = new FormControl("", [
+  formControlItem: FormControl = new FormControl('', [
     Validators.pattern(/([0-9]|[1-2]\d):[0-5]\d/),
   ]);
-  time: string = "00:00";
-  @ViewChild("timepicker") timepicker: NgxMatTimepickerComponent;
+  time: string = '00:00';
+  @ViewChild('timepicker') timepicker: NgxMatTimepickerComponent;
 
   constructor(
     private _matDialog: MatDialog,
-    localeOverrideSrv: NgxMatTimepickerLocaleService
+    localeOverrideSrv: NgxMatTimepickerLocaleService,
   ) {
     super(localeOverrideSrv);
   }
@@ -93,7 +92,7 @@ export class NgxMatTimepickerTestComponent extends NgxMatTimepickerDemoComponent
 
   openDialog() {
     this._matDialog.open(NgxMatTimepickerTestDialogComponent, {
-      width: "300px",
+      width: '300px',
     });
   }
 

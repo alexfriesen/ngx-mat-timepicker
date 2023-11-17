@@ -93,7 +93,7 @@ describe('NgxMatTimepickerAdapter', () => {
             try {
                 NgxMatTimepickerAdapter.isTimeAvailable('11:43 pm', min, max, 'minutes', minutesGap);
             } catch (e: any) {
-                expect(e.message).toBe(`Your minutes - 43 doesn\'t match your minutesGap - ${minutesGap}`);
+                expect(e.message).toBe(`Your minutes - 43 doesn't match your minutesGap - ${minutesGap}`);
             }
         });
     });

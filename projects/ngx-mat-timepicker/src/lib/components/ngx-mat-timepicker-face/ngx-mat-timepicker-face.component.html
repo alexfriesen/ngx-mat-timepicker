@@ -64,7 +64,7 @@
                 : minutesGap
                 : isClockFaceDisabled)
                 ? color
-                : undefined
+                : 'void'
             "
             [ngStyle]="{ transform: 'rotateZ(-' + time.angle + 'deg)' }"
             [disabled]="time.disabled"

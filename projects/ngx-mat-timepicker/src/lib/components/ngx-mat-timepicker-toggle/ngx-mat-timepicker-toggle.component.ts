@@ -3,16 +3,16 @@ import {
   ContentChild,
   Input,
   ViewEncapsulation,
-} from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 //
-import { NgxMatTimepickerToggleIconDirective } from "../../directives/ngx-mat-timepicker-toggle-icon.directive";
-import { NgxMatTimepickerComponent } from "../ngx-mat-timepicker/ngx-mat-timepicker.component";
+import { NgxMatTimepickerToggleIconDirective } from '../../directives/ngx-mat-timepicker-toggle-icon.directive';
+import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepicker.component';
 
 @Component({
-  selector: "ngx-mat-timepicker-toggle",
-  templateUrl: "ngx-mat-timepicker-toggle.component.html",
-  styleUrls: ["ngx-mat-timepicker-toggle.component.scss"],
+  selector: 'ngx-mat-timepicker-toggle',
+  templateUrl: 'ngx-mat-timepicker-toggle.component.html',
+  styleUrls: ['ngx-mat-timepicker-toggle.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [MatButtonModule],
@@ -32,8 +32,8 @@ export class NgxMatTimepickerToggleComponent {
   @ContentChild(NgxMatTimepickerToggleIconDirective, { static: true })
   customIcon: NgxMatTimepickerToggleIconDirective;
 
-  // tslint:disable-next-line:no-input-rename
-  @Input("for") timepicker: NgxMatTimepickerComponent;
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input('for') timepicker: NgxMatTimepickerComponent;
 
   private _disabled: boolean;
 

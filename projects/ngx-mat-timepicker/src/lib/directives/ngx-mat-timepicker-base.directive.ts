@@ -16,6 +16,7 @@ import {Observable, Subject} from "rxjs";
 import {shareReplay, takeUntil} from "rxjs/operators";
 
 @Directive({
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: "[ngxMatTimepickerBase]",
     standalone: true
 })

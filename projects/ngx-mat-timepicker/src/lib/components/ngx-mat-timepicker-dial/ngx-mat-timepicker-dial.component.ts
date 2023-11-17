@@ -7,25 +7,25 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-} from "@angular/core";
-import { ThemePalette } from "@angular/material/core";
-import { NgClass, NgTemplateOutlet } from "@angular/common";
+} from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 //
-import { NgxMatTimepickerFormatType } from "../../models/ngx-mat-timepicker-format.type";
-import { NgxMatTimepickerPeriods } from "../../models/ngx-mat-timepicker-periods.enum";
-import { NgxMatTimepickerUnits } from "../../models/ngx-mat-timepicker-units.enum";
-import { NgxMatTimepickerClockFace } from "../../models/ngx-mat-timepicker-clock-face.interface";
-import { NgxMatTimepickerLocaleService } from "../../services/ngx-mat-timepicker-locale.service";
-import { NgxMatTimepickerUtils } from "../../utils/ngx-mat-timepicker.utils";
-import { NgxMatTimepickerPeriodComponent } from "../ngx-mat-timepicker-period/ngx-mat-timepicker-period.component";
-import { NgxMatTimepickerDialControlComponent } from "../ngx-mat-timepicker-dial-control/ngx-mat-timepicker-dial-control.component";
+import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
+import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
+import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
+import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
+import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { NgxMatTimepickerPeriodComponent } from '../ngx-mat-timepicker-period/ngx-mat-timepicker-period.component';
+import { NgxMatTimepickerDialControlComponent } from '../ngx-mat-timepicker-dial-control/ngx-mat-timepicker-dial-control.component';
 //
-import { DateTime, Info } from "ts-luxon";
+import { DateTime, Info } from 'ts-luxon';
 
 @Component({
-  selector: "ngx-mat-timepicker-dial",
-  templateUrl: "ngx-mat-timepicker-dial.component.html",
-  styleUrls: ["ngx-mat-timepicker-dial.component.scss"],
+  selector: 'ngx-mat-timepicker-dial',
+  templateUrl: 'ngx-mat-timepicker-dial.component.html',
+  styleUrls: ['ngx-mat-timepicker-dial.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -83,7 +83,7 @@ export class NgxMatTimepickerDialComponent implements OnChanges {
   timeUnit = NgxMatTimepickerUnits;
   @Output() timeUnitChanged = new EventEmitter<NgxMatTimepickerUnits>();
 
-  private _color: ThemePalette = "primary";
+  private _color: ThemePalette = 'primary';
 
   constructor(private _localeSrv: NgxMatTimepickerLocaleService) {}
 
@@ -108,12 +108,11 @@ export class NgxMatTimepickerDialComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // tslint:disable-next-line:no-string-literal
-    const periodChanged = changes["period"] && changes["period"].currentValue;
-    // tslint:disable-next-line:no-string-literal
+    const periodChanged = changes['period'] && changes['period'].currentValue;
+
     if (
       periodChanged ||
-      (changes["format"] && changes["format"].currentValue)
+      (changes['format'] && changes['format'].currentValue)
     ) {
       const hours = NgxMatTimepickerUtils.getHours(this.format);
 
@@ -124,8 +123,8 @@ export class NgxMatTimepickerDialComponent implements OnChanges {
         period: this.period,
       });
     }
-    // tslint:disable-next-line:no-string-literal
-    if (periodChanged || (changes["hour"] && changes["hour"].currentValue)) {
+
+    if (periodChanged || (changes['hour'] && changes['hour'].currentValue)) {
       const minutes = NgxMatTimepickerUtils.getMinutes(this.minutesGap);
 
       this.minutes = NgxMatTimepickerUtils.disableMinutes(minutes, +this.hour, {

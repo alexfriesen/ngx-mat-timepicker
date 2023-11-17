@@ -122,7 +122,6 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        // tslint:disable-next-line:no-string-literal
         if (changes["timeList"] && this.time != null) {
             if (this._isSelectedTimeDisabled(this.time)) {
                 this._setAvailableTime();

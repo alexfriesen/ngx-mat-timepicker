@@ -6,25 +6,25 @@ import {
   Output,
   ElementRef,
   AfterViewInit,
-} from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { NgClass } from "@angular/common";
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 //
-import { NgxMatTimepickerClockFace } from "../../models/ngx-mat-timepicker-clock-face.interface";
-import { NgxMatTimepickerUnits } from "../../models/ngx-mat-timepicker-units.enum";
-import { NgxMatTimepickerParserPipe } from "../../pipes/ngx-mat-timepicker-parser.pipe";
-import { NgxMatTimepickerUtils } from "../../utils/ngx-mat-timepicker.utils";
-import { NgxMatTimepickerTimeLocalizerPipe } from "../../pipes/ngx-mat-timepicker-time-localizer.pipe";
-import { NgxMatTimepickerAutofocusDirective } from "../../directives/ngx-mat-timepicker-autofocus.directive";
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
+import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
+import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
+import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
+import { NgxMatTimepickerAutofocusDirective } from '../../directives/ngx-mat-timepicker-autofocus.directive';
+import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 
 function retainSelection(this: HTMLInputElement) {
   this.selectionStart = this.selectionEnd;
 }
 
 @Component({
-  selector: "ngx-mat-timepicker-dial-control",
-  templateUrl: "ngx-mat-timepicker-dial-control.component.html",
-  styleUrls: ["ngx-mat-timepicker-dial-control.component.scss"],
+  selector: 'ngx-mat-timepicker-dial-control',
+  templateUrl: 'ngx-mat-timepicker-dial-control.component.html',
+  styleUrls: ['ngx-mat-timepicker-dial-control.component.scss'],
   providers: [NgxMatTimepickerParserPipe],
   standalone: true,
   imports: [
@@ -39,7 +39,7 @@ export class NgxMatTimepickerDialControlComponent
   implements AfterViewInit, OnDestroy
 {
   private get _selectedTime(): NgxMatTimepickerClockFace | undefined {
-    if (!!this.time) {
+    if (this.time) {
       return this.timeList.find((t) => t.time === +this.time);
     }
 
@@ -72,10 +72,10 @@ export class NgxMatTimepickerDialControlComponent
 
   constructor(
     private _elRef: ElementRef,
-    private _timeParserPipe: NgxMatTimepickerParserPipe
+    private _timeParserPipe: NgxMatTimepickerParserPipe,
   ) {}
 
-  changeTimeByKeyboard(e: any): void {
+  changeTimeByKeyboard(e: KeyboardEvent): void {
     const char = String.fromCharCode(e.keyCode);
 
     if (isTimeDisabledToChange(this.time, char, this.timeList)) {
@@ -85,17 +85,17 @@ export class NgxMatTimepickerDialControlComponent
 
   ngAfterViewInit(): void {
     this._elRef.nativeElement
-      .querySelector("input")
-      .addEventListener("select", retainSelection, false);
+      .querySelector('input')
+      .addEventListener('select', retainSelection, false);
   }
 
   ngOnDestroy(): void {
     this._elRef.nativeElement
-      .querySelector("input")
-      .removeEventListener("select", retainSelection);
+      .querySelector('input')
+      .removeEventListener('select', retainSelection);
   }
 
-  onKeydown(e: any): void {
+  onKeydown(e: KeyboardEvent): void {
     if (!NgxMatTimepickerUtils.isDigit(e)) {
       e.preventDefault();
     } else {
@@ -109,7 +109,7 @@ export class NgxMatTimepickerDialControlComponent
 
   saveTimeAndChangeTimeUnit(
     event: FocusEvent,
-    unit: NgxMatTimepickerUnits
+    unit: NgxMatTimepickerUnits,
   ): void {
     event.preventDefault();
     this.previousTime = this.time;
@@ -150,7 +150,7 @@ export class NgxMatTimepickerDialControlComponent
 function isTimeDisabledToChange(
   currentTime: string,
   nextTime: string,
-  timeList: NgxMatTimepickerClockFace[]
+  timeList: NgxMatTimepickerClockFace[],
 ): boolean | undefined {
   const isNumber = /\d/.test(nextTime);
 
@@ -165,7 +165,7 @@ function isTimeDisabledToChange(
 
 function isTimeUnavailable(
   time: string,
-  timeList: NgxMatTimepickerClockFace[]
+  timeList: NgxMatTimepickerClockFace[],
 ): boolean {
   const selectedTime = timeList.find((value) => value.time === +time);
 
