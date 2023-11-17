@@ -1,8 +1,4 @@
-# Sample workflow for building and deploying a Nuxt site to GitHub Pages
-#
-# To get started with Nuxt see: https://nuxtjs.org/docs/get-started/installation
-#
-name: Build and deploy Angular site to Pages
+name: Build and deploy to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -24,12 +20,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -45,11 +41,13 @@ jobs:
             echo "Unable to determine packager manager"
             exit 1
           fi
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18.13.0"
+          node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -59,23 +57,19 @@ jobs:
           key: ${{ runner.os }}-angular-build-${{ hashFiles('dist') }}
           restore-keys: |
             ${{ runner.os }}-angular-build-
+
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Static HTML export with Nuxt
+
+      - name: Build
         run: ${{ steps.detect-package-manager.outputs.manager }} run build:demo
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          FOLDER: dist/ngx-mat-timepicker-repo
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./dist/ngx-mat-timepicker-repo
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
