@@ -16,7 +16,7 @@ import {
   NgxMatTimepickerToggleComponent,
   NgxMatTimepickerFieldComponent,
   NgxMatTimepickerDirective,
-} from 'ngx-mat-timepicker';
+} from '@alexfriesen/ngx-mat-timepicker';
 
 import pkg from '../../../../../../package.json';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
@@ -28,8 +28,6 @@ interface NgxMatTimepickerTheme {
   description: string;
   value: string;
 }
-
-const pkgName = 'ngx-mat-timepicker';
 
 @Component({
   selector: 'app-demo',
@@ -65,7 +63,8 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
     return `${pkg.version}-build-dev`;
   }
 
-  githubLink: string = `https://github.com/tonysamperi/${pkgName}`;
+  npmPackage = '@alexfriesen/ngx-mat-timepicker';
+  githubLink: string = `https://github.com/alexfriesen/ngx-mat-timepicker`;
   latestVersion: string = '';
   maxTime: DateTime = DateTime.local().startOf('day').set({
     hour: 16,
@@ -85,7 +84,7 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
   };
   myLocalesReversed: Record<string, NgxMatTimepickerLocaleKey> =
     Object.fromEntries(Object.entries(this.myLocales).map((a) => a.reverse()));
-  npmLink: string = `https://www.npmjs.com/package/${pkgName}`;
+  npmLink: string = `https://www.npmjs.com/package/${this.npmPackage}`;
   @ViewChild('pickerH') pickerFreeInput: NgxMatTimepickerComponent;
   selectedTheme: NgxMatTimepickerTheme;
   selectedTimes: Record<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H', string> =
@@ -121,7 +120,7 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
     ) as NgxMatTimepickerLocaleKey[];
     this.selectedTheme = this.themes[0];
     ajax
-      .get(`https://unpkg.com/${pkgName}@latest/package.json`)
+      .get(`https://unpkg.com/${this.npmPackage}@latest/package.json`)
       .pipe(
         map((raw: AjaxResponse<any>) => {
           return raw.response?.version;

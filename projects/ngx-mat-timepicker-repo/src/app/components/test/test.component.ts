@@ -13,7 +13,7 @@ import {
   NgxMatTimepickerDirective,
   NgxMatTimepickerLocaleService,
   NgxMatTimepickerFieldComponent,
-} from 'ngx-mat-timepicker';
+} from '@alexfriesen/ngx-mat-timepicker';
 //
 import { NgxMatTimepickerDemoComponent } from '../demo/demo.component';
 

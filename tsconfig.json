@@ -25,13 +25,13 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2022",
-    "module": "es2020",
+    "module": "es2022",
     "lib": [
-      "es2020",
+      "es2022",
       "dom"
     ],
     "paths": {
-      "ngx-mat-timepicker": [
+      "@alexfriesen/ngx-mat-timepicker": [
         "projects/ngx-mat-timepicker/src/public-api"
       ]
     },

@@ -1,23 +1,19 @@
 {
-  "name": "ngx-mat-timepicker-repo",
+  "name": "@alexfriesen/ngx-mat-timepicker",
   "version": "17.0.0",
   "license": "MIT",
   "private": true,
-  "description": "ngx-mat-timepicker is an Angular material 9+ extension to add time pickers!",
-  "homepage": "https://tonysamperi.github.io/ngx-mat-timepicker",
+  "description": "ngx-mat-timepicker is an Angular material 17+ extension to add time pickers!",
+  "homepage": "https://alexfriesen.github.io/ngx-mat-timepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tonysamperi/ngx-mat-timepicker"
+    "url": "https://github.com/alexfriesen/ngx-mat-timepicker"
   },
   "bugs": {
-    "url": "https://github.com/tonysamperi/ngx-mat-timepicker/issues"
-  },
-  "author": {
-    "name": "Tony Samperi",
-    "email": "github@tonysamperi.it"
+    "url": "https://github.com/alexfriesen/ngx-mat-timepicker/issues"
   },
   "keywords": [
-    "Angular 9+",
+    "Angular 17+",
     "Material timepicker",
     "Timepicker",
     "Android timepicker",
@@ -30,8 +26,9 @@
     "test": "ng test",
     "build": "ng build ngx-mat-timepicker --configuration=production",
     "build:demo": "ng build ngx-mat-timepicker-repo --configuration=production --base-href=",
-    "publish": "npm publish ./dist/ngx-mat-timepicker",
-    "publish:beta": "npm publish ./dist/ngx-mat-timepicker --tag beta",
+    "link": "npm link ./dist/ngx-mat-timepicker",
+    "publish": "npm publish ./dist/ngx-mat-timepicker --access=public",
+    "publish:beta": "npm publish ./dist/ngx-mat-timepicker --tag beta --access=public",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

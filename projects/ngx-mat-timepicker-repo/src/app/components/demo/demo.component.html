@@ -6,7 +6,7 @@
       alt=""
     />
     <span class="ngx-mtp-header-title" title="toggle locale">
-      ngx-mat-timepicker
+      {{ npmPackage }}
     </span>
   </div>
   <div>
@@ -77,29 +77,21 @@
 </mat-toolbar>
 <div class="ngx-mtp-top">
   <h1 class="mat-h1 ngx-mtp-main-title">Angular Material Timepicker</h1>
-  <p>an Angular material 9+ extension to add time pickers!</p>
+  <p>an Angular material 17+ extension to add time pickers!</p>
   <div class="ngx-mtp-badges">
     <a [href]="npmLink" target="_blank">
       <img
-        src="https://img.shields.io/npm/v/ngx-mat-timepicker.svg?style=flat-square"
+        src="https://img.shields.io/npm/v/@alexfriesen/ngx-mat-timepicker.svg?style=flat-square"
         [title]="latestVersion"
         [alt]="latestVersion"
       />
     </a>
     <img
-      src="https://img.shields.io/npm/dm/ngx-mat-timepicker.svg?style=flat-square"
+      src="https://img.shields.io/npm/dm/@alexfriesen/ngx-mat-timepicker.svg?style=flat-square"
       alt=""
     />
     <img
-      src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square"
-      alt=""
-    />
-    <img
-      src="https://travis-ci.com/tonysamperi/ngx-mat-timepicker.svg?branch=master"
-      alt=""
-    />
-    <img
-      src="https://img.shields.io/bundlephobia/min/ngx-mat-timepicker"
+      src="https://img.shields.io/bundlephobia/min/@alexfriesen/ngx-mat-timepicker"
       alt=""
     />
   </div>
@@ -131,7 +123,7 @@
   <h2 class="mat-h2">Install NgxMatTimepicker</h2>
   <div class="terminal">
     <ul>
-      <li>npm i ngx-mat-timepicker</li>
+      <li>npm i {{ npmPackage }}</li>
     </ul>
     <ul mtp-messages>
       @for (m of messages; track m) {
@@ -700,7 +692,7 @@
   <p>Go to the <a class="mat-color-primary" [href]="githubLink">docs</a>!</p>
 </div>
 <footer>
-  <p>
+<p>
     Created with <span [title]="buildRef">♥</span> by
     <a
       class="mat-color-accent"

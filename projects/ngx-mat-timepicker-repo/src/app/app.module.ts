@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 //
-import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { NgxMatTimepickerModule } from '@alexfriesen/ngx-mat-timepicker';
 //
 import { NgxMatTimepickerAppComponent } from './app.component';
 import {
