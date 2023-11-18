@@ -1,0 +1,17 @@
+{
+  "messages": [
+    {
+      "text": "⚡ 08/11/2023: published V17! Check it out!",
+      "opts": {
+        "loop": true
+      }
+    },
+    {
+      "text": "⭐ 14/10/2023: new V16.1.0 standalone components released!",
+      "opts": {
+        "loop": false,
+        "delay": 80
+      }
+    }
+  ]
+}
