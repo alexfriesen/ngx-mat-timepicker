@@ -1,3 +1,6 @@
+@alexfriesen/ngx-mat-timepicker
+MIT
+
 @angular/animations
 MIT
 
@@ -61,9 +64,6 @@ THE SOFTWARE.
 
 
 @angular/platform-browser
-MIT
-
-ngx-mat-timepicker
 MIT
 
 prismjs
