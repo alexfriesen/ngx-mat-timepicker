@@ -1,63 +1,8 @@
 # @alexfriesen/ngx-mat-timepicker
 
-[![npm][badge-npm-version]][url-npm] [![MIT licensed][badge-licence]][url-licence] [![Build state][badge-ci-state]][url-ci-state] [![Size][badge-bundle]][url-bundle] [![Rate this package][badge-openbase]][url-openbase]
+[![npm][badge-npm-version]][url-npm] [![MIT licensed][badge-licence]][url-licence] [![Build state][badge-ci-state]][url-ci-state] [![Size][badge-bundle]][url-bundle]
 
 A simple time picker module using Angular Material: it provides an Android style dialog for time selection and a handy input for time selection in Material style.
-
-## VERY IMPORTANT READ THIS
-
-I'm moving this to the top because it appears that people don't get to reading it in the **contribute** section.  
-FOR THIS LIBRARY **PLEASE USE ISSUES ONLY FOR BUG REPORTING**. DON'T OPEN ISSUES SUCH AS "I need upgrade for Angular 1745646456" especially if Angular 1745646456 was released a few days ago.  
-I **guarantee** that I manage the updates **AS SOON AS POSSIBLE**. But as you understand this is not a paying job, so you can't get Angular 1745646456 the day it gets released.  
-**ISSUES NOT RESPECTING THIS WILL BE DELETED IMMEDIATELY WITHOUT ANY RESPONSE**.  
-Thank you.
-
-### Why this project?
-
-The original was nice, but for some reason it didn't adapt to your Material theme.  
-So an extra config was necessary to have a nice integration in your app.  
-This project **automatically adapts** to your Material theme, even if a custom one (so, for example, if you have a dark theme, you'll have a dark dialog!).  
-By default it will use the primary color.  
-You can choose the color scheme among the three **ThemePalette** items, natively provided by Material: `primary`, `accent`, `warn`.
-
-Also a few components were unnecessary and not in material style, so I got rid of them and integrated Material components, such as `mat-select` and others.
-
-**Other general improvements**
-
-- Improved clock hand alignments
-- Changed clock hand appearance for minutes which aren't multiple of 5 (as in Android timepicker)
-- Improved appearance of focused inputs, the toggle and increase/decrease arrows in timepicker-field
-- Improved header content disposition when 24h format is enabled
-- Used material buttons for dialog actions (CANCEL/OK)
-- Added leading zero for the hours in the dialog header (as in Android timepicker)
-- More consistent naming
-- Removed useless exports from NgxMatTimepickerModule
-
-### Compatibility
-
-- v9 < Angular/Material < v17
-
-**IMPORTANT**  
-Remember to include a Material Theme in your project, example:
-
-```scss
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-```
-
-or
-
-```scss
-@use '@angular/material' as mat;
-
-@include mat.all-component-themes($my-theme);
-```
-
-**IMPORTANT ABOUT MATERIAL V15**
-This library uses the new set of Material components, so it doesn't support the **legacy** theming.
-Support for legacy components has been considered, but won't be developed.
-If you still need the legacy version you can contact me and we'll see what can be done, but a real effort will be put through only for a huge amount of requests.
-
-Refer to the [Angular Material](https://material.angular.io) website for theming options.
 
 ## Table of contents
 
@@ -118,6 +63,21 @@ import { NgxMatTimepickerModule } from '@alexfriesen/ngx-mat-timepicker';
 export class MyModule {}
 ```
 
+## Theming
+This Package relies on an existing Angular Material Theme:
+
+```scss
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+```
+
+or
+
+```scss
+@use '@angular/material' as mat;
+
+@include mat.all-component-themes($my-theme);
+```
+
 ## Documentation
 
 #### API reference for Angular Material Timepicker
@@ -152,7 +112,7 @@ Selector: `ngxMatTimepicker`
 | @Input()  
  disableClick: boolean | Set `true` to disable opening timepicker by clicking on the input |
 
-#### NgxMatTimepickerLocaleService (⭐NEW FROM v 13.2.0!!!⭐)
+#### NgxMatTimepickerLocaleService
 
 This service allows to **change the locale anytime**.  
 You can inject this in your component or extend and provide your version, in order to provide your current locale to all the pickers!  
@@ -268,16 +228,11 @@ Selector: `[ngxMatTimepickerToggleIcon]`
 <a href="https://alexfriesen.github.io/ngx-mat-timepicker/">Demo</a>
 
 ```terminal
- $ npm install $ npm run start  //run example
+$ yarn
+$ yarn start  //run example
 ```
 
-Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
-
-## Special thanks
-
-Jetbrains is now supporting this library with an open-source license, which will allow a better code! 🎉
-
-![jetbrains-logo](https://user-images.githubusercontent.com/5957244/150580991-863d6fba-1090-4924-b26c-be19c6310f24.svg)
+Run `npm test` to run tests once.
 
 ## License
 
@@ -294,10 +249,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [badge-licence]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
 [badge-npm-downloads]: https://img.shields.io/npm/dm/@alexfriesen/ngx-mat-timepicker.svg?style=flat-square
 [badge-npm-version]: https://img.shields.io/npm/v/@alexfriesen/ngx-mat-timepicker.svg?style=flat-square
-[badge-openbase]: https://badges.openbase.com/js/rating/@alexfriesen/ngx-mat-timepicker.svg?token=imNtfVxrKTW3J1VSOlxCqRcyvTG7POhNoOkaljG1DeA=
-[initial-author]: https://github.com/TonySamperi
 [url-bundle]: https://img.shields.io/bundlephobia/minzip/@alexfriesen/ngx-mat-timepicker
 [url-ci-state]: https://github.com/alexfriesen/ngx-mat-timepicker/actions
 [url-licence]: https://github.com/alexfriesen/ngx-mat-timepicker/blob/master/LICENSE
 [url-npm]: https://www.npmjs.com/package/@alexfriesen/ngx-mat-timepicker
-[url-openbase]: https://openbase.com/js/@alexfriesen/ngx-mat-timepicker
