@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { catchError, map, of, switchMap, timer } from 'rxjs';
+import { map } from 'rxjs';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
 
 import {
@@ -21,7 +21,6 @@ import {
 import pkg from '../../../../../../package.json';
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { NgxMatTimepickerLocaleKey } from '../../shared/ngx-mat-timepicker-locale-key.enum';
-import TypeWriter from 'typewriter-effect/dist/core.js';
 import { DateTime } from 'ts-luxon';
 
 interface NgxMatTimepickerTheme {
@@ -131,8 +130,6 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
           this.latestVersion = version;
         },
       });
-
-    this._getMessages('[mtp-messages]');
   }
 
   onTimeSet($event: string): void {
@@ -162,45 +159,5 @@ export class NgxMatTimepickerDemoComponent implements OnInit {
   updateTime($event: string, targetProp: string): void {
     console.info('TIME SET', $event);
     (this as any)[targetProp] = $event;
-  }
-
-  //
-
-  private _getMessages(wrapperSelector: string): void {
-    if (!document.querySelector(wrapperSelector)) {
-      console.warn(
-        `No results for selector ${wrapperSelector}, skipping messages!`,
-      );
-
-      return;
-    }
-    ajax
-      .get(`./assets/messages.json`)
-      .pipe(
-        switchMap((resp: AjaxResponse<any>) => {
-          this.messages = resp.response.messages;
-
-          return timer(150);
-        }),
-        catchError(() => of([])),
-      )
-      .subscribe({
-        next: () => {
-          this.messages.forEach(({ text, opts = {} }, i: number) => {
-            const tw = new TypeWriter(
-              `${wrapperSelector} li:nth-child(${i + 1})`,
-              {
-                strings: opts.loop ? [text] : void 0,
-                autoStart: !!opts.loop,
-                loop: !!opts.loop,
-                delay: opts.delay || 'natural',
-              },
-            );
-            if (!opts.loop) {
-              tw.typeString(text).stop().start();
-            }
-          });
-        },
-      });
   }
 }
