@@ -15,7 +15,7 @@ import {
   NgxMatTimepickerFieldComponent,
 } from '@alexfriesen/ngx-mat-timepicker';
 //
-import { NgxMatTimepickerDemoComponent } from '../demo/demo.component';
+import { DemoComponent } from '../demo/demo.component';
 
 @Component({
   selector: 'app-dialog',
@@ -67,7 +67,7 @@ export class NgxMatTimepickerTestDialogComponent {
     NgxMatTimepickerFieldComponent,
   ],
 })
-export class NgxMatTimepickerTestComponent extends NgxMatTimepickerDemoComponent {
+export class TestComponent extends DemoComponent {
   formControlItem: FormControl = new FormControl('', [
     Validators.pattern(/([0-9]|[1-2]\d):[0-5]\d/),
   ]);

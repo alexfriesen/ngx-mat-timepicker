@@ -67,9 +67,4 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          FOLDER: dist/ngx-mat-timepicker-repo
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./dist/ngx-mat-timepicker-repo
+          FOLDER: dist/ngx-mat-timepicker-repo/browser

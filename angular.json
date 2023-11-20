@@ -58,11 +58,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/ngx-mat-timepicker-repo",
             "index": "projects/ngx-mat-timepicker-repo/src/index.html",
-            "main": "projects/ngx-mat-timepicker-repo/src/main.ts",
+            "browser": "projects/ngx-mat-timepicker-repo/src/main.ts",
+            "server": "projects/ngx-mat-timepicker-repo/src/main.server.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -78,7 +79,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "prismjs"
-            ]
+            ],
+            "prerender": true
           },
           "configurations": {
             "production": {
@@ -103,12 +105,11 @@
               ]
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"

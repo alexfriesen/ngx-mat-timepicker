@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-//
-import { NGX_MAT_TIMEPICKER_ENVIRONMENT } from '../environments/environment';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet],
 })
-export class NgxMatTimepickerAppComponent {
-  isDemo: boolean = NGX_MAT_TIMEPICKER_ENVIRONMENT.isDemo;
-}
+export class AppComponent {}

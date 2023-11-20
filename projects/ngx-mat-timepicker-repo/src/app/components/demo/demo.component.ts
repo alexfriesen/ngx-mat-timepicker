@@ -45,7 +45,7 @@ interface NgxMatTimepickerTheme {
     CodeViewerComponent,
   ],
 })
-export class NgxMatTimepickerDemoComponent implements OnInit {
+export class DemoComponent implements OnInit {
   get currentLocale(): string {
     return this._localeOverrideSrv.locale;
   }
