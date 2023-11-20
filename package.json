@@ -25,7 +25,7 @@
     "start": "ng serve",
     "test": "ng test",
     "build": "ng build ngx-mat-timepicker --configuration=production",
-    "build:demo": "ng build ngx-mat-timepicker-repo --configuration=production",
+    "build:demo": "ng build demo --configuration=production",
     "build:demo:gh-pages": "yarn build:demo --base-href https://alexfriesen.github.io/ngx-mat-timepicker/",
     "link": "npm link ./dist/ngx-mat-timepicker",
     "publish": "npm publish ./dist/ngx-mat-timepicker --access=public",

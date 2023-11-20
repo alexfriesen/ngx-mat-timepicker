@@ -67,4 +67,4 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          FOLDER: dist/ngx-mat-timepicker-repo/browser
+          FOLDER: dist/demo/browser
