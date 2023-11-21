@@ -1,13 +1,7 @@
 @use "@angular/material" as mat;
+@import "scss/fonts";
 @import "scss/themes";
 @import "scss/core";
-
-@font-face {
-	font-family: "Material Icons";
-	font-style: normal;
-	font-weight: 400;
-	src: url("assets/fonts/MaterialIcons-Regular.woff") format("woff");
-}
 
 $primary-color: mat.get-color-from-palette($candy-app-primary);
 $accent-color: mat.get-color-from-palette($candy-app-accent);
@@ -154,11 +148,9 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 
 // Include the default theme styles.
 @include mat.all-component-themes($candy-app-theme);
-// @include mat.all-component-themes($candy-app-theme); // doesn't work yet
 
 .dark-theme {
 	@include mat.all-component-colors($dark-theme);
-	// @include mat.all-component-themes($dark-theme); // doesn't work yet
 
 	a {
 		&.mat-color-primary {
