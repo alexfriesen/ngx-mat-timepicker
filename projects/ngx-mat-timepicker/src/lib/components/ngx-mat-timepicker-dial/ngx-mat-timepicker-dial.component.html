@@ -44,16 +44,16 @@
     }
   </div>
   @if (isEditable || editableHintTmpl) {
-    <div
-      [ngClass]="{ 'timepicker-dial__hint-container--hidden': !isHintVisible }"
-    >
+    <div [class.timepicker-dial__hint-container--hidden]="!isHintVisible">
       <ng-container
         *ngTemplateOutlet="
           editableHintTmpl ? editableHintTmpl : editableHintDefault
         "
       />
       <ng-template #editableHintDefault>
-        <small class="timepicker-dial__hint">* use arrows (<span>&#8645;</span>) to change the time</small>
+        <small class="timepicker-dial__hint">
+          * use arrows (<span>&#8645;</span>) to change the time
+        </small>
       </ng-template>
     </div>
   }

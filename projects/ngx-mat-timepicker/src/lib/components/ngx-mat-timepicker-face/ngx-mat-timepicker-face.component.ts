@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { NgStyle, NgTemplateOutlet, NgClass, SlicePipe } from '@angular/common';
+import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -72,8 +72,6 @@ const CLOCK_HAND_STYLES = {
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgClass,
-    NgStyle,
     NgTemplateOutlet,
     SlicePipe,
     MatButtonModule,

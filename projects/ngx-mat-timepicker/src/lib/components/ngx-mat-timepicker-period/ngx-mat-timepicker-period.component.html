@@ -6,7 +6,7 @@
   <button
     type="button"
     class="timepicker-dial__item timepicker-period__btn"
-    [ngClass]="{ active: selectedPeriod === timePeriod.AM }"
+    [class.active]="selectedPeriod === timePeriod.AM"
     (click)="changePeriod(timePeriod.AM)"
   >
     {{ meridiems[0] }}
@@ -14,7 +14,7 @@
   <button
     type="button"
     class="timepicker-dial__item timepicker-period__btn"
-    [ngClass]="{ active: selectedPeriod === timePeriod.PM }"
+    [class.active]="selectedPeriod === timePeriod.PM"
     (click)="changePeriod(timePeriod.PM)"
   >
     {{ meridiems[1] }}

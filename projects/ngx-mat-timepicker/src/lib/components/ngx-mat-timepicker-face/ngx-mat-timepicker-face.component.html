@@ -9,7 +9,7 @@
         ? color
         : 'void'
     "
-    [ngStyle]="{ transform: 'rotateZ(-' + time.angle + 'deg)' }"
+    [style.transform]="'rotateZ(-' + time.angle + 'deg)'"
     [disabled]="time.disabled"
   >
     {{ time.time | timeLocalizer: timeUnit.HOUR }}
@@ -22,7 +22,7 @@
       @for (time of faceTime | slice: 0 : 12; track time.time) {
         <div
           class="clock-face__number clock-face__number--outer"
-          [ngStyle]="{ transform: 'rotateZ(' + time.angle + 'deg)' }"
+          [style.transform]="'rotateZ(' + time.angle + 'deg)'"
         >
           <ng-content
             *ngTemplateOutlet="hourButton; context: { $implicit: time }"
@@ -35,7 +35,7 @@
             <div
               class="clock-face__number clock-face__number--inner"
               [style.top]="'calc(50% - ' + innerClockFaceSize + 'px)'"
-              [ngStyle]="{ transform: 'rotateZ(' + time.angle + 'deg)' }"
+              [style.transform]="'rotateZ(' + time.angle + 'deg)'"
               [style.height.px]="innerClockFaceSize"
             >
               <ng-content
@@ -51,7 +51,7 @@
       @for (time of faceTime; track time.time) {
         <div
           class="clock-face__number clock-face__number--outer"
-          [ngStyle]="{ transform: 'rotateZ(' + time.angle + 'deg)' }"
+          [style.transform]="'rotateZ(' + time.angle + 'deg)'"
         >
           <button
             mat-mini-fab
@@ -66,7 +66,7 @@
                 ? color
                 : 'void'
             "
-            [ngStyle]="{ transform: 'rotateZ(-' + time.angle + 'deg)' }"
+            [style.transform]="'rotateZ(-' + time.angle + 'deg)'"
             [disabled]="time.disabled"
           >
             {{
@@ -80,10 +80,10 @@
     </div>
   }
   <mat-toolbar
+    #clockHand
     class="clock-face__clock-hand"
     [color]="color"
-    [ngClass]="{ 'clock-face__clock-hand_minute': unit === timeUnit.MINUTE }"
-    #clockHand
+    [class.clock-face__clock-hand_minute]="unit === timeUnit.MINUTE"
     [hidden]="isClockFaceDisabled"
   >
     @if (unit === timeUnit.MINUTE) {

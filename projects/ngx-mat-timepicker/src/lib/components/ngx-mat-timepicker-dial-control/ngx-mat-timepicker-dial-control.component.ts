@@ -8,8 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
-//
+
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
@@ -29,7 +28,6 @@ function retainSelection(this: HTMLInputElement) {
   standalone: true,
   imports: [
     FormsModule,
-    NgClass,
     NgxMatTimepickerAutofocusDirective,
     NgxMatTimepickerParserPipe,
     NgxMatTimepickerTimeLocalizerPipe,

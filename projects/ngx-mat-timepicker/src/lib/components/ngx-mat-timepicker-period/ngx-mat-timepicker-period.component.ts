@@ -1,46 +1,45 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   animate,
   sequence,
   style,
   transition,
   trigger,
-} from "@angular/animations";
-import { NgClass } from "@angular/common";
+} from '@angular/animations';
 import {
   FlexibleConnectedPositionStrategy,
   Overlay,
   ScrollStrategy,
   CdkOverlayOrigin,
   CdkConnectedOverlay,
-} from "@angular/cdk/overlay";
+} from '@angular/cdk/overlay';
 //
-import { NgxMatTimepickerFormatType } from "../../models/ngx-mat-timepicker-format.type";
-import { NgxMatTimepickerPeriods } from "../../models/ngx-mat-timepicker-periods.enum";
-import { NgxMatTimepickerUnits } from "../../models/ngx-mat-timepicker-units.enum";
-import { NgxMatTimepickerClockFace } from "../../models/ngx-mat-timepicker-clock-face.interface";
-import { NgxMatTimepickerUtils } from "../../utils/ngx-mat-timepicker.utils";
+import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
+import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
+import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
+import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 //
-import { DateTime } from "ts-luxon";
+import { DateTime } from 'ts-luxon';
 
 @Component({
-  selector: "ngx-mat-timepicker-period",
-  templateUrl: "ngx-mat-timepicker-period.component.html",
-  styleUrls: ["ngx-mat-timepicker-period.component.scss"],
+  selector: 'ngx-mat-timepicker-period',
+  templateUrl: 'ngx-mat-timepicker-period.component.html',
+  styleUrls: ['ngx-mat-timepicker-period.component.scss'],
   animations: [
-    trigger("scaleInOut", [
-      transition(":enter", [
-        style({ transform: "scale(0)" }),
-        animate(".2s", style({ transform: "scale(1)" })),
+    trigger('scaleInOut', [
+      transition(':enter', [
+        style({ transform: 'scale(0)' }),
+        animate('.2s', style({ transform: 'scale(1)' })),
         sequence([
-          animate("3s", style({ opacity: 1 })),
-          animate(".3s", style({ opacity: 0 })),
+          animate('3s', style({ opacity: 1 })),
+          animate('.3s', style({ opacity: 0 })),
         ]),
       ]),
     ]),
   ],
   standalone: true,
-  imports: [CdkOverlayOrigin, NgClass, CdkConnectedOverlay],
+  imports: [CdkOverlayOrigin, CdkConnectedOverlay],
 })
 export class NgxMatTimepickerPeriodComponent {
   @Input() activeTimeUnit: NgxMatTimepickerUnits;
@@ -73,7 +72,7 @@ export class NgxMatTimepickerPeriodComponent {
   }
 
   private _getDisabledTimeByPeriod(
-    period: NgxMatTimepickerPeriods
+    period: NgxMatTimepickerPeriods,
   ): NgxMatTimepickerClockFace[] {
     switch (this.activeTimeUnit) {
       case NgxMatTimepickerUnits.HOUR:
@@ -92,10 +91,10 @@ export class NgxMatTimepickerPeriodComponent {
             max: this.maxTime,
             format: this.format,
             period,
-          }
+          },
         );
       default:
-        throw new Error("no such NgxMatTimepickerUnits");
+        throw new Error('no such NgxMatTimepickerUnits');
     }
   }
 
