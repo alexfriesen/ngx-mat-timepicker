@@ -25,8 +25,8 @@ describe("NgxMatTimepickerDialComponent", () => {
     });
 
     it("should call disableHours and disableMinutes on period change", () => {
-        const spyOnFunctionHours = spyOn(NgxMatTimepickerUtils, "disableHours");
-        const spyOnFunctionMinutes = spyOn(NgxMatTimepickerUtils, "disableMinutes");
+        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
+        const spyOnFunctionMinutes = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
         const changes: SimpleChanges = {
             period: {
                 currentValue: NgxMatTimepickerPeriods.AM,
@@ -42,7 +42,7 @@ describe("NgxMatTimepickerDialComponent", () => {
     });
 
     it("should call disableHours on format change", () => {
-        const spyOnFunctionHours = spyOn(NgxMatTimepickerUtils, "disableHours");
+        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
         const changes: SimpleChanges = {
             format: {
                 currentValue: 24,
@@ -57,7 +57,7 @@ describe("NgxMatTimepickerDialComponent", () => {
     });
 
     it("should call disableMinutes on hour change", () => {
-        const spy = spyOn(NgxMatTimepickerUtils, "disableMinutes");
+        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
         const changes: SimpleChanges = {
             hour: {
                 currentValue: 24,
@@ -72,8 +72,8 @@ describe("NgxMatTimepickerDialComponent", () => {
     });
 
     it("should not call disableHours and disableMinutes", () => {
-        const spyOnFunctionHours = spyOn(NgxMatTimepickerUtils, "disableHours");
-        const spyOnFunctionMinutes = spyOn(NgxMatTimepickerUtils, "disableMinutes");
+        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
+        const spyOnFunctionMinutes = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
         const changes: SimpleChanges = {
             minTime: {
                 currentValue: null,

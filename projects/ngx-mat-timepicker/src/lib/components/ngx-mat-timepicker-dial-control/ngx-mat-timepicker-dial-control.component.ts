@@ -89,8 +89,8 @@ export class NgxMatTimepickerDialControlComponent
 
   ngOnDestroy(): void {
     this._elRef.nativeElement
-      .querySelector('input')
-      .removeEventListener('select', retainSelection);
+      ?.querySelector('input')
+      ?.removeEventListener('select', retainSelection);
   }
 
   onKeydown(e: KeyboardEvent): void {

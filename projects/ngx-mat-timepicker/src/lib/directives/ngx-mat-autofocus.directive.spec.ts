@@ -6,12 +6,14 @@ import {
   tick,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-//
+
 import { NgxMatTimepickerAutofocusDirective } from './ngx-mat-timepicker-autofocus.directive';
 
 @Component({
-  template: ` <button id="button">Push me</button>
-    <input [ngxMatTimepickerAutofocus]="true" />`,
+  template: `
+    <button id="button">Push me</button>
+    <input [ngxMatTimepickerAutofocus]="true" />
+  `,
   standalone: true,
   imports: [NgxMatTimepickerAutofocusDirective],
 })

@@ -1,17 +1,17 @@
 import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-//
+
 import { NgxMatTimepickerDirective } from './ngx-mat-timepicker.directive';
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
 import { NgxMatTimepickerModule } from '../ngx-mat-timepicker.module';
-//
+
 import { DateTime } from 'ts-luxon';
 
 @Component({
   template: `
     <input [ngxMatTimepicker]="picker" />
-    <ngx-mat-timepicker #picker></ngx-mat-timepicker>
+    <ngx-mat-timepicker #picker />
   `,
   standalone: true,
   imports: [NgxMatTimepickerModule],
@@ -39,14 +39,14 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should register NgxMatTimepickerComponent', () => {
-    const spy = spyOnProperty(directive, 'timepicker', 'set').and.callThrough();
+    const spy = jest.spyOn(directive, 'timepicker', 'set');
     directive.timepicker = timepickerComponent;
     expect(spy).toHaveBeenCalledWith(timepickerComponent);
   });
 
   it('should throw Error if NgxMatTimepickerComponent is not defined', () => {
-    spyOnProperty(directive, 'timepicker', 'set').and.callThrough();
-    expect((): any => (directive.timepicker = null)).toThrowError(
+    jest.spyOn(directive, 'timepicker', 'set');
+    expect((): void => (directive.timepicker = null)).toThrowError(
       'NgxMatTimepickerComponent is not defined.' +
         ' Please make sure you passed the timepicker to ngxMatTimepicker directive',
     );
@@ -64,7 +64,7 @@ describe('NgxMatTimepickerDirective', () => {
     });
 
     it('should set value and call updateTime  when format changes dynamically', () => {
-      const spy = spyOn(timepickerComponent, 'updateTime');
+      const spy = jest.spyOn(timepickerComponent, 'updateTime');
       directive.timepicker = timepickerComponent;
       directive.value = '11:11 pm';
       directive.format = 12;
@@ -79,7 +79,7 @@ describe('NgxMatTimepickerDirective', () => {
     });
 
     it('should not call updateTime when format the same as before', () => {
-      const spy = spyOn(timepickerComponent, 'updateTime');
+      const spy = jest.spyOn(timepickerComponent, 'updateTime');
       directive.timepicker = timepickerComponent;
       directive.format = 12;
 
@@ -132,7 +132,7 @@ describe('NgxMatTimepickerDirective', () => {
 
   it('should call console.warn if time is not between min and max(inclusively) value', () => {
     directive.timepicker = timepickerComponent;
-    const spy = spyOn(console, 'warn');
+    const spy = jest.spyOn(console, 'warn');
     directive.min = '11:00 am';
     directive.value = '10:00 am';
     expect(spy).toHaveBeenCalledWith(consoleWarnValue);
@@ -154,7 +154,7 @@ describe('NgxMatTimepickerDirective', () => {
 
   it('should change time onChange', () => {
     directive.timepicker = timepickerComponent;
-    const updateEvent = new CustomEvent<any>('change', {
+    const updateEvent = new CustomEvent('change', {
       composed: !1,
       detail: {
         target: directive.element,
@@ -202,7 +202,7 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should open timepicker on click', () => {
-    const spy = spyOn(timepickerComponent, 'open');
+    const spy = jest.spyOn(timepickerComponent, 'open');
     directive.timepicker = timepickerComponent;
 
     directive.onClick({ stopPropagation: () => null } as MouseEvent);
@@ -210,7 +210,7 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should not open timepicker on click if disableClick is true', () => {
-    const spy = spyOn(timepickerComponent, 'open');
+    const spy = jest.spyOn(timepickerComponent, 'open');
     directive.timepicker = timepickerComponent;
     directive.disableClick = true;
 
@@ -237,10 +237,10 @@ describe('NgxMatTimepickerDirective', () => {
 
   it('should set onChange function on registerOnChange', () => {
     directive.timepicker = timepickerComponent;
-    const spy = spyOn(console, 'log');
-    directive.registerOnChange(console.log);
+    const spy = jest.fn();
+    directive.registerOnChange(spy);
     const time = '11:12 am';
-    const updateEvent = new CustomEvent<any>('change', {
+    const updateEvent = new CustomEvent('change', {
       composed: !1,
       detail: {
         target: directive.element,
@@ -253,7 +253,7 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should set onTouch function on registerOnTouched', () => {
-    const spy = spyOn(console, 'log');
+    const spy = jest.spyOn(console, 'log');
 
     directive.registerOnTouched(console.log);
     directive.onTouched();
