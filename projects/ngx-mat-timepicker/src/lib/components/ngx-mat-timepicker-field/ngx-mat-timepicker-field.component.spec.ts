@@ -280,25 +280,23 @@ describe('NgxMatTimepickerFieldComponent', () => {
   }));
 
   it('should call touch method', () => {
-    component.registerOnTouched(() => {
-      console.log();
-    });
+    const spy = jest.fn();
+    component.registerOnTouched(spy);
+    component.onTimeSet('12:00 AM');
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should update time and emit timeChanged event when timeSet called', waitForAsync(() => {
-    let time: string | null = null;
-    const timeMock = '2:5 am';
-    const expectedTime = '2:05 am';
-    const onChange = (val: string) => (time = val);
+    const spy = jest.fn();
     component.timeChanged.subscribe((changedTime) =>
-      expect(changedTime.toLowerCase()).toBe(expectedTime),
+      expect(changedTime.toLowerCase()).toBe('2:05 am'),
     );
-    component.registerOnChange(onChange);
+    component.registerOnChange(spy);
 
-    component.onTimeSet(timeMock);
+    component.onTimeSet('2:5 am');
 
-    expect(component.timepickerTime.toLowerCase()).toBe(expectedTime);
-    expect(time.toLowerCase()).toBe(expectedTime);
+    expect(component.timepickerTime.toLowerCase()).toBe('2:05 am');
+    expect(spy).toHaveBeenCalledWith('2:05 AM');
     component.hour$.subscribe((hour) => expect(hour.time).toBe(2));
     component.minute$.subscribe((minute) => expect(minute.time).toBe(5));
   }));

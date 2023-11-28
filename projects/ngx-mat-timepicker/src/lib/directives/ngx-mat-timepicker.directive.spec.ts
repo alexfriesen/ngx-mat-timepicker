@@ -2,9 +2,9 @@ import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { NgxMatTimepickerModule } from '../ngx-mat-timepicker.module';
 import { NgxMatTimepickerDirective } from './ngx-mat-timepicker.directive';
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
-import { NgxMatTimepickerModule } from '../ngx-mat-timepicker.module';
 
 import { DateTime } from 'ts-luxon';
 
@@ -133,6 +133,7 @@ describe('NgxMatTimepickerDirective', () => {
   it('should call console.warn if time is not between min and max(inclusively) value', () => {
     directive.timepicker = timepickerComponent;
     const spy = jest.spyOn(console, 'warn');
+
     directive.min = '11:00 am';
     directive.value = '10:00 am';
     expect(spy).toHaveBeenCalledWith(consoleWarnValue);
@@ -153,15 +154,12 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should change time onChange', () => {
+    expect(directive.value).toBe('');
     directive.timepicker = timepickerComponent;
-    const updateEvent = new CustomEvent('change', {
-      composed: !1,
-      detail: {
-        target: directive.element,
-        data: '11:12',
-      },
-    });
-    directive.updateValue(updateEvent);
+
+    directive.element.value = '11:12';
+    directive.element.dispatchEvent(new CustomEvent('change'));
+
     expect(directive.value).toBe('11:12 AM');
   });
 
@@ -236,20 +234,14 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should set onChange function on registerOnChange', () => {
-    directive.timepicker = timepickerComponent;
     const spy = jest.fn();
+    directive.timepicker = timepickerComponent;
     directive.registerOnChange(spy);
-    const time = '11:12 am';
-    const updateEvent = new CustomEvent('change', {
-      composed: !1,
-      detail: {
-        target: directive.element,
-        data: time,
-      },
-    });
-    directive.updateValue(updateEvent);
 
-    expect(spy).toHaveBeenCalledWith(time);
+    directive.element.value = '11:12 am';
+    directive.element.dispatchEvent(new CustomEvent('change'));
+
+    expect(spy).toHaveBeenCalledWith('11:12 AM');
   });
 
   it('should set onTouch function on registerOnTouched', () => {

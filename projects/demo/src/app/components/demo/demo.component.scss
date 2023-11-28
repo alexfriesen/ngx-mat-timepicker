@@ -19,6 +19,8 @@
   overflow: hidden;
   z-index: 2;
 
+  --mat-toolbar-mobile-height: 80px;
+
   > div {
     display: flex;
     align-items: center;
@@ -50,6 +52,10 @@
   @include respond-below(sm) {
     padding-left: 8px;
     padding-right: 8px;
+  }
+
+  @include respond-below(xxs) {
+    flex-direction: column;
   }
 }
 
@@ -178,7 +184,7 @@ footer {
 }
 
 .terminal::before {
-  content: '\2022 \2022 \2022';
+  content: "\2022 \2022 \2022";
   position: absolute;
   z-index: 1;
   top: 0;
