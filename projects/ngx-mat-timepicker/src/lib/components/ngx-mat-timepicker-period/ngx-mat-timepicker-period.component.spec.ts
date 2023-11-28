@@ -73,8 +73,8 @@ describe('NgxMatTimepickerPeriodComponent', () => {
     component.selectedPeriod = NgxMatTimepickerPeriods.AM;
     try {
       component.changePeriod(NgxMatTimepickerPeriods.PM);
-    } catch (e: any) {
-      expect(e.message).toBe('no such NgxMatTimepickerUnits');
+    } catch (e: unknown) {
+      expect((e as Error).message).toBe('no such NgxMatTimepickerUnits');
     }
   });
 

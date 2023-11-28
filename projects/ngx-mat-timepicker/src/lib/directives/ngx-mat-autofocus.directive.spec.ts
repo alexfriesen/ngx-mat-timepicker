@@ -20,7 +20,7 @@ import { NgxMatTimepickerAutofocusDirective } from './ngx-mat-timepicker-autofoc
 class TestComponent {}
 
 describe('AutofocusDirective', () => {
-  let component: TestComponent;
+  // let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
   let directive: NgxMatTimepickerAutofocusDirective;
@@ -31,7 +31,7 @@ describe('AutofocusDirective', () => {
       schemas: [NO_ERRORS_SCHEMA],
     }).createComponent(TestComponent);
 
-    component = fixture.componentInstance;
+    // component = fixture.componentInstance;
     debugElement = fixture.debugElement.query(
       By.directive(NgxMatTimepickerAutofocusDirective),
     );
