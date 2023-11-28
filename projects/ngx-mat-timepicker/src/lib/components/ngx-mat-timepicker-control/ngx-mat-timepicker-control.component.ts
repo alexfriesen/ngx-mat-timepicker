@@ -92,6 +92,7 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
 
   changeTime(event: InputEvent): void {
     event.stopPropagation();
+
     const char = event.data;
     const time = concatTime(String(this.time), char);
 

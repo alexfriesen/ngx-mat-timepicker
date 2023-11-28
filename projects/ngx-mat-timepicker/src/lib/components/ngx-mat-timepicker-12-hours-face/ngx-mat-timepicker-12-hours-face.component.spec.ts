@@ -21,7 +21,7 @@ describe("NgxMatTimepicker12HoursFaceComponent", () => {
     });
 
     it("should call disabledHours once period changed", () => {
-        const spy = spyOn(NgxMatTimepickerUtils, "disableHours");
+        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
         const changes: SimpleChanges = {
             period: {
                 currentValue: NgxMatTimepickerPeriods.PM,
@@ -45,7 +45,7 @@ describe("NgxMatTimepicker12HoursFaceComponent", () => {
     });
 
     it("should not call disabledHours", () => {
-        const spy = spyOn(NgxMatTimepickerUtils, "disableHours");
+        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
         const changes: SimpleChanges = {
             minTime: {
                 currentValue: null,

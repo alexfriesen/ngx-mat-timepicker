@@ -1,119 +1,118 @@
 ngx-mat-timepicker-face {
-	[mat-mini-fab].mat-unthemed {
-		--mdc-fab-container-color: transparent;
+  [mat-mini-fab].mat-unthemed {
+    --mdc-fab-container-color: transparent;
 
-		&:disabled[disabled] {
-			--mdc-fab-container-color: transparent;
-		}
-	}
+    &:disabled[disabled] {
+      --mdc-fab-container-color: transparent;
+    }
+  }
 
-	.clock-face {
+  .clock-face {
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: rgba(200, 200, 200, 0.5) !important;
 
-		width: 290px;
-		height: 290px;
-		border-radius: 50%;
-		position: relative;
-		display: flex;
-		justify-content: center;
-		box-sizing: border-box;
-		background-color: rgba(200, 200, 200, 0.5) !important;
+    &__inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-		&__inner {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
+    [mat-mini-fab].mat-void {
+      box-shadow: none;
+      background-color: transparent;
 
-		[mat-mini-fab].mat-void {
-			box-shadow: none;
-			background-color: transparent;
+      > span.mat-mdc-button-persistent-ripple {
+        display: none;
+      }
+    }
+  }
 
-			> span.mat-mdc-button-persistent-ripple {
-				display: none;
-			}
-		}
-	}
+  .clock-face__container {
+    margin-left: -2px;
+  }
 
-	.clock-face__container {
-		margin-left: -2px;
-	}
+  .clock-face__number {
+    position: absolute;
+    transform-origin: 25px 100%;
+    width: 50px;
+    text-align: center;
+    z-index: 2;
+    top: calc(50% - 125px);
+    left: calc(50% - 25px);
 
-	.clock-face__number {
-		position: absolute;
-		transform-origin: 25px 100%;
-		width: 50px;
-		text-align: center;
-		z-index: 2;
-		top: calc(50% - 125px);
-		left: calc(50% - 25px);
+    &--outer {
+      height: calc(290px / 2 - 20px);
 
-		&--outer {
-			height: calc(290px / 2 - 20px);
+      > span {
+        font-size: 16px;
+      }
+    }
 
-			> span {
-				font-size: 16px;
-			}
-		}
+    &--inner {
+      > span {
+        font-size: 14px;
+      }
+    }
+  }
 
-		&--inner {
-			> span {
-				font-size: 14px;
-			}
-		}
-	}
+  .clock-face__clock-hand {
+    height: 103px;
+    width: 2px;
+    padding: 0;
+    transform-origin: 1px 100%;
+    position: absolute;
+    top: calc(50% - 103px);
+    z-index: 1;
+  }
 
-	.clock-face__clock-hand {
-		height: 103px;
-		width: 2px;
-		padding: 0;
-		transform-origin: 1px 100%;
-		position: absolute;
-		top: calc(50% - 103px);
-		z-index: 1;
-	}
+  .clock-face__center {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin: -4px;
+  }
 
-	.clock-face__center {
-		width: 8px;
-		height: 8px;
-		padding: 0;
-		position: absolute;
-		border-radius: 50%;
-		top: 50%;
-		left: 50%;
-		margin: -4px;
-	}
+  .clock-face__clock-hand_minute > button {
+    position: absolute;
+    top: -22px;
+    left: calc(50% - 20px);
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-	.clock-face__clock-hand_minute > button {
-		position: absolute;
-		top: -22px;
-		left: calc(50% - 20px);
-		box-sizing: content-box;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+    .clock-face__clock-hand_minute_dot {
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+    }
+  }
 
-		.clock-face__clock-hand_minute_dot {
-			display: block;
-			width: 4px;
-			height: 4px;
-			background: #FFF;
-			border-radius: 50%;
-		}
-	}
+  @media (max-device-width: 1023px) and (orientation: landscape) {
+    .clock-face {
+      width: 250px;
+      height: 250px;
+    }
+  }
 
-	@media (max-device-width: 1023px) and (orientation: landscape) {
-		.clock-face {
-			width: 250px;
-			height: 250px;
-		}
-	}
-
-	@media screen and (max-width: 360px) {
-		.clock-face {
-			width: 250px;
-			height: 250px;
-		}
-	}
+  @media screen and (max-width: 360px) {
+    .clock-face {
+      width: 250px;
+      height: 250px;
+    }
+  }
 }

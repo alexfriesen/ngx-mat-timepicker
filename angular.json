@@ -24,17 +24,6 @@
           },
           "defaultConfiguration": "production"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/ngx-mat-timepicker/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-mat-timepicker/karma.conf.js",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -130,26 +119,6 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "buildTarget": "demo:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/demo/tsconfig.spec.json",
-            "karmaConfig": "projects/demo/karma.conf.js",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/demo/src/favicon.ico",
-              "projects/demo/src/assets"
-            ],
-            "styles": [
-              "projects/demo/src/styles.scss"
-            ],
-            "scripts": []
           }
         },
         "lint": {

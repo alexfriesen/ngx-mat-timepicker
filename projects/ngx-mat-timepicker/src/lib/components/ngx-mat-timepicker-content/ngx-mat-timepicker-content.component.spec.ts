@@ -1,26 +1,26 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {NO_ERRORS_SCHEMA} from "@angular/core";
-//
-import {NgxMatTimepickerContentComponent} from "./ngx-mat-timepicker-content.component";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe("NgxMatTimepickerContentComponent", () => {
-    let component: NgxMatTimepickerContentComponent;
-    let fixture: ComponentFixture<NgxMatTimepickerContentComponent>;
+import { NgxMatTimepickerContentComponent } from './ngx-mat-timepicker-content.component';
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NgxMatTimepickerContentComponent],
-            schemas: [NO_ERRORS_SCHEMA]
-        });
-    });
+describe('NgxMatTimepickerContentComponent', () => {
+  let fixture: ComponentFixture<NgxMatTimepickerContentComponent>;
+  let component: NgxMatTimepickerContentComponent;
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(NgxMatTimepickerContentComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NgxMatTimepickerContentComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
-    it("should create", () => {
-        expect(component).toBeTruthy();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(NgxMatTimepickerContentComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
