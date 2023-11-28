@@ -231,45 +231,52 @@ describe('NgxMatTimepickerFaceComponent', () => {
       component.onMouseup(mouseClickEvent);
       component.selectTime(mouseMoveEvent);
       tick();
+
       expect(counter).toBe(0);
     }));
 
     it('should return angle from I quarter', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 706, clientY: 20 };
 
       component.faceTime = hourFaceTime;
       subscription.add(
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: 706, clientY: 20 }),
+      );
       tick();
+
       expect(selectedTime.angle > 0 && selectedTime.angle <= 90).toBeTruthy();
     }));
 
     it('should return angle from II quarter', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 703, clientY: 581 };
 
       component.faceTime = hourFaceTime;
       subscription.add(
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: 703, clientY: 581 }),
+      );
       tick();
+
       expect(selectedTime.angle > 90 && selectedTime.angle <= 180).toBeTruthy();
     }));
 
     it('should return angle from III quarter', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 2, clientY: 500 };
 
       component.faceTime = hourFaceTime;
       subscription.add(
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: -10, clientY: 10 }),
+      );
       tick();
+
       expect(
         selectedTime.angle > 180 && selectedTime.angle <= 270,
       ).toBeTruthy();
@@ -277,14 +284,16 @@ describe('NgxMatTimepickerFaceComponent', () => {
 
     it('should return angle from IV quarter', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 20, clientY: 20 };
 
       component.faceTime = hourFaceTime;
       subscription.add(
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: -20, clientY: -20 }),
+      );
       tick();
+
       expect(
         selectedTime.angle > 270 && selectedTime.angle <= 360,
       ).toBeTruthy();
@@ -292,7 +301,6 @@ describe('NgxMatTimepickerFaceComponent', () => {
 
     it('should select hour from inner clock face', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 150, clientY: 200 };
 
       component.faceTime = hourFaceTime;
       component.format = 24;
@@ -300,7 +308,9 @@ describe('NgxMatTimepickerFaceComponent', () => {
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
 
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: 20, clientY: 20 }),
+      );
       tick();
 
       expect(selectedTime.angle > 360).toBeTruthy();
@@ -308,7 +318,6 @@ describe('NgxMatTimepickerFaceComponent', () => {
 
     it('should select minute from list', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 20, clientY: 20 };
 
       component.faceTime = minutesFaceTime;
       component.unit = NgxMatTimepickerUnits.MINUTE;
@@ -316,14 +325,15 @@ describe('NgxMatTimepickerFaceComponent', () => {
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
 
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: 20, clientY: 20 }),
+      );
       tick();
       expect(selectedTime.angle).toBeDefined();
     }));
 
     it('should not emit timeChanged', fakeAsync(() => {
       let selectedTime: NgxMatTimepickerClockFace = { time: 1, angle: 5 };
-      const mouseCords: MouseEventInit = { clientX: 150, clientY: 200 };
 
       hourFaceTime.forEach((h) => (h.disabled = true));
       component.faceTime = hourFaceTime;
@@ -331,14 +341,14 @@ describe('NgxMatTimepickerFaceComponent', () => {
         component.timeChange.subscribe((time) => (selectedTime = time)),
       );
 
-      component.selectTime(new MouseEvent('mousemove', mouseCords));
+      component.selectTime(
+        new MouseEvent('mousemove', { clientX: 150, clientY: 200 }),
+      );
       tick();
       expect(selectedTime).toEqual({ time: 1, angle: 5 });
     }));
 
     it('should emit selected time once user stop interaction with clock face', waitForAsync(() => {
-      const mouseCords: MouseEventInit = { clientX: 20, clientY: 20 };
-
       component.faceTime = minutesFaceTime;
       component.unit = NgxMatTimepickerUnits.MINUTE;
 
@@ -346,7 +356,9 @@ describe('NgxMatTimepickerFaceComponent', () => {
         component.timeSelected.subscribe((time) => expect(time).toBe(55)),
       );
       component.onMouseup(mouseClickEvent);
-      component.selectTime(new MouseEvent('click', mouseCords));
+      component.selectTime(
+        new MouseEvent('click', { clientX: 20, clientY: 20 }),
+      );
     }));
   });
 });
