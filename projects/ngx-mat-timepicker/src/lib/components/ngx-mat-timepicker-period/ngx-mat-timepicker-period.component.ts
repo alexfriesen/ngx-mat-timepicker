@@ -20,7 +20,7 @@ import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enu
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-period',

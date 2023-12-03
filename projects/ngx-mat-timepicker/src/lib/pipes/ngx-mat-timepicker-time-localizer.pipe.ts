@@ -4,7 +4,7 @@ import {NgxMatTimepickerLocaleService} from "../services/ngx-mat-timepicker-loca
 import {NgxMatTimepickerUnits} from "../models/ngx-mat-timepicker-units.enum";
 import {NgxMatTimepickerMeasure} from "../models/ngx-mat-timepicker-measures.enum";
 //
-import {DateTime} from "ts-luxon";
+import {DateTime} from 'luxon';
 
 @Pipe({
     name: "timeLocalizer",

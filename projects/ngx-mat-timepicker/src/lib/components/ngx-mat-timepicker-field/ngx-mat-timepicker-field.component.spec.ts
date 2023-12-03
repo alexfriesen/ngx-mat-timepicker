@@ -16,7 +16,7 @@ import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-
 import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerFieldComponent', () => {
   let component: NgxMatTimepickerFieldComponent;

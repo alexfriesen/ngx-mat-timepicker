@@ -14,7 +14,7 @@ import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parse
 import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-locale.token';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerDialControlComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepickerDialControlComponent>;

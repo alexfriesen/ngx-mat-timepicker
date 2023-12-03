@@ -3,7 +3,7 @@ import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.
 import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerOptions } from '../models/ngx-mat-timepicker-options.interface';
 //
-import { DateTime, LocaleOptions, NumberingSystem } from 'ts-luxon';
+import { DateTime, DateTimeUnit, LocaleOptions, NumberingSystem } from 'luxon';
 
 // @dynamic
 export class NgxMatTimepickerAdapter {
@@ -83,9 +83,9 @@ export class NgxMatTimepickerAdapter {
     time: DateTime,
     before: DateTime,
     after: DateTime,
-    unit: 'hours' | 'minutes' = 'minutes',
+    unit: DateTimeUnit = 'minute',
   ): boolean {
-    const innerUnit = unit === 'hours' ? unit : void 0;
+    const innerUnit = unit === 'hour' ? unit : void 0;
 
     return (
       this.isSameOrBefore(time, after, innerUnit) &&
@@ -96,9 +96,9 @@ export class NgxMatTimepickerAdapter {
   static isSameOrAfter(
     time: DateTime,
     compareWith: DateTime,
-    unit: 'hours' | 'minutes' = 'minutes',
+    unit: DateTimeUnit = 'minute',
   ): boolean {
-    if (unit === 'hours') {
+    if (unit === 'hour') {
       return time.hour >= compareWith.hour;
     }
 
@@ -110,9 +110,9 @@ export class NgxMatTimepickerAdapter {
   static isSameOrBefore(
     time: DateTime,
     compareWith: DateTime,
-    unit: 'hours' | 'minutes' = 'minutes',
+    unit: DateTimeUnit = 'minute',
   ): boolean {
-    if (unit === 'hours') {
+    if (unit === 'hour') {
       return time.hour <= compareWith.hour;
     }
 
@@ -125,7 +125,7 @@ export class NgxMatTimepickerAdapter {
     time: string,
     min?: DateTime,
     max?: DateTime,
-    granularity?: 'hours' | 'minutes',
+    granularity?: DateTimeUnit,
     minutesGap?: number | null,
     format?: number,
   ): boolean {
@@ -195,7 +195,6 @@ export class NgxMatTimepickerAdapter {
       .reconfigure({
         locale,
         numberingSystem: opts.numberingSystem,
-        defaultToEN: opts.defaultToEN,
         outputCalendar: opts.outputCalendar,
       })
       .toLocaleString({
@@ -219,7 +218,6 @@ export class NgxMatTimepickerAdapter {
         locale: opts.locale,
         numberingSystem: opts.numberingSystem,
         outputCalendar: opts.outputCalendar,
-        defaultToEN: opts.defaultToEN,
       })
       .resolvedLocaleOptions();
 

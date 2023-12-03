@@ -4,7 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { NgxMatTimepickerFormatType } from './ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerRef } from './ngx-mat-timepicker-ref.interface';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 export interface NgxMatTimepickerConfig {
   appendToInput: boolean;

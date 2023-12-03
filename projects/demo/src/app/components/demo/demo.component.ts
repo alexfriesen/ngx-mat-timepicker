@@ -17,7 +17,7 @@ import {
 } from '@alexfriesen/ngx-mat-timepicker';
 
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 interface NgxMatTimepickerTheme {
   description: string;

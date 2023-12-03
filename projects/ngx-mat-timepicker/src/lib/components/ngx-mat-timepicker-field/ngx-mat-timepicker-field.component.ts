@@ -38,7 +38,7 @@ import { NgxMatTimepickerToggleIconDirective } from '../../directives/ngx-mat-ti
 import { NgxMatTimepickerToggleComponent } from '../ngx-mat-timepicker-toggle/ngx-mat-timepicker-toggle.component';
 import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/ngx-mat-timepicker-control.component';
 
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-field',
@@ -338,7 +338,7 @@ export class NgxMatTimepickerFieldComponent
       time,
       this.min as DateTime,
       this.max as DateTime,
-      'minutes',
+      'minute',
       null,
       this.format,
     );

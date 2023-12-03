@@ -7,7 +7,7 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerModule } from '../../ngx-mat-timepicker.module';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';

@@ -2,7 +2,7 @@ import {NgxMatTimepickerPeriods} from "../models/ngx-mat-timepicker-periods.enum
 import {NgxMatTimepickerUtils} from "./ngx-mat-timepicker.utils";
 import {NgxMatTimepickerAdapter} from "../services/ngx-mat-timepicker-adapter";
 //
-import {DateTime} from "ts-luxon";
+import {DateTime} from 'luxon';
 
 describe("TimepickerTime", () => {
     describe("Hour", () => {

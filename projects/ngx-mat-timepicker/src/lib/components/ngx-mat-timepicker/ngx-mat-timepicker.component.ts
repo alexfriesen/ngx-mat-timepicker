@@ -26,7 +26,7 @@ import { NgxMatTimepickerRef } from '../../models/ngx-mat-timepicker-ref.interfa
 import { NgxMatTimepickerDialogComponent } from '../ngx-mat-timepicker-dialog/ngx-mat-timepicker-dialog.component';
 import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 import { BehaviorSubject } from 'rxjs';
 import { NgxMatTimepickerStandaloneComponent } from '../ngx-mat-timepicker-standalone/ngx-mat-timepicker-standalone.component';
 

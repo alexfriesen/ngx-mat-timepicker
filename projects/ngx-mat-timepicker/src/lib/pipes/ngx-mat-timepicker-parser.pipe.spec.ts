@@ -1,7 +1,7 @@
 import { NgxMatTimepickerParserPipe } from './ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerUnits } from '../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerParserPipe', () => {
   const locale = 'ar-AE';

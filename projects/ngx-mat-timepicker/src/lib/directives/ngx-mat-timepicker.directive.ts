@@ -20,7 +20,7 @@ import { NgxMatTimepickerAdapter } from '../services/ngx-mat-timepicker-adapter'
 import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
 //
 import { Subject, takeUntil } from 'rxjs';
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -133,7 +133,7 @@ export class NgxMatTimepickerDirective
       time,
       this._min as DateTime,
       this._max as DateTime,
-      'minutes',
+      'minute',
       this._timepicker.minutesGap,
       this._format,
     );

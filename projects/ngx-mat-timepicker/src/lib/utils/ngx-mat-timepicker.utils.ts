@@ -3,7 +3,7 @@ import {NgxMatTimepickerAdapter} from "../services/ngx-mat-timepicker-adapter";
 import {NgxMatTimepickerFormat} from "../models/ngx-mat-timepicker-format.enum";
 import {NgxMatTimepickerDisabledConfig} from "../models/ngx-mat-timepicker-disabled-config.interface";
 //
-import {DateTime} from "ts-luxon";
+import {DateTime} from 'luxon';
 
 // @dynamic
 export class NgxMatTimepickerUtils {
@@ -19,7 +19,7 @@ export class NgxMatTimepickerUtils {
 
                 return {
                     ...value,
-                    disabled: !NgxMatTimepickerAdapter.isTimeAvailable(currentTime, config.min, config.max, "hours")
+                    disabled: !NgxMatTimepickerAdapter.isTimeAvailable(currentTime, config.min, config.max, "hour")
                 };
             });
         }
@@ -41,7 +41,7 @@ export class NgxMatTimepickerUtils {
 
                 return {
                     ...value,
-                    disabled: !NgxMatTimepickerAdapter.isTimeAvailable(currentTime.toFormat(NgxMatTimepickerFormat.TWELVE), config.min, config.max, "minutes")
+                    disabled: !NgxMatTimepickerAdapter.isTimeAvailable(currentTime.toFormat(NgxMatTimepickerFormat.TWELVE), config.min, config.max, "minute")
                 };
             });
         }

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 //
 import { NgxMatTimepickerUnits } from '../models/ngx-mat-timepicker-units.enum';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 @Pipe({
   name: 'timeFormatter',

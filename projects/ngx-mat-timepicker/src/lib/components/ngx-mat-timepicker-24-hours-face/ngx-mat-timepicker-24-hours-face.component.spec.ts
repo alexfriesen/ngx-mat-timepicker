@@ -4,7 +4,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgxMatTimepicker24HoursFaceComponent } from './ngx-mat-timepicker-24-hours-face.component';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepicker24HoursFaceComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepicker24HoursFaceComponent>;
