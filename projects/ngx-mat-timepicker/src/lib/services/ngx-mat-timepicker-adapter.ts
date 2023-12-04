@@ -3,7 +3,11 @@ import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.
 import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerOptions } from '../models/ngx-mat-timepicker-options.interface';
 //
-import { DateTime, DateTimeUnit, LocaleOptions, NumberingSystem } from 'luxon';
+import { DateTime, LocaleOptions, NumberingSystem } from 'luxon';
+import {
+  DateTimeUnitWithDeprecatedTypes,
+  fixDateTimeUnit,
+} from '../utils/datetime-unit-fix.utils';
 
 // @dynamic
 export class NgxMatTimepickerAdapter {
@@ -25,9 +29,9 @@ export class NgxMatTimepickerAdapter {
     const hour =
       period === NgxMatTimepickerPeriods.AM ? currentHour : currentHour + 12;
 
-    if (period === NgxMatTimepickerPeriods.AM && hour === 12) {
+    if (period === NgxMatTimepickerPeriods.AM && hour >= 12) {
       return 0;
-    } else if (period === NgxMatTimepickerPeriods.PM && hour === 24) {
+    } else if (period === NgxMatTimepickerPeriods.PM && hour >= 24) {
       return 12;
     }
 
@@ -83,8 +87,9 @@ export class NgxMatTimepickerAdapter {
     time: DateTime,
     before: DateTime,
     after: DateTime,
-    unit: DateTimeUnit = 'minute',
+    unit: DateTimeUnitWithDeprecatedTypes = 'minute',
   ): boolean {
+    unit = fixDateTimeUnit(unit);
     const innerUnit = unit === 'hour' ? unit : void 0;
 
     return (
@@ -96,8 +101,9 @@ export class NgxMatTimepickerAdapter {
   static isSameOrAfter(
     time: DateTime,
     compareWith: DateTime,
-    unit: DateTimeUnit = 'minute',
+    unit: DateTimeUnitWithDeprecatedTypes = 'minute',
   ): boolean {
+    unit = fixDateTimeUnit(unit);
     if (unit === 'hour') {
       return time.hour >= compareWith.hour;
     }
@@ -110,8 +116,9 @@ export class NgxMatTimepickerAdapter {
   static isSameOrBefore(
     time: DateTime,
     compareWith: DateTime,
-    unit: DateTimeUnit = 'minute',
+    unit: DateTimeUnitWithDeprecatedTypes = 'minute',
   ): boolean {
+    unit = fixDateTimeUnit(unit);
     if (unit === 'hour') {
       return time.hour <= compareWith.hour;
     }
@@ -125,7 +132,7 @@ export class NgxMatTimepickerAdapter {
     time: string,
     min?: DateTime,
     max?: DateTime,
-    granularity?: DateTimeUnit,
+    granularity?: DateTimeUnitWithDeprecatedTypes,
     minutesGap?: number | null,
     format?: number,
   ): boolean {
@@ -141,6 +148,8 @@ export class NgxMatTimepickerAdapter {
         `Your minutes - ${minutes} doesn't match your minutesGap - ${minutesGap}`,
       );
     }
+
+    granularity = fixDateTimeUnit(granularity);
     const isAfter =
       min && !max && this.isSameOrAfter(convertedTime, min, granularity);
     const isBefore =

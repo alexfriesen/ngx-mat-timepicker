@@ -226,7 +226,7 @@ describe("TimepickerTime", () => {
         it("should return false if hour less than min value", () => {
             const min = NgxMatTimepickerAdapter.parseTime("11:11 am", {locale});
             const time = NgxMatTimepickerAdapter.parseTime("10:12 am", {locale});
-            expect(NgxMatTimepickerAdapter.isSameOrAfter(time, min, "hours")).toBeFalsy();
+            expect(NgxMatTimepickerAdapter.isSameOrAfter(time, min, "hour")).toBeFalsy();
         });
 
         it("should return false", () => {
@@ -252,7 +252,7 @@ describe("TimepickerTime", () => {
         it("should return false if hour more than max", () => {
             const max = NgxMatTimepickerAdapter.parseTime("11:11 am", {locale});
             const time = NgxMatTimepickerAdapter.parseTime("12:10 pm", {locale});
-            expect(NgxMatTimepickerAdapter.isSameOrBefore(time, max, "hours")).toBeFalsy();
+            expect(NgxMatTimepickerAdapter.isSameOrBefore(time, max, "hour")).toBeFalsy();
         });
 
         it("should return false", () => {
@@ -285,7 +285,7 @@ describe("TimepickerTime", () => {
             const max = NgxMatTimepickerAdapter.parseTime("03:00 pm", {locale});
             const time = NgxMatTimepickerAdapter.parseTime("04:05 pm", {locale});
 
-            expect(NgxMatTimepickerAdapter.isBetween(time, min, max, "hours")).toBeFalsy();
+            expect(NgxMatTimepickerAdapter.isBetween(time, min, max, "hour")).toBeFalsy();
         });
 
         it("should return false", () => {

@@ -148,7 +148,7 @@ describe('NgxMatTimepickerAdapter', () => {
           '11:43 pm',
           min,
           max,
-          'minutes',
+          'minute',
           minutesGap,
         );
       } catch (e: unknown) {
