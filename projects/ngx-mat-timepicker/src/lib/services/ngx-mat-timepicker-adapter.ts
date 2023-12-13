@@ -1,9 +1,10 @@
-import { NgxMatTimepickerFormat } from '../models/ngx-mat-timepicker-format.enum';
-import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.type';
-import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
-import { NgxMatTimepickerOptions } from '../models/ngx-mat-timepicker-options.interface';
-//
 import { DateTime, LocaleOptions, NumberingSystem } from 'luxon';
+
+import { NgxMatTimepickerFormat } from '../models/ngx-mat-timepicker-format.enum';
+import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
+import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.type';
+import { NgxMatTimepickerOptions } from '../models/ngx-mat-timepicker-options.interface';
+
 import {
   DateTimeUnitWithDeprecatedTypes,
   fixDateTimeUnit,

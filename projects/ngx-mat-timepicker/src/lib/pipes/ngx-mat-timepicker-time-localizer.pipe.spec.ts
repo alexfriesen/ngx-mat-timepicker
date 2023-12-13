@@ -1,13 +1,27 @@
-import { NgxMatTimepickerTimeLocalizerPipe } from './ngx-mat-timepicker-time-localizer.pipe';
-import { NgxMatTimepickerUnits } from '../models/ngx-mat-timepicker-units.enum';
-import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
+import { TestBed } from '@angular/core/testing';
 import { DateTime } from 'luxon';
+
+import { NgxMatTimepickerUnits } from '../models/ngx-mat-timepicker-units.enum';
+import { NGX_MAT_TIMEPICKER_LOCALE } from '../tokens/ngx-mat-timepicker-time-locale.token';
+import { NgxMatTimepickerTimeLocalizerPipe } from './ngx-mat-timepicker-time-localizer.pipe';
 
 describe('NgxMatTimepickerTimeLocalizerPipe', () => {
   const defaultLocale = 'en-US';
-  const pipe = new NgxMatTimepickerTimeLocalizerPipe(
-    new NgxMatTimepickerLocaleService(defaultLocale),
-  );
+  let pipe: NgxMatTimepickerTimeLocalizerPipe;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        NgxMatTimepickerTimeLocalizerPipe,
+        {
+          provide: NGX_MAT_TIMEPICKER_LOCALE,
+          useValue: defaultLocale,
+        },
+      ],
+    });
+
+    pipe = TestBed.inject(NgxMatTimepickerTimeLocalizerPipe);
+  });
 
   it('should create an instance', () => {
     expect(pipe).toBeTruthy();

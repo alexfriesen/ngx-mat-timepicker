@@ -6,15 +6,15 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-//
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerDialControlComponent } from './ngx-mat-timepicker-dial-control.component';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-locale.token';
+import { NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM } from '../../tokens/ngx-mat-timepicker-time-numberingsystem.token';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
-//
-import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerDialControlComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepickerDialControlComponent>;
@@ -30,6 +30,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
       providers: [
         NgxMatTimepickerParserPipe,
         { provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: 'ar-AE' },
+        { provide: NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM, useValue: 'arab' },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).createComponent(NgxMatTimepickerDialControlComponent);
@@ -186,8 +187,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
   });
 
   describe('onModelChange', () => {
-    // arabic is broken in ts-luxon
-    it.skip('should parse value and set it to time property', () => {
+    it('should parse value and set it to time property', () => {
       const unparsedTime = DateTime.fromObject(
         { minute: 10 },
         { numberingSystem: 'arab' },
