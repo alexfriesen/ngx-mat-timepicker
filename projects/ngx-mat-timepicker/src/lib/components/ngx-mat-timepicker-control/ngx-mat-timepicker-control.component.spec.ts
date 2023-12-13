@@ -9,10 +9,11 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DateTime } from 'luxon';
 
-import { NgxMatTimepickerModule } from '../../ngx-mat-timepicker.module';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerTimeFormatterPipe } from '../../pipes/ngx-mat-timepicker-time-formatter.pipe';
+import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-locale.token';
+import { NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM } from '../../tokens/ngx-mat-timepicker-time-numberingsystem.token';
 import { NgxMatTimepickerControlComponent } from './ngx-mat-timepicker-control.component';
 
 describe('NgxMatTimepickerControlComponent', () => {
@@ -21,11 +22,10 @@ describe('NgxMatTimepickerControlComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        NgxMatTimepickerModule.setLocale('ar-AE'),
-      ],
+      imports: [NoopAnimationsModule],
       providers: [
+        { provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: 'ar-AE' },
+        { provide: NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM, useValue: 'arab' },
         NgxMatTimepickerParserPipe,
         NgxMatTimepickerTimeFormatterPipe,
       ],
@@ -318,8 +318,7 @@ describe('NgxMatTimepickerControlComponent', () => {
   });
 
   describe('onModelChange', () => {
-    // arabic is broken in ts-luxon
-    it.skip('should parse value and set it to time property', () => {
+    it('should parse value and set it to time property', () => {
       const unparsedTime = DateTime.fromObject(
         { minute: 10 },
         { numberingSystem: 'arab' },
