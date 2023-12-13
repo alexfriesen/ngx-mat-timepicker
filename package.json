@@ -48,8 +48,8 @@
     "@angular/platform-server": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@angular/ssr": "^17.0.0",
+    "luxon": "^3.4.4",
     "rxjs": "^7.4.0",
-    "ts-luxon": "^4.3.2",
     "tslib": "^2.5.2",
     "zone.js": "~0.14.0"
   },
@@ -66,6 +66,7 @@
     "@fontsource/material-icons": "^5.0.7",
     "@fontsource/roboto": "^5.0.8",
     "@types/jest": "^29.5.10",
+    "@types/luxon": "^3.3.6",
     "@types/node": "^18.0.0",
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",

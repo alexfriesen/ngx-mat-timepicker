@@ -1,6 +1,6 @@
 import { NgxMatTimepickerAdapter } from './ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerAdapter', () => {
   describe('parseTime', () => {
@@ -148,7 +148,7 @@ describe('NgxMatTimepickerAdapter', () => {
           '11:43 pm',
           min,
           max,
-          'minutes',
+          'minute',
           minutesGap,
         );
       } catch (e: unknown) {

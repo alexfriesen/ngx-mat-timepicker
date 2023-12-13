@@ -6,7 +6,7 @@ import { NgxMatTimepickerModule } from '../ngx-mat-timepicker.module';
 import { NgxMatTimepickerDirective } from './ngx-mat-timepicker.directive';
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
 
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 @Component({
   template: `
@@ -132,7 +132,7 @@ describe('NgxMatTimepickerDirective', () => {
 
   it('should call console.warn if time is not between min and max(inclusively) value', () => {
     directive.timepicker = timepickerComponent;
-    const spy = jest.spyOn(console, 'warn');
+    const spy = jest.spyOn(console, 'warn').mockImplementation(() => null);
 
     directive.min = '11:00 am';
     directive.value = '10:00 am';

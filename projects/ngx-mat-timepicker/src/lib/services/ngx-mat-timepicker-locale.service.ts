@@ -1,24 +1,38 @@
-import {Inject, Injectable} from "@angular/core";
-//
-import {NGX_MAT_TIMEPICKER_LOCALE} from "../tokens/ngx-mat-timepicker-time-locale.token";
+import { Injectable, inject } from '@angular/core';
+import { DateTime, NumberingSystem } from 'luxon';
+
+import { NGX_MAT_TIMEPICKER_LOCALE } from '../tokens/ngx-mat-timepicker-time-locale.token';
+import { NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM } from '../tokens/ngx-mat-timepicker-time-numberingsystem.token';
 
 @Injectable({
-    providedIn: "root"
+  providedIn: 'root',
 })
 export class NgxMatTimepickerLocaleService {
+  get locale(): string {
+    return this._locale;
+  }
 
-    get locale(): string {
-        return this._locale;
-    }
+  get numberingSystem(): string {
+    return this._numberingSystem;
+  }
 
-    protected _initialLocale: string;
-    protected _locale;
+  private _locale = inject(NGX_MAT_TIMEPICKER_LOCALE);
+  private _numberingSystem = inject(NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM);
 
-    constructor(@Inject(NGX_MAT_TIMEPICKER_LOCALE) initialLocale: string) {
-        this._locale = initialLocale;
-    }
+  updateLocale(newValue: string): void {
+    this._locale = newValue;
+  }
 
-    updateLocale(newValue: string): void {
-        this._locale = newValue || this._initialLocale;
-    }
+  updateNumberingSystemByLocale(newValue: string): void {
+    this._numberingSystem = this.resolveNumberingSystemByLocale(newValue);
+  }
+
+  updateNumberingSystem(newValue: NumberingSystem): void {
+    this._numberingSystem = newValue;
+  }
+
+  private resolveNumberingSystemByLocale(locale: string): NumberingSystem {
+    return DateTime.local().setLocale(locale).resolvedLocaleOptions()
+      .numberingSystem;
+  }
 }

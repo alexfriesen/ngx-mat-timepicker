@@ -7,7 +7,7 @@ import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enu
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 //
-import { DateTime } from 'ts-luxon';
+import { DateTime } from 'luxon';
 
 describe('NgxMatTimepickerPeriodComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepickerPeriodComponent>;

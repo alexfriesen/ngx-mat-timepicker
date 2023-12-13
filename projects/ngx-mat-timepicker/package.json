@@ -20,7 +20,7 @@
     "Time picker"
   ],
   "dependencies": {
-    "ts-luxon": "^4.3.2",
+    "luxon": "^3.4.4",
     "tslib": "^2.5.2"
   },
   "peerDependencies": {

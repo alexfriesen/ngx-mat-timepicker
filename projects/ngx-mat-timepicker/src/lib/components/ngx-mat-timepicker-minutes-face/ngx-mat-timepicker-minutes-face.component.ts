@@ -8,7 +8,7 @@ import {NgxMatTimepickerPeriods} from "../../models/ngx-mat-timepicker-periods.e
 import {NgxMatTimepickerUtils} from "../../utils/ngx-mat-timepicker.utils";
 import { NgxMatTimepickerFaceComponent } from "../ngx-mat-timepicker-face/ngx-mat-timepicker-face.component";
 //
-import {DateTime} from "ts-luxon";
+import {DateTime} from 'luxon';
 
 @Component({
     selector: "ngx-mat-timepicker-minutes-face",

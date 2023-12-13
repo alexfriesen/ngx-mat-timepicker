@@ -1,4 +1,4 @@
 export enum NgxMatTimepickerUnits {
-    HOUR,
-    MINUTE
+  HOUR,
+  MINUTE,
 }

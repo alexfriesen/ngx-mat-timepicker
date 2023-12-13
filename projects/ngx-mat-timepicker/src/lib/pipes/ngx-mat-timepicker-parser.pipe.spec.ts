@@ -1,13 +1,30 @@
-import { NgxMatTimepickerParserPipe } from './ngx-mat-timepicker-parser.pipe';
+import { TestBed } from '@angular/core/testing';
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerUnits } from '../models/ngx-mat-timepicker-units.enum';
-import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
-import { DateTime } from 'ts-luxon';
+import { NGX_MAT_TIMEPICKER_LOCALE } from '../tokens/ngx-mat-timepicker-time-locale.token';
+import { NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM } from '../tokens/ngx-mat-timepicker-time-numberingsystem.token';
+import { NgxMatTimepickerParserPipe } from './ngx-mat-timepicker-parser.pipe';
 
 describe('NgxMatTimepickerParserPipe', () => {
-  const locale = 'ar-AE';
-  const pipe = new NgxMatTimepickerParserPipe(
-    new NgxMatTimepickerLocaleService(locale),
-  );
+  let pipe: NgxMatTimepickerParserPipe;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        NgxMatTimepickerParserPipe,
+        {
+          provide: NGX_MAT_TIMEPICKER_LOCALE,
+          useValue: 'ar-AE',
+        },
+        {
+          provide: NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM,
+          useValue: 'arab',
+        },
+      ],
+    });
+    pipe = TestBed.inject(NgxMatTimepickerParserPipe);
+  });
 
   it('should create an instance', () => {
     expect(pipe).toBeTruthy();
@@ -23,47 +40,44 @@ describe('NgxMatTimepickerParserPipe', () => {
     expect(pipe.transform('', NgxMatTimepickerUnits.HOUR)).toBe(expected);
   });
 
-  // arabic is broken in ts-luxon
-  it.skip('should return unparsed time if number provided', () => {
+  it('should return unparsed time if number provided', () => {
     const time = 5;
 
     expect(pipe.transform(time)).toBe(`${time}`);
   });
 
-  // arabic is broken in ts-luxon
-  it.skip('should parse arabian hour to latin', () => {
+  it('should parse arabian hour to latin', () => {
     const unparsedHours = Array(24)
       .fill(0)
       .map((v, i) => v + i);
 
-    unparsedHours.forEach((hour) => {
+    for (const hour of unparsedHours) {
       const unparsedHour = DateTime.fromObject(
         { hour },
         { numberingSystem: 'arab' },
-      ).toFormat('H');
+      ).toFormat('HH');
 
       expect(pipe.transform(unparsedHour, NgxMatTimepickerUnits.HOUR)).toBe(
-        hour,
+        `${hour}`,
       );
-    });
+    }
   });
 
-  // arabic is broken in ts-luxon
-  it.skip('should parse arabian minute to latin', () => {
+  it('should parse arabian minute to latin', () => {
     const unparsedMinutes = Array(59)
       .fill(0)
       .map((v, i) => v + i);
 
-    unparsedMinutes.forEach((minute) => {
+    for (const minute of unparsedMinutes) {
       const unparsedMinute = DateTime.fromObject(
         { minute },
         { numberingSystem: 'arab' },
-      ).toFormat('m');
+      ).toFormat('mm');
 
       expect(pipe.transform(unparsedMinute, NgxMatTimepickerUnits.MINUTE)).toBe(
-        minute,
+        `${minute}`,
       );
-    });
+    }
   });
 
   it('should throw an error when cannot parse provided time', () => {
