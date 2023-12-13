@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateTime } from 'luxon';
 
 import {
   NgxMatTimepickerComponent,
@@ -17,7 +19,6 @@ import {
 } from '@alexfriesen/ngx-mat-timepicker';
 
 import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
-import { DateTime } from 'luxon';
 
 interface NgxMatTimepickerTheme {
   description: string;
@@ -46,6 +47,8 @@ interface NgxMatTimepickerTheme {
   ],
 })
 export class DemoComponent implements OnInit {
+  private readonly document = inject(DOCUMENT, { optional: true });
+
   get currentLocale(): string {
     return this._localeOverrideSrv.locale;
   }
@@ -128,7 +131,7 @@ export class DemoComponent implements OnInit {
 
   updateTheme(theme: NgxMatTimepickerTheme): void {
     this.selectedTheme = theme;
-    document.body.classList.toggle('dark-theme', !!theme.value);
+    this.document?.body.classList.toggle('dark-theme', !!theme.value);
   }
 
   updateTime($event: string, targetProp: string): void {

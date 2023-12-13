@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-//
+
 import * as Prism from 'prismjs';
 
 @Component({
@@ -15,12 +16,12 @@ import * as Prism from 'prismjs';
   imports: [MatCardModule, MatButtonModule, MatTooltipModule, MatIconModule],
 })
 export class CodeViewerComponent implements OnInit {
+  private readonly document = inject(DOCUMENT, { optional: true });
+
   showCode: boolean = !1;
 
-  constructor() {}
-
   ngOnInit(): void {
-    const $code = document.querySelector(`code`);
+    const $code = this.document?.querySelector(`code`);
     if (!$code) {
       return;
     }

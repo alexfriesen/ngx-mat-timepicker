@@ -34,6 +34,6 @@ export class NgxMatTimepickerAutofocusDirective
 
   ngOnDestroy() {
     // To avoid ExpressionChangedAfterItHasBeenCheckedError;
-    setTimeout(() => this._activeElement.focus({ preventScroll: true }));
+    setTimeout(() => this._activeElement?.focus({ preventScroll: true }));
   }
 }
