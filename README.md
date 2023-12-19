@@ -231,8 +231,8 @@ Selector: `[ngxMatTimepickerToggleIcon]`
 <a href="https://alexfriesen.github.io/ngx-mat-timepicker/">Demo</a>
 
 ```terminal
-$ yarn
-$ yarn start  //run example
+$ npm
+$ npm start
 ```
 
 Run `npm test` to run tests once.
