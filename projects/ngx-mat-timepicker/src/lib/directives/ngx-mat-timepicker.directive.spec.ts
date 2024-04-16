@@ -1,12 +1,12 @@
 import { Component, DebugElement, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerModule } from '../ngx-mat-timepicker.module';
 import { NgxMatTimepickerDirective } from './ngx-mat-timepicker.directive';
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
 
-import { DateTime } from 'luxon';
 
 @Component({
   template: `
@@ -245,7 +245,7 @@ describe('NgxMatTimepickerDirective', () => {
   });
 
   it('should set onTouch function on registerOnTouched', () => {
-    const spy = jest.spyOn(console, 'log');
+    const spy = jest.spyOn(console, 'log').mockImplementation(() => null);
 
     directive.registerOnTouched(console.log);
     directive.onTouched();

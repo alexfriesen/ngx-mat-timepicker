@@ -158,7 +158,7 @@ describe('NgxMatTimepickerService', () => {
     const locale = 'en-US';
     const min = NgxMatTimepickerAdapter.parseTime('11:00 pm', { locale });
     const max = NgxMatTimepickerAdapter.parseTime('11:50 pm', { locale });
-    const spy = jest.spyOn(console, 'error');
+    const spy = jest.spyOn(console, 'error').mockImplementation(() => null);
 
     timepickerService.setDefaultTimeIfAvailable(
       '11:43 pm',

@@ -2,6 +2,8 @@ import { fixDateTimeUnit } from './datetime-unit-fix.utils';
 
 describe('fixDateTimeUnit', () => {
   it('should fix unit', () => {
+    jest.spyOn(console, 'warn').mockImplementation(() => null);
+
     expect(fixDateTimeUnit('hours')).toBe('hour');
     expect(fixDateTimeUnit('minutes')).toBe('minute');
 
