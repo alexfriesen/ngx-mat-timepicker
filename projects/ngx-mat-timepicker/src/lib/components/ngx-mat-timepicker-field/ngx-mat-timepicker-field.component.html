@@ -1,8 +1,8 @@
 <div class="ngx-mat-timepicker" [class.ngx-mat-timepicker--disabled]="disabled">
   <ngx-mat-timepicker-time-control
     class="ngx-mat-timepicker__control--first"
-    [color]="color"
-    [floatLabel]="floatLabel"
+    [color]="color()"
+    [floatLabel]="floatLabel()"
     [placeholder]="'HH'"
     [time]="hour$.getValue()?.time"
     [min]="minHour"
@@ -16,8 +16,8 @@
   <span class="separator-colon ngx-mat-timepicker__control--second">:</span>
   <ngx-mat-timepicker-time-control
     class="ngx-mat-timepicker__control--third"
-    [color]="color"
-    [floatLabel]="floatLabel"
+    [color]="color()"
+    [floatLabel]="floatLabel()"
     [placeholder]="'MM'"
     [time]="minute$.getValue()?.time"
     [min]="0"
@@ -31,7 +31,7 @@
   @if (format !== 24) {
     <mat-form-field
       class="period-select ngx-mat-timepicker__control--forth"
-      [color]="color"
+      [color]="color()"
     >
       <mat-select
         [ngModel]="period"
@@ -58,7 +58,7 @@
 </div>
 <ngx-mat-timepicker
   #timepicker
-  [color]="color"
+  [color]="color()"
   [min]="min"
   [max]="max"
   [defaultTime]="timepickerTime"

@@ -1,15 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
   TemplateRef,
+  input,
+  output,
 } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { ThemePalette } from '@angular/material/core';
+import { DateTime, Info } from 'luxon';
 
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
@@ -19,8 +20,6 @@ import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerPeriodComponent } from '../ngx-mat-timepicker-period/ngx-mat-timepicker-period.component';
 import { NgxMatTimepickerDialControlComponent } from '../ngx-mat-timepicker-dial-control/ngx-mat-timepicker-dial-control.component';
-//
-import { DateTime, Info } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-dial',
@@ -37,14 +36,7 @@ import { DateTime, Info } from 'luxon';
 export class NgxMatTimepickerDialComponent implements OnChanges {
   @Input() activeTimeUnit: NgxMatTimepickerUnits;
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-
-  get color(): ThemePalette {
-    return this._color;
-  }
+  readonly color = input<ThemePalette>('primary');
 
   get hourString() {
     return `${this.hour}`;
@@ -61,7 +53,6 @@ export class NgxMatTimepickerDialComponent implements OnChanges {
   @Input() editableHintTmpl: TemplateRef<Node>;
   @Input() format: NgxMatTimepickerFormatType;
   @Input() hour: number | string;
-  @Output() hourChanged = new EventEmitter<NgxMatTimepickerClockFace>();
 
   hours: NgxMatTimepickerClockFace[];
   @Input() hoursOnly: boolean;
@@ -72,34 +63,33 @@ export class NgxMatTimepickerDialComponent implements OnChanges {
   meridiems = Info.meridiems({ locale: this._locale });
   @Input() minTime: DateTime;
   @Input() minute: number | string;
-  @Output() minuteChanged = new EventEmitter<NgxMatTimepickerClockFace>();
   minutes: NgxMatTimepickerClockFace[];
   @Input() minutesGap: number;
   @Input() period: NgxMatTimepickerPeriods;
 
-  @Output() periodChanged = new EventEmitter<NgxMatTimepickerPeriods>();
-
   timeUnit = NgxMatTimepickerUnits;
-  @Output() timeUnitChanged = new EventEmitter<NgxMatTimepickerUnits>();
 
-  private _color: ThemePalette = 'primary';
+  readonly hourChanged = output<NgxMatTimepickerClockFace>();
+  readonly minuteChanged = output<NgxMatTimepickerClockFace>();
+  readonly periodChanged = output<NgxMatTimepickerPeriods>();
+  readonly timeUnitChanged = output<NgxMatTimepickerUnits>();
 
   constructor(private _localeSrv: NgxMatTimepickerLocaleService) {}
 
   changeHour(hour: NgxMatTimepickerClockFace): void {
-    this.hourChanged.next(hour);
+    this.hourChanged.emit(hour);
   }
 
   changeMinute(minute: NgxMatTimepickerClockFace): void {
-    this.minuteChanged.next(minute);
+    this.minuteChanged.emit(minute);
   }
 
   changePeriod(period: NgxMatTimepickerPeriods): void {
-    this.periodChanged.next(period);
+    this.periodChanged.emit(period);
   }
 
   changeTimeUnit(unit: NgxMatTimepickerUnits): void {
-    this.timeUnitChanged.next(unit);
+    this.timeUnitChanged.emit(unit);
   }
 
   hideHint(): void {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import {
   animate,
   sequence,
@@ -13,14 +13,13 @@ import {
   CdkOverlayOrigin,
   CdkConnectedOverlay,
 } from '@angular/cdk/overlay';
-//
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
-//
-import { DateTime } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-period',
@@ -53,7 +52,7 @@ export class NgxMatTimepickerPeriodComponent {
   overlayPositionStrategy: FlexibleConnectedPositionStrategy;
   overlayScrollStrategy: ScrollStrategy =
     this._overlay.scrollStrategies.reposition();
-  @Output() periodChanged = new EventEmitter<NgxMatTimepickerPeriods>();
+  readonly periodChanged = output<NgxMatTimepickerPeriods>();
   @Input() selectedHour: number | string;
   @Input() selectedPeriod: NgxMatTimepickerPeriods;
   timePeriod = NgxMatTimepickerPeriods;
@@ -67,7 +66,7 @@ export class NgxMatTimepickerPeriodComponent {
   changePeriod(period: NgxMatTimepickerPeriods): void {
     this.isPeriodAvailable = this._isSwitchPeriodAvailable(period);
     if (this.isPeriodAvailable) {
-      this.periodChanged.next(period);
+      this.periodChanged.emit(period);
     }
   }
 

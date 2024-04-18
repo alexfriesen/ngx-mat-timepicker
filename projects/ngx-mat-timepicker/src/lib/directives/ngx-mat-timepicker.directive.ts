@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   Optional,
 } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { MatFormField } from '@angular/material/form-field';
@@ -235,7 +236,7 @@ export class NgxMatTimepickerDirective
     if (picker) {
       this._timepicker = picker;
       this._timepicker.registerInput(this);
-      this._timepicker.timeSet
+      outputToObservable(this._timepicker.timeSet)
         .pipe(takeUntil(this._subsCtrl$))
         .subscribe((time: string) => {
           this.value = time;

@@ -348,7 +348,7 @@ describe('NgxMatTimepickerFaceComponent', () => {
       expect(selectedTime).toEqual({ time: 1, angle: 5 });
     }));
 
-    it('should emit selected time once user stop interaction with clock face', waitForAsync(() => {
+    it('should emit selected time once user stop interaction with clock face', fakeAsync(() => {
       component.faceTime = minutesFaceTime;
       component.unit = NgxMatTimepickerUnits.MINUTE;
 

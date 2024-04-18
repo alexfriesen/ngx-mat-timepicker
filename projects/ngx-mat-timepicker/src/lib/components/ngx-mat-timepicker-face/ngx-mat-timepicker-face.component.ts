@@ -3,21 +3,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Input,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
+  output,
 } from '@angular/core';
 import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-//
+
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
@@ -102,9 +101,9 @@ export class NgxMatTimepickerFaceComponent
 
   @Input() selectedTime: NgxMatTimepickerClockFace;
 
-  @Output() timeChange = new EventEmitter<NgxMatTimepickerClockFace>();
+  readonly timeChange = output<NgxMatTimepickerClockFace>();
 
-  @Output() timeSelected = new EventEmitter<number>();
+  readonly timeSelected = output<number>();
 
   timeUnit = NgxMatTimepickerUnits;
 
@@ -202,11 +201,11 @@ export class NgxMatTimepickerFaceComponent
     const selectedTime = this.faceTime.find((val) => val.angle === angle);
 
     if (selectedTime && !selectedTime.disabled) {
-      this.timeChange.next(selectedTime);
+      this.timeChange.emit(selectedTime);
 
       /* To let know whether user ended interaction with clock face */
       if (!this._isStarted) {
-        this.timeSelected.next(selectedTime.time);
+        this.timeSelected.emit(selectedTime.time);
       }
     }
   }
@@ -268,7 +267,7 @@ export class NgxMatTimepickerFaceComponent
     if (currentTime && currentTime.disabled && !this.isClockFaceDisabled) {
       const availableTime = this.faceTime.find((time) => !time.disabled);
 
-      this.timeChange.next(availableTime);
+      this.timeChange.emit(availableTime);
     }
   }
 

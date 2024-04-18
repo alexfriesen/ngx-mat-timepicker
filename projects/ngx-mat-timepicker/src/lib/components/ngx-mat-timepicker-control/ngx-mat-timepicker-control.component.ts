@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  input,
+  output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -51,25 +51,10 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
 export class NgxMatTimepickerControlComponent implements OnChanges {
   static nextId: number = 0;
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-
-  get color(): ThemePalette {
-    return this._color;
-  }
+  readonly color = input<ThemePalette>('primary');
+  readonly floatLabel = input<FloatLabelType>('auto');
 
   @Input() disabled: boolean;
-
-  @Input()
-  set floatLabel(newValue: FloatLabelType) {
-    this._floatLabel = newValue;
-  }
-
-  get floatLabel(): FloatLabelType {
-    return this._floatLabel;
-  }
 
   id: number = NgxMatTimepickerControlComponent.nextId++;
   isFocused: boolean;
@@ -80,12 +65,11 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
 
   @Input() time: number;
 
-  @Output() timeChanged = new EventEmitter<number>();
   @Input() timeList: NgxMatTimepickerClockFace[];
   @Input() timeUnit: NgxMatTimepickerUnits;
 
-  private _color: ThemePalette = 'primary';
-  private _floatLabel: FloatLabelType = 'auto';
+  readonly timeChanged = output<number>();
+
   private _previousTime: number;
 
   constructor(private _timeParser: NgxMatTimepickerParserPipe) {}

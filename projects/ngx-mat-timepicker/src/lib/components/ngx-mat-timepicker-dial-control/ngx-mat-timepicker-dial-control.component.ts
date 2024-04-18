@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
   OnDestroy,
   Input,
-  Output,
   ElementRef,
   AfterViewInit,
+  output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -46,8 +45,6 @@ export class NgxMatTimepickerDialControlComponent
 
   @Input() disabled: boolean;
 
-  @Output() focused = new EventEmitter<void>();
-
   @Input() isActive: boolean;
 
   @Input() isEditable: boolean;
@@ -58,15 +55,14 @@ export class NgxMatTimepickerDialControlComponent
 
   @Input() time: string;
 
-  @Output() timeChanged = new EventEmitter<NgxMatTimepickerClockFace>();
-
   @Input() timeList: NgxMatTimepickerClockFace[];
 
   @Input() timeUnit: NgxMatTimepickerUnits;
 
-  @Output() timeUnitChanged = new EventEmitter<NgxMatTimepickerUnits>();
-
-  @Output() unfocused = new EventEmitter<void>();
+  readonly focused = output<void>();
+  readonly timeChanged = output<NgxMatTimepickerClockFace>();
+  readonly timeUnitChanged = output<NgxMatTimepickerUnits>();
+  readonly unfocused = output<void>();
 
   constructor(
     private _elRef: ElementRef,
@@ -111,13 +107,13 @@ export class NgxMatTimepickerDialControlComponent
   ): void {
     event.preventDefault();
     this.previousTime = this.time;
-    this.timeUnitChanged.next(unit);
-    this.focused.next();
+    this.timeUnitChanged.emit(unit);
+    this.focused.emit();
   }
 
   updateTime(): void {
     if (this._selectedTime) {
-      this.timeChanged.next(this._selectedTime);
+      this.timeChanged.emit(this._selectedTime);
       this.previousTime = this._selectedTime.time;
     }
   }

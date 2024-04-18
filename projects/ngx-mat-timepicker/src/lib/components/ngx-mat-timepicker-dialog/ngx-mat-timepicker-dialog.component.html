@@ -1,8 +1,8 @@
 <ng-template #cancelBtnDefault>
-  <button mat-button [color]="color">CANCEL</button>
+  <button mat-button [color]="color()">CANCEL</button>
 </ng-template>
 <ng-template #confirmBtnDefault>
-  <button mat-button [color]="color">OK</button>
+  <button mat-button [color]="color()">OK</button>
 </ng-template>
 <div mat-dialog-content>
   <ngx-mat-timepicker-content
@@ -11,12 +11,12 @@
   >
     <div class="timepicker" [ngClass]="data.timepickerClass">
       <mat-toolbar
-        [color]="color"
+        [color]="color()"
         [class.is-editable]="data.enableKeyboardInput"
         class="timepicker-header"
       >
         <ngx-mat-timepicker-dial
-          [color]="color"
+          [color]="color()"
           [format]="data.format"
           [hour]="(selectedHour | async)?.time"
           [minute]="(selectedMinute | async)?.time"
@@ -41,7 +41,7 @@
               <div>
                 @if (data.format === 24) {
                   <ngx-mat-timepicker-24-hours-face
-                    [color]="color"
+                    [color]="color()"
                     [selectedHour]="selectedHour | async"
                     [minTime]="data.minTime"
                     [maxTime]="data.maxTime"
@@ -51,7 +51,7 @@
                   />
                 } @else {
                   <ngx-mat-timepicker-12-hours-face
-                    [color]="color"
+                    [color]="color()"
                     [selectedHour]="selectedHour | async"
                     [period]="selectedPeriod | async"
                     [minTime]="data.minTime"
@@ -64,7 +64,7 @@
             }
             @case (timeUnit.MINUTE) {
               <ngx-mat-timepicker-minutes-face
-                [color]="color"
+                [color]="color()"
                 [selectedMinute]="selectedMinute | async"
                 [selectedHour]="(selectedHour | async)?.time"
                 [minTime]="data.minTime"

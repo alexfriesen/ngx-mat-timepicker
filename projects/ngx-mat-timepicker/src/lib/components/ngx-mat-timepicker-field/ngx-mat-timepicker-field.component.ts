@@ -1,13 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   TemplateRef,
   ViewEncapsulation,
+  input,
+  output,
 } from '@angular/core';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
@@ -24,6 +24,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
@@ -37,8 +38,6 @@ import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepic
 import { NgxMatTimepickerToggleIconDirective } from '../../directives/ngx-mat-timepicker-toggle-icon.directive';
 import { NgxMatTimepickerToggleComponent } from '../ngx-mat-timepicker-toggle/ngx-mat-timepicker-toggle.component';
 import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/ngx-mat-timepicker-control.component';
-
-import { DateTime } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-field',
@@ -72,14 +71,7 @@ import { DateTime } from 'luxon';
 export class NgxMatTimepickerFieldComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
-  get color(): ThemePalette {
-    return this._color;
-  }
-
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
+  readonly color = input<ThemePalette>('primary');
 
   get defaultTime(): string {
     return this._defaultTime;
@@ -91,14 +83,7 @@ export class NgxMatTimepickerFieldComponent
     this._isDefaultTime = !!val;
   }
 
-  get floatLabel(): FloatLabelType {
-    return this._floatLabel;
-  }
-
-  @Input()
-  set floatLabel(newValue: FloatLabelType) {
-    this._floatLabel = newValue;
-  }
+  readonly floatLabel = input<FloatLabelType>('auto');
 
   get format(): NgxMatTimepickerFormatType {
     return this._format;
@@ -188,15 +173,13 @@ export class NgxMatTimepickerFieldComponent
     NgxMatTimepickerPeriods.PM,
   ];
 
-  @Output() timeChanged = new EventEmitter<string>();
+  readonly timeChanged = output<string>();
   timepickerTime: string;
 
   timeUnit = NgxMatTimepickerUnits;
   @Input() toggleIcon: TemplateRef<HTMLObjectElement>;
 
-  private _color: ThemePalette = 'primary';
   private _defaultTime: string;
-  private _floatLabel: FloatLabelType = 'auto';
   private _format: NgxMatTimepickerFormatType = 12;
   private _isDefaultTime: boolean;
   private _isFirstTimeChange: boolean = true;

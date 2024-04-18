@@ -1,11 +1,10 @@
-import {EventEmitter} from "@angular/core";
-//
-import {Observable} from "rxjs";
+import { EventEmitter, OutputEmitterRef } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface NgxMatTimepickerRef {
-    close?: () => void;
-    hourSelected: EventEmitter<number>;
-    timeChanged: EventEmitter<string>;
-    timeSet: EventEmitter<string>;
-    timeUpdated: Observable<string>;
+  close?: () => void;
+  hourSelected: EventEmitter<number> | OutputEmitterRef<number>;
+  timeChanged: EventEmitter<string> | OutputEmitterRef<string>;
+  timeSet: EventEmitter<string> | OutputEmitterRef<string>;
+  timeUpdated: Observable<string>;
 }

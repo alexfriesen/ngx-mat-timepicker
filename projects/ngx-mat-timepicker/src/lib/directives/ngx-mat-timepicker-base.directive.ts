@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  model,
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { Observable, Subject } from 'rxjs';
@@ -27,14 +28,7 @@ import { NGX_MAT_TIMEPICKER_CONFIG } from '../tokens/ngx-mat-timepicker-config.t
   standalone: true,
 })
 export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-
-  get color(): ThemePalette {
-    return this._color;
-  }
+  protected readonly color = model<ThemePalette>('primary');
 
   get defaultTime(): string {
     return this._defaultTime;
@@ -56,7 +50,6 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
   selectedPeriod: Observable<NgxMatTimepickerPeriods>;
   timeUnit: typeof NgxMatTimepickerUnits = NgxMatTimepickerUnits;
 
-  protected _color: ThemePalette = 'primary';
   protected _defaultTime: string;
   protected _subsCtrl$: Subject<void> = new Subject<void>();
 
@@ -66,7 +59,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
     protected _timepickerLocaleSrv: NgxMatTimepickerLocaleService,
     @Inject(NGX_MAT_TIMEPICKER_CONFIG) public data: NgxMatTimepickerConfig,
   ) {
-    this.color = data.color;
+    this.color.set(data.color);
     this.defaultTime = data.defaultTime;
   }
 
@@ -117,7 +110,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
     if (!this.data.hoursOnly) {
       this.changeTimeUnit(NgxMatTimepickerUnits.MINUTE);
     }
-    this.data.timepickerBaseRef.hourSelected.next(hour);
+    this.data.timepickerBaseRef.hourSelected.emit(hour);
   }
 
   @HostListener('keydown', ['$event'])

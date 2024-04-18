@@ -1,11 +1,11 @@
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   Component,
-  EventEmitter,
   HostBinding,
   Input,
-  Output,
   TemplateRef,
+  input,
+  output,
 } from '@angular/core';
 import {
   CdkOverlayOrigin,
@@ -16,18 +16,17 @@ import {
 } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ThemePalette } from '@angular/material/core';
-//
+import { BehaviorSubject } from 'rxjs';
+import { DateTime } from 'luxon';
+
+import { NgxMatTimepickerRef } from '../../models/ngx-mat-timepicker-ref.interface';
 import { NgxMatTimepickerConfig } from '../../models/ngx-mat-timepicker-config.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
+import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
 import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerEventService } from '../../services/ngx-mat-timepicker-event.service';
 import { NgxMatTimepickerDirective } from '../../directives/ngx-mat-timepicker.directive';
-import { NgxMatTimepickerRef } from '../../models/ngx-mat-timepicker-ref.interface';
 import { NgxMatTimepickerDialogComponent } from '../ngx-mat-timepicker-dialog/ngx-mat-timepicker-dialog.component';
-import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
-//
-import { DateTime } from 'luxon';
-import { BehaviorSubject } from 'rxjs';
 import { NgxMatTimepickerStandaloneComponent } from '../ngx-mat-timepicker-standalone/ngx-mat-timepicker-standalone.component';
 
 let config: NgxMatTimepickerConfig;
@@ -64,13 +63,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
     this._appendToInput = coerceBooleanProperty(newValue);
   }
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-  get color(): ThemePalette {
-    return this._color;
-  }
+  color = input<ThemePalette>('primary');
 
   get disabled(): boolean {
     return this._timepickerInput && this._timepickerInput.disabled;
@@ -142,11 +135,11 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   @Input() preventOverlayClick: boolean;
   @Input() timepickerClass: string;
 
-  @Output() opened = new EventEmitter<void>();
-  @Output() closed = new EventEmitter<void>();
-  @Output() timeSet = new EventEmitter<string>();
-  @Output() timeChanged = new EventEmitter<string>();
-  @Output() hourSelected = new EventEmitter<number>();
+  readonly opened = output<void>();
+  readonly closed = output<void>();
+  readonly timeSet = output<string>();
+  readonly timeChanged = output<string>();
+  readonly hourSelected = output<number>();
 
   @HostBinding('id') id: string =
     `ngx_mat_timepicker_${++NgxMatTimepickerComponent.nextId}`;
@@ -171,7 +164,6 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   timeUpdated = new BehaviorSubject<string>(void 0); // used in the dialog, check if a better approach can be used
 
   private _appendToInput: boolean = !1;
-  private _color: ThemePalette = 'primary';
   private _dialogRef: MatDialogRef<NgxMatTimepickerDialogComponent, void>;
   private _enableKeyboardInput: boolean = !1;
   private _format: NgxMatTimepickerFormatType = 12;
@@ -217,7 +209,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       hoursOnly: this.hoursOnly,
       timepickerClass: this.timepickerClass,
       inputElement: this.inputElement,
-      color: this.color,
+      color: this.color(),
     };
 
     if (this._appendToInput) {
