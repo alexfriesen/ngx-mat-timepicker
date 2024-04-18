@@ -3,7 +3,6 @@ import {
   fakeAsync,
   TestBed,
   tick,
-  waitForAsync,
 } from '@angular/core/testing';
 import { ElementRef, NO_ERRORS_SCHEMA, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';

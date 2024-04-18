@@ -98,7 +98,7 @@ export class DemoComponent implements OnInit {
       H: void 0,
     };
 
-  showInput: boolean = !0;
+  showInput: boolean = true;
   timeRegex: RegExp = /([0-9]|1\d):[0-5]\d (AM|PM)/;
   year: number = new Date().getFullYear();
 
@@ -136,6 +136,7 @@ export class DemoComponent implements OnInit {
 
   updateTime($event: string, targetProp: string): void {
     console.info('TIME SET', $event);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any)[targetProp] = $event;
   }
 }

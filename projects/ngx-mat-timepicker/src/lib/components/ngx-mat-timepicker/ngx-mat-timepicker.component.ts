@@ -39,7 +39,7 @@ let config: NgxMatTimepickerConfig;
     [cdkConnectedOverlayOpen]="showPicker"
     [cdkConnectedOverlayOrigin]="overlayOrigin"
     [cdkConnectedOverlayPositions]="overlayPositions"
-    [cdkConnectedOverlayHasBackdrop]="!0"
+    [cdkConnectedOverlayHasBackdrop]="true"
     (backdropClick)="close()"
   >
     <ngx-mat-timepicker-standalone />
@@ -129,7 +129,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   @Input() disableAnimation: boolean;
   @Input() editableHintTmpl: TemplateRef<Node>;
   @Input() hoursOnly = false;
-  @Input() isEsc = !0;
+  @Input() isEsc = true;
   @Input() max: DateTime;
   @Input() min: DateTime;
   @Input() preventOverlayClick: boolean;
@@ -160,12 +160,12 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       offsetY: 0,
     },
   ];
-  showPicker: boolean = !1;
+  showPicker: boolean = false;
   timeUpdated = new BehaviorSubject<string>(void 0); // used in the dialog, check if a better approach can be used
 
-  private _appendToInput: boolean = !1;
+  private _appendToInput: boolean = false;
   private _dialogRef: MatDialogRef<NgxMatTimepickerDialogComponent, void>;
-  private _enableKeyboardInput: boolean = !1;
+  private _enableKeyboardInput: boolean = false;
   private _format: NgxMatTimepickerFormatType = 12;
   private _minutesGap: number;
   private _overlayRef: OverlayRef;
@@ -184,7 +184,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       this._dialogRef && this._dialogRef.close();
     }
     this.inputElement.focus(); // Fix ExpressionHasChangedAfterCheck error on overlay destroy
-    this.showPicker = !1;
+    this.showPicker = false;
     this.closed.emit();
   }
 
@@ -213,7 +213,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
     };
 
     if (this._appendToInput) {
-      this.showPicker = !0;
+      this.showPicker = true;
     } else {
       this._dialogRef = this._dialog.open(NgxMatTimepickerDialogComponent, {
         panelClass: 'ngx-mat-timepicker-dialog',
