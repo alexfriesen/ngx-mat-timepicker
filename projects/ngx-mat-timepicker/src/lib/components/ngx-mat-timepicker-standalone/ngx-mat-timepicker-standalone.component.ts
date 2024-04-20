@@ -1,9 +1,9 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { A11yModule } from '@angular/cdk/a11y';
-import { MatButtonModule } from '@angular/material/button';
-//
+
 import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
 import { NgxMatTimepickerService } from '../../services/ngx-mat-timepicker.service';
 import { NgxMatTimepickerEventService } from '../../services/ngx-mat-timepicker-event.service';
@@ -27,7 +27,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgClass,
     NgTemplateOutlet,
     AsyncPipe,
     A11yModule,

@@ -9,7 +9,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -55,7 +55,6 @@ import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgClass,
     NgTemplateOutlet,
     FormsModule,
     MatFormFieldModule,

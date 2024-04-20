@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
@@ -28,7 +28,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   imports: [
     AsyncPipe,
     // Common
-    NgClass,
     NgTemplateOutlet,
     // Material
     MatButtonModule,
