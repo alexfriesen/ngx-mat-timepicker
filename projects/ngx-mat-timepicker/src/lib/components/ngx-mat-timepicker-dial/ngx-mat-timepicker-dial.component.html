@@ -2,11 +2,11 @@
   <div class="timepicker-dial__container">
     <div class="timepicker-dial__time">
       <ngx-mat-timepicker-dial-control
-        [timeList]="hours"
-        [time]="hourString"
+        [timeList]="hours()"
+        [time]="hourString()"
         [timeUnit]="timeUnit.HOUR"
-        [isActive]="activeTimeUnit === timeUnit.HOUR"
-        [isEditable]="isEditable"
+        [isActive]="activeTimeUnit() === timeUnit.HOUR"
+        [isEditable]="isEditable()"
         (timeUnitChanged)="changeTimeUnit($event)"
         (timeChanged)="changeHour($event)"
         (focused)="showHint()"
@@ -14,40 +14,40 @@
       />
       <span>:</span>
       <ngx-mat-timepicker-dial-control
-        [timeList]="minutes"
-        [time]="minuteString"
+        [timeList]="minutes()"
+        [time]="minuteString()"
         [timeUnit]="timeUnit.MINUTE"
-        [isActive]="activeTimeUnit === timeUnit.MINUTE"
-        [isEditable]="isEditable"
-        [minutesGap]="minutesGap"
-        [disabled]="hoursOnly"
+        [isActive]="activeTimeUnit() === timeUnit.MINUTE"
+        [isEditable]="isEditable()"
+        [minutesGap]="minutesGap()"
+        [disabled]="hoursOnly()"
         (timeUnitChanged)="changeTimeUnit($event)"
         (timeChanged)="changeMinute($event)"
         (focused)="showHint()"
         (unfocused)="hideHint()"
       />
     </div>
-    @if (format !== 24) {
+    @if (format() !== 24) {
       <ngx-mat-timepicker-period
         class="timepicker-dial__period"
-        [selectedPeriod]="period"
-        [activeTimeUnit]="activeTimeUnit"
-        [maxTime]="maxTime"
-        [minTime]="minTime"
-        [format]="format"
-        [hours]="hours"
-        [minutes]="minutes"
-        [selectedHour]="hour"
+        [selectedPeriod]="period()"
+        [activeTimeUnit]="activeTimeUnit()"
+        [maxTime]="maxTime()"
+        [minTime]="minTime()"
+        [format]="format()"
+        [hours]="hours()"
+        [minutes]="minutes()"
+        [selectedHour]="hour()"
         [meridiems]="meridiems"
         (periodChanged)="changePeriod($event)"
       />
     }
   </div>
-  @if (isEditable || editableHintTmpl) {
-    <div [class.timepicker-dial__hint-container--hidden]="!isHintVisible">
+  @if (isEditable() || editableHintTmpl()) {
+    <div [class.timepicker-dial__hint-container--hidden]="!isHintVisible()">
       <ng-container
         *ngTemplateOutlet="
-          editableHintTmpl ? editableHintTmpl : editableHintDefault
+          editableHintTmpl() ? editableHintTmpl() : editableHintDefault
         "
       />
       <ng-template #editableHintDefault>

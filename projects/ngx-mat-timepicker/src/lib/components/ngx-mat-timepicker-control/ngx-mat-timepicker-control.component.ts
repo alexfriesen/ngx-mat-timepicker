@@ -18,7 +18,7 @@ import {
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { isDigit } from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
 
 function concatTime(currentTime: string, nextTime: string): number | undefined {
@@ -149,7 +149,7 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
   onKeydown(event: KeyboardEvent): void {
     event.stopPropagation();
 
-    if (!NgxMatTimepickerUtils.isDigit(event)) {
+    if (!isDigit(event)) {
       event.preventDefault();
     }
 

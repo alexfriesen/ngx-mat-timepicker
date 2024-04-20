@@ -1,10 +1,11 @@
-import { Directive, Input, input, output } from '@angular/core';
+import { Directive, computed, input, model, output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { DateTime } from 'luxon';
 
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { getHours } from '../../utils/ngx-mat-timepicker.utils';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -14,29 +15,28 @@ import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 export class NgxMatTimepickerHoursFaceDirective {
   readonly color = input<ThemePalette>('primary');
 
-  @Input()
-  set format(newValue: NgxMatTimepickerFormatType) {
-    this._format = newValue;
-    this.hoursList = NgxMatTimepickerUtils.getHours(this._format);
-  }
+  readonly format = model<NgxMatTimepickerFormatType>(24);
+  readonly availableHours = computed(() => {
+    return getHours(this.format());
+  });
+  readonly hoursList = computed(() => {
+    return this.computeHoursList();
+  });
 
-  get format(): NgxMatTimepickerFormatType {
-    return this._format;
-  }
+  readonly maxTime = input<DateTime>();
+  readonly minTime = input<DateTime>();
+  readonly selectedHour = input<NgxMatTimepickerClockFace>();
 
   readonly hourChange = output<NgxMatTimepickerClockFace>();
   readonly hourSelected = output<number>();
 
-  hoursList: NgxMatTimepickerClockFace[] = [];
-  @Input() maxTime: DateTime;
-  @Input() minTime: DateTime;
-  @Input() selectedHour: NgxMatTimepickerClockFace;
-
-  protected _format: NgxMatTimepickerFormatType = 24;
-
-  constructor() {}
+  timeUnit = NgxMatTimepickerUnits;
 
   onTimeSelected(time: number): void {
     this.hourSelected.emit(time);
+  }
+
+  protected computeHoursList(): NgxMatTimepickerClockFace[] {
+    return this.availableHours();
   }
 }

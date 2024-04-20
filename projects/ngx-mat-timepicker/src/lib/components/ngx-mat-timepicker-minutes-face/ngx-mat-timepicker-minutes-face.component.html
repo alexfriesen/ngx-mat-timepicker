@@ -1,8 +1,8 @@
 <ngx-mat-timepicker-face
   [color]="color()"
-  [faceTime]="minutesList"
-  [selectedTime]="selectedMinute"
-  [minutesGap]="minutesGap"
-  (timeChange)="minuteChange.emit($event)"
+  [faceTime]="minutesList()"
+  [selectedTime]="selectedMinute()"
+  [minutesGap]="minutesGap()"
   [unit]="timeUnit.MINUTE"
+  (timeChange)="minuteChange.emit($event)"
 />

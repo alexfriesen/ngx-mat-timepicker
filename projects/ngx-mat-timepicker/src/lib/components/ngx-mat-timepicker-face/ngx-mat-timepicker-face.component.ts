@@ -84,7 +84,8 @@ const CLOCK_HAND_STYLES = {
 export class NgxMatTimepickerFaceComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
-  @ViewChild('clockFace', { static: true }) clockFace: ElementRef;
+  @ViewChild('clockFace', { static: true })
+  clockFace: ElementRef;
   @ViewChild('clockHand', { static: true, read: ElementRef })
   clockHand: ElementRef;
 
@@ -92,10 +93,8 @@ export class NgxMatTimepickerFaceComponent
 
   @Input() faceTime: NgxMatTimepickerClockFace[];
 
+  @Input() unit: NgxMatTimepickerUnits;
   @Input() format: NgxMatTimepickerFormatType;
-
-  innerClockFaceSize = 85;
-  isClockFaceDisabled: boolean;
 
   @Input() minutesGap: number;
 
@@ -105,9 +104,9 @@ export class NgxMatTimepickerFaceComponent
 
   readonly timeSelected = output<number>();
 
+  innerClockFaceSize = 85;
+  isClockFaceDisabled: boolean;
   timeUnit = NgxMatTimepickerUnits;
-
-  @Input() unit: NgxMatTimepickerUnits;
 
   private _isStarted: boolean;
   private _touchEndHandler: (e: MouseEvent) => void;
@@ -171,6 +170,7 @@ export class NgxMatTimepickerFaceComponent
     /* Get x0 and y0 of the circle */
     const centerX = clockFaceCords.left + clockFaceCords.width / 2;
     const centerY = clockFaceCords.top + clockFaceCords.height / 2;
+
     /* Counting the arctangent and convert it to from radian to deg */
     const arctangent =
       (Math.atan(

@@ -19,7 +19,10 @@ import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-form
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import {
+  disableHours,
+  disableMinutes,
+} from '../../utils/ngx-mat-timepicker.utils';
 
 @Component({
   selector: 'ngx-mat-timepicker-period',
@@ -75,23 +78,20 @@ export class NgxMatTimepickerPeriodComponent {
   ): NgxMatTimepickerClockFace[] {
     switch (this.activeTimeUnit) {
       case NgxMatTimepickerUnits.HOUR:
-        return NgxMatTimepickerUtils.disableHours(this.hours, {
+        return disableHours(this.hours, {
           min: this.minTime,
           max: this.maxTime,
           format: this.format,
           period,
         });
+
       case NgxMatTimepickerUnits.MINUTE:
-        return NgxMatTimepickerUtils.disableMinutes(
-          this.minutes,
-          +this.selectedHour,
-          {
-            min: this.minTime,
-            max: this.maxTime,
-            format: this.format,
-            period,
-          },
-        );
+        return disableMinutes(this.minutes, +this.selectedHour, {
+          min: this.minTime,
+          max: this.maxTime,
+          format: this.format,
+          period,
+        });
       default:
         throw new Error('no such NgxMatTimepickerUnits');
     }

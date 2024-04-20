@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  input,
-  output,
-} from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { DateTime } from 'luxon';
 
@@ -13,7 +6,10 @@ import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import {
+  getMinutes,
+  disableMinutes,
+} from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerFaceComponent } from '../ngx-mat-timepicker-face/ngx-mat-timepicker-face.component';
 
 @Component({
@@ -22,36 +18,28 @@ import { NgxMatTimepickerFaceComponent } from '../ngx-mat-timepicker-face/ngx-ma
   standalone: true,
   imports: [NgxMatTimepickerFaceComponent],
 })
-export class NgxMatTimepickerMinutesFaceComponent implements OnChanges {
+export class NgxMatTimepickerMinutesFaceComponent {
   readonly color = input<ThemePalette>('primary');
 
-  @Input() format: NgxMatTimepickerFormatType;
-  @Input() maxTime: DateTime;
-  @Input() minTime: DateTime;
+  readonly format = input<NgxMatTimepickerFormatType>();
+  readonly maxTime = input<DateTime>();
+  readonly minTime = input<DateTime>();
 
   readonly minuteChange = output<NgxMatTimepickerClockFace>();
-  @Input() minutesGap: number;
+  readonly minutesGap = input<number>();
 
-  minutesList: NgxMatTimepickerClockFace[] = [];
-  @Input() period: NgxMatTimepickerPeriods;
-  @Input() selectedHour: number;
+  readonly minutesList = computed(() => {
+    const minutes = getMinutes(this.minutesGap());
+    return disableMinutes(minutes, this.selectedHour(), {
+      min: this.minTime(),
+      max: this.maxTime(),
+      format: this.format(),
+      period: this.period(),
+    });
+  });
+  readonly period = input<NgxMatTimepickerPeriods>();
+  readonly selectedHour = input<number>();
 
-  @Input() selectedMinute: NgxMatTimepickerClockFace;
+  readonly selectedMinute = input<NgxMatTimepickerClockFace>();
   timeUnit = NgxMatTimepickerUnits;
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['period'] && changes['period'].currentValue) {
-      const minutes = NgxMatTimepickerUtils.getMinutes(this.minutesGap);
-      this.minutesList = NgxMatTimepickerUtils.disableMinutes(
-        minutes,
-        this.selectedHour,
-        {
-          min: this.minTime,
-          max: this.maxTime,
-          format: this.format,
-          period: this.period,
-        },
-      );
-    }
-  }
 }

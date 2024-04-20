@@ -13,7 +13,7 @@ import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
 import { NgxMatTimepickerAutofocusDirective } from '../../directives/ngx-mat-timepicker-autofocus.directive';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { isDigit } from '../../utils/ngx-mat-timepicker.utils';
 
 function retainSelection(this: HTMLInputElement) {
   this.selectionStart = this.selectionEnd;
@@ -90,7 +90,7 @@ export class NgxMatTimepickerDialControlComponent
   }
 
   onKeydown(e: KeyboardEvent): void {
-    if (!NgxMatTimepickerUtils.isDigit(e)) {
+    if (!isDigit(e)) {
       e.preventDefault();
     } else {
       this._changeTimeByArrow(e.keyCode);

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -47,11 +47,10 @@ interface NgxMatTimepickerTheme {
   ],
 })
 export class DemoComponent implements OnInit {
+  private readonly localeOverrideSrv = inject(NgxMatTimepickerLocaleService);
   private readonly document = inject(DOCUMENT, { optional: true });
 
-  get currentLocale(): string {
-    return this._localeOverrideSrv.locale;
-  }
+  currentLocale = this.localeOverrideSrv.locale;
 
   get currentLocaleKey(): string {
     return this.myLocalesReversed[this.currentLocale];
@@ -63,7 +62,7 @@ export class DemoComponent implements OnInit {
 
   maxTime: DateTime = DateTime.local().startOf('day').set({
     hour: 16,
-    minute: 0,
+    minute: 20,
   });
 
   minTime: DateTime = this.maxTime.set({ hour: 14 });
@@ -88,14 +87,14 @@ export class DemoComponent implements OnInit {
 
   selectedTimes: Record<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H', string> =
     {
-      A: void 0,
-      B: void 0,
-      C: void 0,
-      D: void 0,
-      E: void 0,
-      F: void 0,
-      G: void 0,
-      H: void 0,
+      A: undefined,
+      B: undefined,
+      C: undefined,
+      D: undefined,
+      E: undefined,
+      F: undefined,
+      G: undefined,
+      H: undefined,
     };
 
   showInput: boolean = true;
@@ -103,8 +102,6 @@ export class DemoComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   private _nextLocale: number = 0;
-
-  constructor(private _localeOverrideSrv: NgxMatTimepickerLocaleService) {}
 
   ngOnInit(): void {
     this.selectedTheme = this.themes[0];
@@ -123,7 +120,7 @@ export class DemoComponent implements OnInit {
     if (localeKey) {
       this._nextLocale = this.myLocaleKeys.indexOf(localeKey) - 1;
     }
-    this._localeOverrideSrv.updateLocale(
+    this.localeOverrideSrv.updateLocale(
       this.myLocalesMaps[this.myLocaleKeys[++this._nextLocale]],
     );
     this._nextLocale >= this.myLocaleKeys.length - 1 && (this._nextLocale = -1);

@@ -1,8 +1,9 @@
 <ngx-mat-timepicker-face
+  [unit]="timeUnit.HOUR"
+  [format]="format()"
   [color]="color()"
-  [selectedTime]="selectedHour"
-  [faceTime]="hoursList"
-  [format]="format"
+  [faceTime]="hoursList()"
+  [selectedTime]="selectedHour()"
   (timeChange)="hourChange.emit($event)"
   (timeSelected)="onTimeSelected($event)"
 />

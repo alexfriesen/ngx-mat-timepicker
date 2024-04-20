@@ -4,13 +4,13 @@ import {
   HostBinding,
   Input,
   TemplateRef,
+  inject,
   input,
   output,
 } from '@angular/core';
 import {
   CdkOverlayOrigin,
   ConnectedPosition,
-  Overlay,
   OverlayRef,
   CdkConnectedOverlay,
 } from '@angular/cdk/overlay';
@@ -24,7 +24,6 @@ import { NgxMatTimepickerConfig } from '../../models/ngx-mat-timepicker-config.i
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
 import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
-import { NgxMatTimepickerEventService } from '../../services/ngx-mat-timepicker-event.service';
 import { NgxMatTimepickerDirective } from '../../directives/ngx-mat-timepicker.directive';
 import { NgxMatTimepickerDialogComponent } from '../ngx-mat-timepicker-dialog/ngx-mat-timepicker-dialog.component';
 import { NgxMatTimepickerStandaloneComponent } from '../ngx-mat-timepicker-standalone/ngx-mat-timepicker-standalone.component';
@@ -33,7 +32,7 @@ let config: NgxMatTimepickerConfig;
 
 @Component({
   selector: 'ngx-mat-timepicker',
-  template: ` <ng-template
+  template: `<ng-template
     cdkConnectedOverlay
     cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
     [cdkConnectedOverlayOpen]="showPicker"
@@ -56,6 +55,8 @@ let config: NgxMatTimepickerConfig;
   imports: [CdkConnectedOverlay, NgxMatTimepickerStandaloneComponent],
 })
 export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
+  private readonly _dialog = inject(MatDialog);
+
   static nextId: number = 0;
 
   @Input()
@@ -66,7 +67,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   color = input<ThemePalette>('primary');
 
   get disabled(): boolean {
-    return this._timepickerInput && this._timepickerInput.disabled;
+    return this._timepickerInput?.disabled;
   }
 
   @Input()
@@ -82,11 +83,11 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
     this._format = NgxMatTimepickerAdapter.isTwentyFour(value) ? 24 : 12;
   }
   get format(): NgxMatTimepickerFormatType {
-    return this._timepickerInput ? this._timepickerInput.format : this._format;
+    return this._timepickerInput?.format ?? this._format;
   }
 
   get inputElement(): HTMLInputElement {
-    return this._timepickerInput && this._timepickerInput.element;
+    return this._timepickerInput?.element;
   }
 
   get maxTime(): DateTime {
@@ -116,23 +117,25 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   get overlayOrigin(): CdkOverlayOrigin {
     return this._timepickerInput
       ? this._timepickerInput.cdkOverlayOrigin
-      : void 0;
+      : undefined;
   }
 
   get time(): string {
-    return this._timepickerInput && this._timepickerInput.value;
+    return this._timepickerInput?.value;
   }
 
   @Input() cancelBtnTmpl: TemplateRef<Node>;
   @Input() confirmBtnTmpl: TemplateRef<Node>;
+  @Input() editableHintTmpl: TemplateRef<Node>;
+
   @Input() defaultTime: string;
   @Input() disableAnimation: boolean;
-  @Input() editableHintTmpl: TemplateRef<Node>;
+  @Input() preventOverlayClick: boolean;
   @Input() hoursOnly = false;
   @Input() isEsc = true;
+
   @Input() max: DateTime;
   @Input() min: DateTime;
-  @Input() preventOverlayClick: boolean;
   @Input() timepickerClass: string;
 
   readonly opened = output<void>();
@@ -161,7 +164,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
     },
   ];
   showPicker: boolean = false;
-  timeUpdated = new BehaviorSubject<string>(void 0); // used in the dialog, check if a better approach can be used
+  timeUpdated = new BehaviorSubject<string>(undefined); // used in the dialog, check if a better approach can be used
 
   private _appendToInput: boolean = false;
   private _dialogRef: MatDialogRef<NgxMatTimepickerDialogComponent, void>;
@@ -171,17 +174,11 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   private _overlayRef: OverlayRef;
   private _timepickerInput: NgxMatTimepickerDirective;
 
-  constructor(
-    private _eventService: NgxMatTimepickerEventService,
-    private _dialog: MatDialog,
-    private _overlay: Overlay,
-  ) {}
-
   close(): void {
     if (this._appendToInput) {
-      this._overlayRef && this._overlayRef.dispose();
+      this._overlayRef?.dispose();
     } else {
-      this._dialogRef && this._dialogRef.close();
+      this._dialogRef?.close();
     }
     this.inputElement.focus(); // Fix ExpressionHasChangedAfterCheck error on overlay destroy
     this.showPicker = false;
@@ -241,7 +238,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   }
 
   unregisterInput(): void {
-    this._timepickerInput = void 0;
+    this._timepickerInput = undefined;
   }
 
   updateTime(time: string): void {

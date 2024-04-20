@@ -1,21 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormControl, Validators, FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-//
+
 import {
   NgxMatTimepickerComponent,
   NgxMatTimepickerDirective,
-  NgxMatTimepickerLocaleService,
   NgxMatTimepickerFieldComponent,
 } from '@alexfriesen/ngx-mat-timepicker';
-//
+
 import { DemoComponent } from '../demo/demo.component';
+import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-dialog',
@@ -68,18 +67,13 @@ export class NgxMatTimepickerTestDialogComponent {
   ],
 })
 export class TestComponent extends DemoComponent {
+  private _matDialog = inject(MatDialog);
+
   formControlItem: FormControl = new FormControl('', [
     Validators.pattern(/([0-9]|[1-2]\d):[0-5]\d/),
   ]);
   time: string = '00:00';
   @ViewChild('timepicker') timepicker: NgxMatTimepickerComponent;
-
-  constructor(
-    private _matDialog: MatDialog,
-    localeOverrideSrv: NgxMatTimepickerLocaleService,
-  ) {
-    super(localeOverrideSrv);
-  }
 
   onClear() {
     this.formControlItem.setValue(null);
