@@ -60,6 +60,7 @@
     "@angular-eslint/eslint-plugin-template": "^17.1.0",
     "@angular-eslint/schematics": "^17.1.0",
     "@angular-eslint/template-parser": "^17.1.0",
+    "@angular/build": "^18.0.0-next",
     "@angular/cli": "^18.0.0-next",
     "@angular/compiler-cli": "^18.0.0-next",
     "@angular/language-service": "^17.0.0",
