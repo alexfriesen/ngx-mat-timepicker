@@ -15,13 +15,10 @@ import {
   NG_VALUE_ACCESSOR,
   FormsModule,
 } from '@angular/forms';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { ThemePalette, MatOptionModule } from '@angular/material/core';
-import {
-  FloatLabelType,
-  MatFormFieldModule,
-} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatSelect } from '@angular/material/select';
+import { ThemePalette, MatOption } from '@angular/material/core';
+import { FloatLabelType, MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { DateTime } from 'luxon';
@@ -57,10 +54,10 @@ import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/
   imports: [
     NgTemplateOutlet,
     FormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    MatOptionModule,
+    MatFormField,
+    MatSelect,
+    MatIcon,
+    MatOption,
     NgxMatTimepickerControlComponent,
     NgxMatTimepickerToggleComponent,
     NgxMatTimepickerToggleIconDirective,
@@ -205,8 +202,8 @@ export class NgxMatTimepickerFieldComponent
     this._changeTime();
   }
 
-  changePeriod(event: MatSelectChange): void {
-    this._timepickerService.period = event.value as NgxMatTimepickerPeriods;
+  changePeriod(value: NgxMatTimepickerPeriods): void {
+    this._timepickerService.period = value;
     this._changeTime();
   }
 
@@ -365,7 +362,6 @@ export class NgxMatTimepickerFieldComponent
   }
 
   private _onChange: (value: string) => void = () => {};
-
   private _onTouched: (value: string) => void = () => {};
 
   private _resetTime(): void {

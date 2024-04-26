@@ -8,11 +8,13 @@ import {
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 import { ThemePalette } from '@angular/material/core';
 import {
   FloatLabelType,
-  MatFormFieldModule,
+  MatFormField,
+  MatLabel,
+  MatSuffix,
 } from '@angular/material/form-field';
 
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
@@ -41,9 +43,11 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
   providers: [NgxMatTimepickerParserPipe],
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
     FormsModule,
+    MatFormField,
+    MatLabel,
+    MatSuffix,
+    MatInput,
     NgxMatTimepickerParserPipe,
     NgxMatTimepickerTimeLocalizerPipe,
   ],

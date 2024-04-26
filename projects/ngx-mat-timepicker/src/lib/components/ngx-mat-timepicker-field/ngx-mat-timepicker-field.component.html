@@ -36,7 +36,7 @@
       <mat-select
         [ngModel]="period"
         [disabled]="disabled || isChangePeriodDisabled"
-        (selectionChange)="changePeriod($event)"
+        (selectionChange)="changePeriod($event.value)"
       >
         @for (option of periods; track option) {
           <mat-option [value]="option">{{ option }}</mat-option>
