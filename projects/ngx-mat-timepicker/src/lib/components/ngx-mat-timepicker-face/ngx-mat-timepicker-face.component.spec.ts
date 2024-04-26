@@ -70,8 +70,8 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 24;
     component.ngAfterViewInit();
 
-    expect(getStyle(component.clockHand)('height')).toBe('75px');
-    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 75px)');
+    expect(getStyle(component.clockHand)('height')).toBe('103px');
+    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 103px)');
   });
 
   it('should increase clock hand with format 24 and time less or equal 12', () => {
@@ -79,8 +79,8 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 24;
     component.ngAfterViewInit();
 
-    expect(getStyle(component.clockHand)('height')).toBe('103px');
-    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 103px)');
+    expect(getStyle(component.clockHand)('height')).toBe('75px');
+    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 75px)');
   });
 
   it('should change selectedTime on faceTime and selectedTime changes', () => {

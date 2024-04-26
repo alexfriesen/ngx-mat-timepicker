@@ -5,6 +5,156 @@ import { NgxMatTimepickerAdapter } from '../services/ngx-mat-timepicker-adapter'
 import { NgxMatTimepickerFormat } from '../models/ngx-mat-timepicker-format.enum';
 import { NgxMatTimepickerDisabledConfig } from '../models/ngx-mat-timepicker-disabled-config.interface';
 
+const HOURS_24 = [
+  {
+    time: 1,
+    angle: 30,
+  },
+  {
+    time: 2,
+    angle: 60,
+  },
+  {
+    time: 3,
+    angle: 90,
+  },
+  {
+    time: 4,
+    angle: 120,
+  },
+  {
+    time: 5,
+    angle: 150,
+  },
+  {
+    time: 6,
+    angle: 180,
+  },
+  {
+    time: 7,
+    angle: 210,
+  },
+  {
+    time: 8,
+    angle: 240,
+  },
+  {
+    time: 9,
+    angle: 270,
+  },
+  {
+    time: 10,
+    angle: 300,
+  },
+  {
+    time: 11,
+    angle: 330,
+  },
+  {
+    time: 0,
+    angle: 360,
+  },
+  {
+    time: 13,
+    angle: 390,
+  },
+  {
+    time: 14,
+    angle: 420,
+  },
+  {
+    time: 15,
+    angle: 450,
+  },
+  {
+    time: 16,
+    angle: 480,
+  },
+  {
+    time: 17,
+    angle: 510,
+  },
+  {
+    time: 18,
+    angle: 540,
+  },
+  {
+    time: 19,
+    angle: 570,
+  },
+  {
+    time: 20,
+    angle: 600,
+  },
+  {
+    time: 21,
+    angle: 630,
+  },
+  {
+    time: 22,
+    angle: 660,
+  },
+  {
+    time: 23,
+    angle: 690,
+  },
+  {
+    time: 12,
+    angle: 720,
+  },
+];
+
+const HOURS_12 = [
+  {
+    time: 1,
+    angle: 30,
+  },
+  {
+    time: 2,
+    angle: 60,
+  },
+  {
+    time: 3,
+    angle: 90,
+  },
+  {
+    time: 4,
+    angle: 120,
+  },
+  {
+    time: 5,
+    angle: 150,
+  },
+  {
+    time: 6,
+    angle: 180,
+  },
+  {
+    time: 7,
+    angle: 210,
+  },
+  {
+    time: 8,
+    angle: 240,
+  },
+  {
+    time: 9,
+    angle: 270,
+  },
+  {
+    time: 10,
+    angle: 300,
+  },
+  {
+    time: 11,
+    angle: 330,
+  },
+  {
+    time: 12,
+    angle: 360,
+  },
+];
+
 export function disableHours(
   hours: NgxMatTimepickerClockFace[],
   config: NgxMatTimepickerDisabledConfig,
@@ -72,15 +222,10 @@ export function disableMinutes(
 }
 
 export function getHours(format: number): NgxMatTimepickerClockFace[] {
-  return Array(format)
-    .fill(1)
-    .map((v, i) => {
-      const angleStep = 30;
-      const time = v + i;
-      const angle = angleStep * time;
-
-      return { time: time === 24 ? 0 : time, angle };
-    });
+  if (format === 24) {
+    return HOURS_24;
+  }
+  return HOURS_12;
 }
 
 export function getMinutes(gap = 1): NgxMatTimepickerClockFace[] {
@@ -91,7 +236,10 @@ export function getMinutes(gap = 1): NgxMatTimepickerClockFace[] {
   for (let i = 0; i < minutesCount; i++) {
     const angle = angleStep * i;
     if (i % gap === 0) {
-      minutes.push({ time: i, angle: angle !== 0 ? angle : 360 });
+      minutes.push({
+        time: i,
+        angle: angle !== 0 ? angle : 360,
+      });
     }
   }
 

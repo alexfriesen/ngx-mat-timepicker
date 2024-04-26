@@ -29,10 +29,14 @@ describe('TimepickerTime', () => {
         const angleStep = 30;
         const time = i + 1;
 
-        expect(hours[i]).toEqual({
-          time: time === 24 ? 0 : time,
-          angle: time * angleStep,
-        });
+        expect(hours[i].angle).toEqual(time * angleStep);
+        if (time === 24) {
+          expect(hours[i].time).toEqual(12);
+        } else if (time === 12) {
+          expect(hours[i].time).toEqual(0);
+        } else {
+          expect(hours[i].time).toEqual(time);
+        }
       }
     });
 

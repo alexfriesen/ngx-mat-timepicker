@@ -14,8 +14,8 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatMiniFabButton } from '@angular/material/button';
 
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
@@ -73,8 +73,8 @@ const CLOCK_HAND_STYLES = {
   imports: [
     NgTemplateOutlet,
     SlicePipe,
-    MatButtonModule,
-    MatToolbarModule,
+    MatMiniFabButton,
+    MatToolbar,
     NgxMatTimepickerActiveHourPipe,
     NgxMatTimepickerActiveMinutePipe,
     NgxMatTimepickerMinutesFormatterPipe,
@@ -273,7 +273,7 @@ export class NgxMatTimepickerFaceComponent
 
   private _setClockHandPosition(): void {
     if (NgxMatTimepickerAdapter.isTwentyFour(this.format)) {
-      if (this.selectedTime.time > 12 || this.selectedTime.time === 0) {
+      if (this.selectedTime.time > 11) {
         this._decreaseClockHand();
       } else {
         this._increaseClockHand();

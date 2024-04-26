@@ -1,4 +1,8 @@
 ngx-mat-timepicker-face {
+  button[mat-mini-fab] {
+    --mdc-fab-small-container-shape: 999px;
+  }
+
   [mat-mini-fab].mat-unthemed {
     --mdc-fab-container-color: transparent;
 
