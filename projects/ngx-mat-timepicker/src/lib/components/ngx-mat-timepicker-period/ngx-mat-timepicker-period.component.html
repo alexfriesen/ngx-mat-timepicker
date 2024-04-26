@@ -3,23 +3,22 @@
   cdkOverlayOrigin
   #eventPanelOrigin="cdkOverlayOrigin"
 >
-  <button
-    type="button"
-    class="timepicker-dial__item timepicker-period__btn"
-    [class.active]="selectedPeriod === timePeriod.AM"
-    (click)="changePeriod(timePeriod.AM)"
+  <mat-button-toggle-group
+    vertical
+    hideSingleSelectionIndicator
+    [value]="selectedPeriod()"
+    (valueChange)="changePeriod($event)"
   >
-    {{ meridiems[0] }}
-  </button>
-  <button
-    type="button"
-    class="timepicker-dial__item timepicker-period__btn"
-    [class.active]="selectedPeriod === timePeriod.PM"
-    (click)="changePeriod(timePeriod.PM)"
-  >
-    {{ meridiems[1] }}
-  </button>
+    <mat-button-toggle [value]="timePeriod.AM" [disabled]="isAmDisabled()">
+      {{ meridiems()[0] }}
+    </mat-button-toggle>
+
+    <mat-button-toggle [value]="timePeriod.PM" [disabled]="isPmDisabled()">
+      {{ meridiems()[1] }}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 </div>
+
 <ng-template
   cdkConnectedOverlay
   cdkConnectedOverlayPanelClass="todo-remove-pointer-events-if-necessary"
@@ -28,12 +27,8 @@
   [cdkConnectedOverlayOrigin]="eventPanelOrigin"
   [cdkConnectedOverlayOpen]="!isPeriodAvailable"
 >
-  @if (!isPeriodAvailable) {
-    <div
-      class="timepicker-period__warning"
-      [@scaleInOut]
-      (@scaleInOut.done)="animationDone()"
-    >
+  @if (!isPeriodAvailable()) {
+    <div class="timepicker-period__warning" [@scaleInOut]>
       <p>Current time would be invalid in this period.</p>
     </div>
   }

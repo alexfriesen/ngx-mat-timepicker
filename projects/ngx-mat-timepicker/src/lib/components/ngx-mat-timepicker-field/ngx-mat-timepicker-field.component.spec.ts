@@ -7,7 +7,6 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectChange } from '@angular/material/select';
 
 import { NgxMatTimepickerFieldComponent } from './ngx-mat-timepicker-field.component';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
@@ -148,7 +147,7 @@ describe('NgxMatTimepickerFieldComponent', () => {
       component.max = max;
       component.minutesList = minutes;
       component.isTimeRangeSet = true;
-      component.changePeriod({ value: period } as MatSelectChange);
+      component.changePeriod(period);
 
       tick();
       expect(spy).toHaveBeenCalledTimes(0);
@@ -270,9 +269,7 @@ describe('NgxMatTimepickerFieldComponent', () => {
   it('should change period end emit timeChanged event', fakeAsync(() => {
     const expected = '12:00 PM';
     component.timeChanged.subscribe((time) => expect(time).toBe(expected));
-    component.changePeriod({
-      value: NgxMatTimepickerPeriods.PM,
-    } as MatSelectChange);
+    component.changePeriod(NgxMatTimepickerPeriods.PM);
 
     tick();
     expect(component.period).toEqual(NgxMatTimepickerPeriods.PM);

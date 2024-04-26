@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import {
   animate,
   sequence,
@@ -13,6 +13,11 @@ import {
   CdkOverlayOrigin,
   CdkConnectedOverlay,
 } from '@angular/cdk/overlay';
+import {
+  MatButtonToggleGroup,
+  MatButtonToggle,
+} from '@angular/material/button-toggle';
+
 import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
@@ -41,34 +46,59 @@ import {
     ]),
   ],
   standalone: true,
-  imports: [CdkOverlayOrigin, CdkConnectedOverlay],
+  imports: [
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+  ],
 })
 export class NgxMatTimepickerPeriodComponent {
-  @Input() activeTimeUnit: NgxMatTimepickerUnits;
-  @Input() format: NgxMatTimepickerFormatType;
-  @Input() hours: NgxMatTimepickerClockFace[];
-  isPeriodAvailable = true;
-  @Input() maxTime: DateTime;
-  @Input() meridiems: string[];
-  @Input() minTime: DateTime;
-  @Input() minutes: NgxMatTimepickerClockFace[];
+  protected readonly _overlay = inject(Overlay);
+
+  readonly activeTimeUnit = input<NgxMatTimepickerUnits>();
+  readonly format = input<NgxMatTimepickerFormatType>();
+
+  readonly hours = input<NgxMatTimepickerClockFace[]>();
+  readonly minutes = input<NgxMatTimepickerClockFace[]>();
+
+  readonly maxTime = input<DateTime>();
+  readonly minTime = input<DateTime>();
+
+  readonly meridiems = input<string[]>();
+  readonly selectedHour = input<number | string>();
+  readonly selectedPeriod = input<NgxMatTimepickerPeriods>();
+
+  readonly periodChanged = output<NgxMatTimepickerPeriods>();
+
+  readonly isAmDisabled = computed(() => {
+    const times = this._getDisabledTimeByPeriod(NgxMatTimepickerPeriods.AM);
+    return times.every((t) => t.disabled);
+  });
+  readonly isPmDisabled = computed(() => {
+    const times = this._getDisabledTimeByPeriod(NgxMatTimepickerPeriods.PM);
+    return times.every((t) => t.disabled);
+  });
+
+  readonly isPeriodAvailable = computed(() => {
+    const period = this.selectedPeriod();
+    if (period === NgxMatTimepickerPeriods.AM) {
+      return !this.isAmDisabled();
+    }
+    if (period === NgxMatTimepickerPeriods.PM) {
+      return !this.isPmDisabled();
+    }
+    return false;
+  });
+
+  timePeriod = NgxMatTimepickerPeriods;
   overlayPositionStrategy: FlexibleConnectedPositionStrategy;
   overlayScrollStrategy: ScrollStrategy =
     this._overlay.scrollStrategies.reposition();
-  readonly periodChanged = output<NgxMatTimepickerPeriods>();
-  @Input() selectedHour: number | string;
-  @Input() selectedPeriod: NgxMatTimepickerPeriods;
-  timePeriod = NgxMatTimepickerPeriods;
-
-  constructor(protected _overlay: Overlay) {}
-
-  animationDone(): void {
-    this.isPeriodAvailable = true;
-  }
 
   changePeriod(period: NgxMatTimepickerPeriods): void {
-    this.isPeriodAvailable = this._isSwitchPeriodAvailable(period);
-    if (this.isPeriodAvailable) {
+    const allowed = this._isSwitchPeriodAvailable(period);
+    if (allowed) {
       this.periodChanged.emit(period);
     }
   }
@@ -76,20 +106,20 @@ export class NgxMatTimepickerPeriodComponent {
   private _getDisabledTimeByPeriod(
     period: NgxMatTimepickerPeriods,
   ): NgxMatTimepickerClockFace[] {
-    switch (this.activeTimeUnit) {
+    switch (this.activeTimeUnit()) {
       case NgxMatTimepickerUnits.HOUR:
-        return disableHours(this.hours, {
-          min: this.minTime,
-          max: this.maxTime,
-          format: this.format,
+        return disableHours(this.hours(), {
+          min: this.minTime(),
+          max: this.maxTime(),
+          format: this.format(),
           period,
         });
 
       case NgxMatTimepickerUnits.MINUTE:
-        return disableMinutes(this.minutes, +this.selectedHour, {
-          min: this.minTime,
-          max: this.maxTime,
-          format: this.format,
+        return disableMinutes(this.minutes(), +this.selectedHour(), {
+          min: this.minTime(),
+          max: this.maxTime(),
+          format: this.format(),
           period,
         });
       default:
