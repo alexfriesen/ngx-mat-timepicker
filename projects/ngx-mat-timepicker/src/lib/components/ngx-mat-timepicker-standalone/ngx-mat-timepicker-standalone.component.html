@@ -12,8 +12,7 @@
     [inputElement]="data.inputElement"
   >
     <div class="timepicker" [class]="data.timepickerClass">
-      <mat-toolbar
-        [color]="color()"
+      <div
         [class.is-editable]="data.enableKeyboardInput"
         class="timepicker-header"
       >
@@ -35,7 +34,7 @@
           (hourChanged)="onHourChange($event)"
           (minuteChanged)="onMinuteChange($event)"
         />
-      </mat-toolbar>
+      </div>
       <div class="timepicker__main-content">
         <div class="timepicker__body">
           @switch (activeTimeUnit) {

@@ -1,8 +1,7 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { MatToolbar } from '@angular/material/toolbar';
 import { A11yModule } from '@angular/cdk/a11y';
+import { MatButton } from '@angular/material/button';
 
 import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
 import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
@@ -22,15 +21,13 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   styleUrls: ['ngx-mat-timepicker-standalone.component.scss'],
   // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
-    '[class.mat-app-background]': 'true',
+    class: 'mat-app-background',
   },
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     NgTemplateOutlet,
     A11yModule,
     MatButton,
-    MatToolbar,
     NgxMatTimepickerDialComponent,
     NgxMatTimepickerContentComponent,
     NgxMatTimepicker24HoursFaceComponent,
