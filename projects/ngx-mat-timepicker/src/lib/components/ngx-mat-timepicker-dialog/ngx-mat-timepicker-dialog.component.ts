@@ -1,4 +1,4 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
@@ -23,7 +23,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   selector: 'ngx-mat-timepicker-dialog',
   styleUrls: ['./ngx-mat-timepicker-dialog.component.scss'],
   templateUrl: './ngx-mat-timepicker-dialog.component.html',
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     // Common
