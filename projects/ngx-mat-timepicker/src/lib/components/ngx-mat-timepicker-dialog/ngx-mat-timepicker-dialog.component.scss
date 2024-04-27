@@ -3,10 +3,15 @@ div.ngx-mat-timepicker-dialog {
     padding-top: 0;
 
     [mat-dialog-content] {
-      padding: 0;
       max-height: 85vh;
 
-      mat-toolbar.timepicker-header {
+      .timepicker {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .timepicker-header {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -14,10 +19,6 @@ div.ngx-mat-timepicker-dialog {
         &.is-editable {
           height: auto;
         }
-      }
-
-      .clock-face {
-        margin: 16px;
       }
     }
 
@@ -27,6 +28,3 @@ div.ngx-mat-timepicker-dialog {
     }
   }
 }
-
-
-

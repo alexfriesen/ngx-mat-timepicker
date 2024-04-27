@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatToolbar } from '@angular/material/toolbar';
 import { A11yModule } from '@angular/cdk/a11y';
@@ -28,7 +28,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    AsyncPipe,
     A11yModule,
     MatButton,
     MatToolbar,

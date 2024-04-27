@@ -1,8 +1,12 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NgTemplateOutlet } from '@angular/common';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
-import { MatToolbar } from '@angular/material/toolbar';
 
 import { NgxMatTimepickerBaseDirective } from '../../directives/ngx-mat-timepicker-base.directive';
 import { NgxMatTimepickerConfig } from '../../models/ngx-mat-timepicker-config.interface';
@@ -22,12 +26,12 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    AsyncPipe,
     // Common
     NgTemplateOutlet,
     // Material
     MatButton,
-    MatToolbar,
+    MatDialogContent,
+    MatDialogActions,
     // NgxMatTimepicker
     NgxMatTimepickerContentComponent,
     NgxMatTimepickerDialComponent,
