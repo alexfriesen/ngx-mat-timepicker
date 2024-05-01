@@ -6,6 +6,12 @@
   padding-top: 56px;
 }
 
+.logo {
+  width: 26px;
+  height: 26px;
+  margin-right: 0.5rem;
+}
+
 .ngx-mtp-header {
   display: flex;
   align-items: center;
@@ -77,15 +83,15 @@
   &:before {
     content: '';
     position: absolute;
-    background-image: url(../../../assets/angular-white-transparent.svg);
+    background-image: url(../../../assets/angular.svg);
     background-size: contain;
-    bottom: 0;
+    top: 0;
     right: 150px;
     background-repeat: no-repeat;
     background-position: center;
     opacity: 0.2;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
 
     @include respond-below(sm) {
       right: calc(50% - 100px);
@@ -184,7 +190,7 @@ footer {
 }
 
 .terminal::before {
-  content: "\2022 \2022 \2022";
+  content: '\2022 \2022 \2022';
   position: absolute;
   z-index: 1;
   top: 0;

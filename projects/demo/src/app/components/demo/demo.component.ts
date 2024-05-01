@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateTime } from 'luxon';
 
@@ -23,6 +23,8 @@ import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 interface NgxMatTimepickerTheme {
   description: string;
   value: string;
+  dark: boolean;
+  hexColor: string;
 }
 
 @Component({
@@ -35,10 +37,10 @@ interface NgxMatTimepickerTheme {
     MatButtonModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
+    MatIcon,
+    MatInput,
     MatMenuModule,
-    MatToolbarModule,
+    MatToolbar,
     NgxMatTimepickerDirective,
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
@@ -79,8 +81,8 @@ export class DemoComponent implements OnInit {
   );
 
   readonly themes: NgxMatTimepickerTheme[] = [
-    { value: '', description: 'Light' },
-    { value: 'dark-theme', description: 'Dark' },
+    { value: '', description: 'Light', hexColor: '#fff', dark: false },
+    { value: 'dark-theme', description: 'Dark', hexColor: '#444', dark: true },
   ];
   @ViewChild('pickerH') pickerFreeInput: NgxMatTimepickerComponent;
   selectedTheme: NgxMatTimepickerTheme;
