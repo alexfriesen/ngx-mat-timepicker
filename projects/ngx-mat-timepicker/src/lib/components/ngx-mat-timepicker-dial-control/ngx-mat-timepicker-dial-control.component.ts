@@ -119,7 +119,7 @@ export class NgxMatTimepickerDialControlComponent
   }
 
   private _addTime(amount: number): string {
-    return `0${+this.time + amount}`.substr(-2);
+    return `${+this.time + amount}`.padStart(2, '0');
   }
 
   private _changeTimeByArrow(keyCode: number): void {

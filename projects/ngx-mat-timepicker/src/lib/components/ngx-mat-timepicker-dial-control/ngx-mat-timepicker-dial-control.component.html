@@ -1,7 +1,7 @@
 @if (!isEditable) {
   <input
     readonly
-    class="timepicker-dial__control timepicker-dial__item"
+    class="control"
     [class.active]="isActive"
     [ngModel]="time | timeLocalizer: timeUnit : true"
     [disabled]="disabled"
@@ -12,7 +12,7 @@
   />
 } @else {
   <input
-    class="timepicker-dial__control timepicker-dial__item timepicker-dial__control_editable"
+    class="control"
     [class.active]="isActive"
     [ngModel]="
       time | ngxMatTimepickerParser: timeUnit | timeLocalizer: timeUnit : true

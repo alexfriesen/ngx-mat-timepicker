@@ -1,39 +1,40 @@
+.dial {
+  text-align: center;
+}
 
-.timepicker-dial {
-    text-align: center;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 
-    &__container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
+.time {
+  display: flex;
+  align-items: center;
+  line-height: normal;
+  font-size: 3em;
+}
 
-    &__time {
-        display: flex;
-        align-items: baseline;
-        line-height: normal;
-        font-size: 50px;
-    }
+.period {
+  display: block;
+}
 
-    &__period {
-        display: block;
-        margin-left: 10px;
-    }
+.hint-hidden {
+  visibility: hidden;
+}
 
-    &__hint-container {
-        &--hidden {
-            visibility: hidden;
-        }
-    }
+.hint {
+  display: inline-block;
+  font-size: 10px;
 
-    &__hint {
-        display: inline-block;
-        font-size: 10px;
+  span {
+    font-size: 14px;
+  }
+}
 
-        span {
-            font-size: 14px;
-        }
-    }
-
+.seperator {
+  width: 1.5rem;
+  font-weight: 500;
 }

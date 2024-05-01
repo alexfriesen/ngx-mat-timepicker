@@ -1,17 +1,28 @@
+.active {
+  background-color: var(
+    --mat-standard-button-toggle-selected-state-background-color
+  );
+}
 
-.timepicker-dial__control {
+.control {
   border: none;
-  background-color: transparent;
-  font-size: 50px;
-  width: 60px;
-  padding: 0;
-  border-radius: 3px;
-  text-align: center;
+  border-radius: 0.5rem;
+  background-color: var(--mdc-filled-text-field-container-color);
+  transition: background-color 0.2s;
+
+  font-size: inherit;
   color: inherit; // Forces color inheritance because input may have user agent style
+  text-align: center;
+
+  width: 6rem;
+  height: 100%;
+  padding: 1rem;
 
   &:focus {
-    outline: none;
-    background-color: rgba(0, 0, 0, 0.1);
+    outline-color: var(--mdc-filled-text-field-focus-active-indicator-color);
+    background-color: var(
+      --mat-standard-button-toggle-selected-state-background-color
+    );
   }
 
   &:disabled {
