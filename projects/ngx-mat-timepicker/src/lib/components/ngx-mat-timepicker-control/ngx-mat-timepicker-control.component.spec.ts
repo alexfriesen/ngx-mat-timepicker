@@ -6,7 +6,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
@@ -22,8 +22,9 @@ describe('NgxMatTimepickerControlComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule],
       providers: [
+        provideNoopAnimations(),
+
         { provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: 'ar-AE' },
         { provide: NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM, useValue: 'arab' },
         NgxMatTimepickerParserPipe,

@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
+
 import { DemoComponent } from './demo.component';
-import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { injectIcons } from '../../utils/inject-icons';
 
 describe('DemoComponent', () => {
   let component: DemoComponent;
@@ -9,17 +12,20 @@ describe('DemoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        NativeDateModule,
-        MatNativeDateModule,
-
-        DemoComponent,
+      providers: [
+        provideNoopAnimations(),
+        provideHttpClient(),
+        provideNativeDateAdapter(),
       ],
+      imports: [DemoComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    TestBed.runInInjectionContext(() => {
+      injectIcons();
+    });
+
     fixture = TestBed.createComponent(DemoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

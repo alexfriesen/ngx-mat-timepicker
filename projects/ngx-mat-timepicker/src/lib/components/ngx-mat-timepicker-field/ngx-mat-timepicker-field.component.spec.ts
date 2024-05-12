@@ -6,7 +6,8 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerFieldComponent } from './ngx-mat-timepicker-field.component';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
@@ -15,8 +16,6 @@ import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-
 import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 
-import { DateTime } from 'luxon';
-
 describe('NgxMatTimepickerFieldComponent', () => {
   let component: NgxMatTimepickerFieldComponent;
   let fixture: ComponentFixture<NgxMatTimepickerFieldComponent>;
@@ -24,8 +23,11 @@ describe('NgxMatTimepickerFieldComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NgxMatTimepickerFieldComponent],
-      providers: [{ provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: 'en-US' }],
+      imports: [NgxMatTimepickerFieldComponent],
+      providers: [
+        provideNoopAnimations(),
+        { provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: 'en-US' },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     });
   });
