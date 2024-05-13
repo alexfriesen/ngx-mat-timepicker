@@ -53,9 +53,6 @@
             "index": "projects/demo/src/index.html",
             "browser": "projects/demo/src/main.ts",
             "server": "projects/demo/src/main.server.ts",
-            "polyfills": [
-              "zone.js"
-            ],
             "tsConfig": "projects/demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
