@@ -1,10 +1,10 @@
-<div class="ngx-mat-timepicker" [class.ngx-mat-timepicker--disabled]="disabled">
+<div class="field-group" [class.disabled]="disabled">
   <ngx-mat-timepicker-time-control
-    class="ngx-mat-timepicker__control--first"
+    class="first"
     [color]="color()"
     [floatLabel]="floatLabel()"
     [placeholder]="'HH'"
-    [time]="hour$.getValue()?.time"
+    [time]="hour()?.time"
     [min]="minHour"
     [max]="maxHour"
     [timeUnit]="timeUnit.HOUR"
@@ -13,13 +13,15 @@
     [preventTyping]="isTimeRangeSet"
     (timeChanged)="changeHour($event)"
   />
-  <span class="separator-colon ngx-mat-timepicker__control--second">:</span>
+  <div class="wrapped-field">
+    <span class="separator-colon second">:</span>
+  </div>
   <ngx-mat-timepicker-time-control
-    class="ngx-mat-timepicker__control--third"
+    class="third"
     [color]="color()"
     [floatLabel]="floatLabel()"
     [placeholder]="'MM'"
-    [time]="minute$.getValue()?.time"
+    [time]="minute()?.time"
     [min]="0"
     [max]="59"
     [timeUnit]="timeUnit.MINUTE"
@@ -29,10 +31,7 @@
     (timeChanged)="changeMinute($event)"
   />
   @if (format !== 24) {
-    <mat-form-field
-      class="period-select ngx-mat-timepicker__control--forth"
-      [color]="color()"
-    >
+    <mat-form-field class="period-select forth" [color]="color()">
       <mat-select
         [ngModel]="period"
         [disabled]="disabled || isChangePeriodDisabled"
@@ -45,17 +44,20 @@
     </mat-form-field>
   }
   @if (!controlOnly) {
-    <ngx-mat-timepicker-toggle
-      class="ngx-mat-timepicker__toggle"
-      [for]="timepicker"
-      [disabled]="disabled"
-    >
-      <span ngxMatTimepickerToggleIcon>
-        <ng-container *ngTemplateOutlet="toggleIcon || defaultIcon" />
-      </span>
-    </ngx-mat-timepicker-toggle>
+    <div class="wrapped-field">
+      <ngx-mat-timepicker-toggle
+        class="ngx-mat-timepicker__toggle"
+        [for]="timepicker"
+        [disabled]="disabled"
+      >
+        <span ngxMatTimepickerToggleIcon>
+          <ng-container *ngTemplateOutlet="toggleIcon || defaultIcon" />
+        </span>
+      </ngx-mat-timepicker-toggle>
+    </div>
   }
 </div>
+
 <ngx-mat-timepicker
   #timepicker
   [color]="color()"

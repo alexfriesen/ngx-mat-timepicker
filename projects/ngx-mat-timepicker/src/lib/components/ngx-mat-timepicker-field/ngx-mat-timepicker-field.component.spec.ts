@@ -296,8 +296,8 @@ describe('NgxMatTimepickerFieldComponent', () => {
 
     expect(component.timepickerTime.toLowerCase()).toBe('2:05 am');
     expect(spy).toHaveBeenCalledWith('2:05 AM');
-    component.hour$.subscribe((hour) => expect(hour.time).toBe(2));
-    component.minute$.subscribe((minute) => expect(minute.time).toBe(5));
+    expect(component.hour().time).toBe(2);
+    expect(component.minute().time).toBe(5);
   }));
 
   describe('Time range', () => {

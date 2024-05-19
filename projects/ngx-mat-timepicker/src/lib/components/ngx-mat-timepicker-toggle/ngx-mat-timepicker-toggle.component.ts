@@ -13,14 +13,13 @@ import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepic
 })
 export class NgxMatTimepickerToggleComponent {
   @Input()
-  get disabled(): boolean {
-    return this._disabled === void 0
-      ? this.timepicker?.disabled
-      : this._disabled;
-  }
-
   set disabled(value: boolean) {
     this._disabled = value;
+  }
+  get disabled(): boolean {
+    return this._disabled === undefined
+      ? this.timepicker?.disabled
+      : this._disabled;
   }
 
   @ContentChild(NgxMatTimepickerToggleIconDirective, { static: true })

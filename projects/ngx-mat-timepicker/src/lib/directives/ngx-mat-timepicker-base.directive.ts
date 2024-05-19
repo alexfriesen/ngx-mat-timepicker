@@ -7,7 +7,6 @@ import {
   OnInit,
   model,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ThemePalette } from '@angular/material/core';
 import { Subject } from 'rxjs';
 import { shareReplay, takeUntil } from 'rxjs/operators';
@@ -45,20 +44,20 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
     return this._timepickerLocaleSrv.locale;
   }
 
-  readonly selectedHour$ = this._timepickerSrv.selectedHour.pipe(
+  readonly selectedHour = this._timepickerSrv.hour;
+  readonly selectedHour$ = this._timepickerSrv.hour$.pipe(
     shareReplay({ bufferSize: 1, refCount: true }),
   );
-  readonly selectedHour = toSignal(this.selectedHour$);
 
-  readonly selectedMinute$ = this._timepickerSrv.selectedMinute.pipe(
+  readonly selectedMinute = this._timepickerSrv.minute;
+  readonly selectedMinute$ = this._timepickerSrv.minute$.pipe(
     shareReplay({ bufferSize: 1, refCount: true }),
   );
-  readonly selectedMinute = toSignal(this.selectedMinute$);
 
-  readonly selectedPeriod$ = this._timepickerSrv.selectedPeriod.pipe(
+  readonly selectedPeriod = this._timepickerSrv.period;
+  readonly selectedPeriod$ = this._timepickerSrv.period$.pipe(
     shareReplay({ bufferSize: 1, refCount: true }),
   );
-  readonly selectedPeriod = toSignal(this.selectedPeriod$);
 
   activeTimeUnit: NgxMatTimepickerUnits = NgxMatTimepickerUnits.HOUR;
   timeUnit: typeof NgxMatTimepickerUnits = NgxMatTimepickerUnits;
@@ -77,7 +76,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
   }
 
   changePeriod(period: NgxMatTimepickerPeriods): void {
-    this._timepickerSrv.period = period;
+    this._timepickerSrv.setPeriod(period);
     this._onTimeChange();
   }
 
@@ -97,7 +96,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._defineTime();
 
-    this.data.timepickerBaseRef.timeUpdated
+    this.data.timepickerBaseRef.timeUpdated$
       .pipe(takeUntil(this._subsCtrl$))
       .subscribe({
         next: (v: string) => {
@@ -107,7 +106,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
   }
 
   onHourChange(hour: NgxMatTimepickerClockFace): void {
-    this._timepickerSrv.hour = hour;
+    this._timepickerSrv.setHour(hour);
     this._onTimeChange();
   }
 
@@ -125,7 +124,7 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
   }
 
   onMinuteChange(minute: NgxMatTimepickerClockFace): void {
-    this._timepickerSrv.minute = minute;
+    this._timepickerSrv.setMinute(minute);
     this._onTimeChange();
   }
 

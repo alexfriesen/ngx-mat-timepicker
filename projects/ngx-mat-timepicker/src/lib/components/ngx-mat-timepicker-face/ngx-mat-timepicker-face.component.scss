@@ -1,6 +1,8 @@
-ngx-mat-timepicker-face {
+:host {
   button[mat-mini-fab] {
     --mdc-fab-small-container-shape: 999px;
+    --mdc-fab-small-hover-container-elevation-shadow: none;
+    --mat-fab-small-state-layer-color: transparent;
   }
 
   [mat-mini-fab].mat-unthemed {

@@ -5,6 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
   output,
+  booleanAttribute,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -43,11 +44,14 @@ export class NgxMatTimepickerDialControlComponent
     return undefined;
   }
 
-  @Input() disabled: boolean;
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
-  @Input() isActive: boolean;
+  @Input({ transform: booleanAttribute })
+  isActive: boolean;
 
-  @Input() isEditable: boolean;
+  @Input({ transform: booleanAttribute })
+  isEditable: boolean;
 
   @Input() minutesGap: number;
 

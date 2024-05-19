@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  booleanAttribute,
   input,
   output,
 } from '@angular/core';
@@ -58,14 +59,15 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
   readonly color = input<ThemePalette>('primary');
   readonly floatLabel = input<FloatLabelType>('auto');
 
-  @Input() disabled: boolean;
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
   id: number = NgxMatTimepickerControlComponent.nextId++;
   isFocused: boolean;
   @Input() max: number;
   @Input() min: number;
   @Input() placeholder: string;
-  @Input() preventTyping: boolean;
+  @Input({ transform: booleanAttribute }) preventTyping: boolean;
 
   @Input() time: number;
 

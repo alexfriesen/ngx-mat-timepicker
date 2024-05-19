@@ -6,5 +6,5 @@ export interface NgxMatTimepickerRef {
   hourSelected: EventEmitter<number> | OutputEmitterRef<number>;
   timeChanged: EventEmitter<string> | OutputEmitterRef<string>;
   timeSet: EventEmitter<string> | OutputEmitterRef<string>;
-  timeUpdated: Observable<string>;
+  timeUpdated$: Observable<string>;
 }

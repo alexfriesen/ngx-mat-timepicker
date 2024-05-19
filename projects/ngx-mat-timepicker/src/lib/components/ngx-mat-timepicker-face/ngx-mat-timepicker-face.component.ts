@@ -9,7 +9,6 @@ import {
   OnDestroy,
   SimpleChanges,
   ViewChild,
-  ViewEncapsulation,
   output,
 } from '@angular/core';
 import { NgTemplateOutlet, SlicePipe } from '@angular/common';
@@ -68,7 +67,6 @@ const CLOCK_HAND_STYLES = {
   templateUrl: './ngx-mat-timepicker-face.component.html',
   styleUrls: ['./ngx-mat-timepicker-face.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     NgTemplateOutlet,

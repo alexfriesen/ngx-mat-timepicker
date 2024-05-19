@@ -9,19 +9,19 @@ import {
   OnDestroy,
   SimpleChanges,
   Optional,
+  booleanAttribute,
 } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { MatFormField } from '@angular/material/form-field';
-//
+import { Subject, takeUntil } from 'rxjs';
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
 import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerAdapter } from '../services/ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
-//
-import { Subject, takeUntil } from 'rxjs';
-import { DateTime } from 'luxon';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -165,8 +165,11 @@ export class NgxMatTimepickerDirective
         ? this._matFormField.getConnectedOverlayOrigin()
         : this._elementRef,
     );
-  @Input() disableClick: boolean;
-  @Input() disabled: boolean;
+
+  @Input({ transform: booleanAttribute })
+  disableClick: boolean;
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
   private _format: NgxMatTimepickerFormatType = 12;
   private _max: string | DateTime;
