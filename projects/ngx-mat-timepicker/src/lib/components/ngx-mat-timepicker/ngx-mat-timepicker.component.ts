@@ -32,17 +32,19 @@ let config: NgxMatTimepickerConfig;
 
 @Component({
   selector: 'ngx-mat-timepicker',
-  template: `<ng-template
-    cdkConnectedOverlay
-    cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
-    [cdkConnectedOverlayOpen]="showPicker"
-    [cdkConnectedOverlayOrigin]="overlayOrigin"
-    [cdkConnectedOverlayPositions]="overlayPositions"
-    [cdkConnectedOverlayHasBackdrop]="true"
-    (backdropClick)="close()"
-  >
-    <ngx-mat-timepicker-standalone />
-  </ng-template>`,
+  template: `
+    <ng-template
+      cdkConnectedOverlay
+      cdkConnectedOverlayHasBackdrop
+      cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+      [cdkConnectedOverlayOpen]="showPicker"
+      [cdkConnectedOverlayOrigin]="overlayOrigin"
+      [cdkConnectedOverlayPositions]="overlayPositions"
+      (backdropClick)="close()"
+    >
+      <ngx-mat-timepicker-standalone />
+    </ng-template>
+  `,
   providers: [
     {
       provide: NGX_MAT_TIMEPICKER_CONFIG,
