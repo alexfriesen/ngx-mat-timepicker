@@ -1,3 +1,11 @@
+:host {
+  display: block;
+  background-color: var(--mat-datepicker-calendar-container-background-color);
+  color: var(--mat-datepicker-calendar-container-text-color);
+  box-shadow: var(--mat-datepicker-calendar-container-elevation-shadow);
+  border-radius: var(--mat-datepicker-calendar-container-shape);
+}
+
 [mat-dialog-content] {
   max-height: 85vh;
 }

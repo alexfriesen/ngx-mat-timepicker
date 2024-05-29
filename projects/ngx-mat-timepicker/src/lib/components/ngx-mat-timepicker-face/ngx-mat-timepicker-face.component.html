@@ -79,10 +79,9 @@
       }
     </div>
   }
-  <mat-toolbar
+  <div
     #clockHand
     class="clock-face__clock-hand"
-    [color]="color"
     [class.clock-face__clock-hand_minute]="unit === timeUnit.MINUTE"
     [hidden]="isClockFaceDisabled"
   >
@@ -91,6 +90,6 @@
         <span class="clock-face__clock-hand_minute_dot"></span>
       </button>
     }
-  </mat-toolbar>
-  <mat-toolbar class="clock-face__center" [color]="color"></mat-toolbar>
+  </div>
+  <div class="clock-face__center"></div>
 </div>
