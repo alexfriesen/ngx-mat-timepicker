@@ -59,15 +59,15 @@ export class DemoComponent implements OnInit {
   }
 
   npmPackage = '@alexfriesen/ngx-mat-timepicker';
-  npmLink: string = `https://www.npmjs.com/package/${this.npmPackage}`;
-  githubLink: string = `https://github.com/alexfriesen/ngx-mat-timepicker`;
+  npmLink = `https://www.npmjs.com/package/${this.npmPackage}`;
+  githubLink = `https://github.com/alexfriesen/ngx-mat-timepicker`;
 
-  maxTime: DateTime = DateTime.local().startOf('day').set({
+  maxTime = DateTime.local().startOf('day').set({
     hour: 16,
     minute: 20,
   });
 
-  minTime: DateTime = this.maxTime.set({ hour: 14 });
+  minTime = this.maxTime.set({ hour: 14 });
 
   myLocaleKeys = ['en', 'it', 'es', 'fr'];
   myLocalesMaps: Record<string, string> = {
@@ -99,11 +99,11 @@ export class DemoComponent implements OnInit {
       H: undefined,
     };
 
-  showInput: boolean = true;
-  timeRegex: RegExp = /([0-9]|1\d):[0-5]\d (AM|PM)/;
-  year: number = new Date().getFullYear();
+  showInput = true;
+  timeRegex = /([0-9]|1\d):[0-5]\d (AM|PM)/;
+  year = new Date().getFullYear();
 
-  private _nextLocale: number = 0;
+  private _nextLocale = 0;
 
   ngOnInit(): void {
     this.selectedTheme = this.themes[0];
@@ -125,7 +125,9 @@ export class DemoComponent implements OnInit {
     this.localeOverrideSrv.updateLocale(
       this.myLocalesMaps[this.myLocaleKeys[++this._nextLocale]],
     );
-    this._nextLocale >= this.myLocaleKeys.length - 1 && (this._nextLocale = -1);
+    if (this._nextLocale >= this.myLocaleKeys.length - 1) {
+      this._nextLocale = -1;
+    }
   }
 
   updateTheme(theme: NgxMatTimepickerTheme): void {

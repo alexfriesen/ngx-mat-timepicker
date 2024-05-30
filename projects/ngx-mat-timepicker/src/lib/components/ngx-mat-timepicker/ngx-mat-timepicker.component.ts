@@ -59,10 +59,10 @@ let config: NgxMatTimepickerConfig;
 export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   private readonly _dialog = inject(MatDialog);
 
-  static nextId: number = 0;
+  static nextId = 0;
 
   @Input({ transform: booleanAttribute })
-  appendToInput: boolean = false;
+  appendToInput = false;
 
   color = input<ThemePalette>('primary');
 
@@ -141,7 +141,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   readonly timeChanged = output<string>();
   readonly hourSelected = output<number>();
 
-  @HostBinding('id') id: string =
+  @HostBinding('id') id =
     `ngx_mat_timepicker_${++NgxMatTimepickerComponent.nextId}`;
 
   overlayPositions: ConnectedPosition[] = [
@@ -160,7 +160,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       offsetY: 0,
     },
   ];
-  showPicker: boolean = false;
+  showPicker = false;
   timeUpdated$ = new BehaviorSubject<string>(undefined); // used in the dialog, check if a better approach can be used
 
   private _dialogRef: MatDialogRef<NgxMatTimepickerDialogComponent, void>;

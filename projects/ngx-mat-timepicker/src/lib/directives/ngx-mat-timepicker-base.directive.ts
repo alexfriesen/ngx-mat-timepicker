@@ -23,7 +23,6 @@ import { NgxMatTimepickerConfig } from '../models/ngx-mat-timepicker-config.inte
 import { NGX_MAT_TIMEPICKER_CONFIG } from '../tokens/ngx-mat-timepicker-config.token';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxMatTimepickerBase]',
   standalone: true,
 })
@@ -100,7 +99,9 @@ export class NgxMatTimepickerBaseDirective implements OnInit, OnDestroy {
       .pipe(takeUntil(this._subsCtrl$))
       .subscribe({
         next: (v: string) => {
-          v && this._setDefaultTime(v);
+          if (v) {
+            this._setDefaultTime(v);
+          }
         },
       });
   }

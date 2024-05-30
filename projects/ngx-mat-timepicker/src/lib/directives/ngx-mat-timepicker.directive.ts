@@ -24,7 +24,6 @@ import { NgxMatTimepickerAdapter } from '../services/ngx-mat-timepicker-adapter'
 import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxMatTimepicker]',
   providers: [
     {
@@ -33,7 +32,6 @@ import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-lo
       multi: true,
     },
   ],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[disabled]': 'disabled',
     '(blur)': 'onTouched()',
@@ -177,7 +175,7 @@ export class NgxMatTimepickerDirective
   private _previousFormat: number;
   private _subsCtrl$: Subject<void> = new Subject<void>();
   private _timepicker: NgxMatTimepickerComponent;
-  private _value: string = '';
+  private _value = '';
 
   constructor(
     private _elementRef: ElementRef,
@@ -206,7 +204,9 @@ export class NgxMatTimepickerDirective
     }
   }
 
-  onTouched = () => {};
+  onTouched = () => {
+    // ignore
+  };
 
   registerOnChange(fn: (value: string) => void): void {
     this._onChange = fn;
@@ -233,7 +233,9 @@ export class NgxMatTimepickerDirective
     }
   }
 
-  private _onChange: (value: string) => void = () => {};
+  private _onChange: (value: string) => void = () => {
+    // ignore
+  };
 
   private _registerTimepicker(picker: NgxMatTimepickerComponent): void {
     if (picker) {

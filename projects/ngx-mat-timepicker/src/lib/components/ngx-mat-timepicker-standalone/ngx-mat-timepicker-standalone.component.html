@@ -83,6 +83,7 @@
   </ngx-mat-timepicker-content>
 
   <div class="ngx-mat-timepicker-standalone-actions">
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div (click)="close()">
       <ng-container
         *ngTemplateOutlet="
@@ -90,6 +91,7 @@
         "
       />
     </div>
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div (click)="setTime()">
       <ng-container
         *ngTemplateOutlet="

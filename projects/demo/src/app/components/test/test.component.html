@@ -16,13 +16,13 @@
     <p>Dynamic locale (v >= 12.2.0)</p>
     <p>
       @for (locale of myLocaleKeys; track locale; let last = $last) {
-        <span
+        <button
           class="locale"
           [class.active]="locale === currentLocaleKey"
           (click)="updateLocale(locale)"
         >
           {{ locale }}
-        </span>
+        </button>
 
         @if (!last) {
           <span class="separator"> | </span>

@@ -13,7 +13,7 @@ import {
 // @dynamic
 export class NgxMatTimepickerAdapter {
   static defaultFormat: NgxMatTimepickerFormatType = 12;
-  static defaultLocale: string = 'en-US';
+  static defaultLocale = 'en-US';
   static defaultNumberingSystem: NumberingSystem = 'latn';
 
   /***

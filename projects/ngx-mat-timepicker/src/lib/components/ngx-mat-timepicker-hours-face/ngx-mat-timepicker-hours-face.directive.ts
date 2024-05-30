@@ -8,7 +8,6 @@ import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-form
 import { getHours } from '../../utils/ngx-mat-timepicker.utils';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxMatTimepickerHoursFace]',
   standalone: true,
 })

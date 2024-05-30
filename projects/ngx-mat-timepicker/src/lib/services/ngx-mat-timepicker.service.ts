@@ -69,7 +69,9 @@ export class NgxMatTimepickerService {
     format: number,
     minutesGap?: number,
   ) {
-    time || this._resetTime();
+    if (!time) {
+      this._resetTime();
+    }
     /* Workaround to double error message*/
     try {
       if (

@@ -19,7 +19,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   selector: 'ngx-mat-timepicker-standalone',
   templateUrl: 'ngx-mat-timepicker-standalone.component.html',
   styleUrls: ['ngx-mat-timepicker-standalone.component.scss'],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     class: 'mat-app-background',
   },

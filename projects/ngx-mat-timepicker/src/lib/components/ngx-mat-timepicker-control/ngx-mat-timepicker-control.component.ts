@@ -54,7 +54,7 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
   ],
 })
 export class NgxMatTimepickerControlComponent implements OnChanges {
-  static nextId: number = 0;
+  static nextId = 0;
 
   readonly color = input<ThemePalette>('primary');
   readonly floatLabel = input<FloatLabelType>('auto');

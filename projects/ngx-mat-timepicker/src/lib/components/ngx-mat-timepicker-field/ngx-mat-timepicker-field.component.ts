@@ -181,7 +181,7 @@ export class NgxMatTimepickerFieldComponent
   private _defaultTime: string;
   private _format: NgxMatTimepickerFormatType = 12;
   private _isDefaultTime: boolean;
-  private _isFirstTimeChange: boolean = true;
+  private _isFirstTimeChange = true;
   private _max: DateTime;
   private _min: DateTime;
   private _previousFormat: number;
@@ -363,8 +363,12 @@ export class NgxMatTimepickerFieldComponent
     ).every((time) => time.disabled);
   }
 
-  private _onChange: (value: string) => void = () => {};
-  private _onTouched: (value: string) => void = () => {};
+  private _onChange: (value: string) => void = () => {
+    // ignore
+  };
+  private _onTouched: (value: string) => void = () => {
+    // ignore
+  };
 
   private _resetTime(): void {
     this._timepickerService.setHour({ angle: 0, time: null });

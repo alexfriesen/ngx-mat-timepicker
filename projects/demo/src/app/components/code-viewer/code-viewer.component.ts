@@ -18,7 +18,7 @@ import * as Prism from 'prismjs';
 export class CodeViewerComponent implements OnInit {
   private readonly document = inject(DOCUMENT, { optional: true });
 
-  showCode: boolean = false;
+  showCode = false;
 
   ngOnInit(): void {
     const $code = this.document?.querySelector(`code`);

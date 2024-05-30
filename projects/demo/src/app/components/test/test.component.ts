@@ -50,7 +50,7 @@ import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
   ],
 })
 export class NgxMatTimepickerTestDialogComponent {
-  date: string = '2:00';
+  date = '2:00';
 }
 
 @Component({
@@ -69,19 +69,23 @@ export class NgxMatTimepickerTestDialogComponent {
 export class TestComponent extends DemoComponent {
   private _matDialog = inject(MatDialog);
 
-  formControlItem: FormControl = new FormControl('', [
+  formControlItem = new FormControl('', [
     Validators.pattern(/([0-9]|[1-2]\d):[0-5]\d/),
   ]);
-  time: string = '00:00';
-  @ViewChild('timepicker') timepicker: NgxMatTimepickerComponent;
+
+  time = '00:00';
+
+  @ViewChild('timepicker')
+  timepicker: NgxMatTimepickerComponent;
 
   onClear() {
     this.formControlItem.setValue(null);
   }
 
   onFieldBlur(): void {
-    this.formControlItem.valid &&
+    if (this.formControlItem.valid) {
       this.pickerFreeInput.updateTime(this.formControlItem.value);
+    }
   }
 
   openDialog() {
