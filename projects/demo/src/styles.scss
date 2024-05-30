@@ -3,10 +3,10 @@
 @import "scss/themes";
 @import "scss/core";
 
-$primary-color: mat.get-color-from-palette($candy-app-primary);
-$accent-color: mat.get-color-from-palette($candy-app-accent);
-$primary-color-dark: mat.get-color-from-palette($dark-primary);
-$accent-color-dark: mat.get-color-from-palette($dark-accent);
+$primary-color: mat.get-theme-color($light-theme, primary, 20);
+$accent-color: mat.get-theme-color($light-theme, tertiary, 20);
+$primary-color-dark: mat.get-theme-color($dark-theme, primary, 20);
+$accent-color-dark: mat.get-theme-color($dark-theme, tertiary, 20);
 
 body {
 	margin: 0;
@@ -99,8 +99,8 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 }
 
 .ngx-mtp-top, footer {
-	background-color: $primary-color;
-	color: mat.get-color-from-palette($candy-app-primary, default-contrast);
+	background-color: mat.get-theme-color($light-theme, primary-container);
+	color: mat.get-theme-color($light-theme, on-primary-container);
 }
 
 .mat-color-primary {
@@ -112,7 +112,7 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 }
 
 .mat-color-warn {
-	color: mat.get-color-from-palette($candy-app-warn);
+	// color: mat.get-color-from-palette($light-app-warn);
 }
 
 .ngx-mtp-margin-top {
@@ -126,9 +126,9 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 .ngx-mtp-box-bordered {
 	text-align: center;
 	min-height: 20px;
-	border-radius: 10px;
 	padding: 8px;
 	width: 100%;
+	border-radius: 12px;
 	border: 2px dashed $primary-color;
 }
 
@@ -147,18 +147,22 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 // @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 // Include the default theme styles.
-@include mat.all-component-themes($candy-app-theme);
+@include mat.core();
+:root {
+	@include mat.all-component-themes($light-theme);
+}
+@include mat.typography-hierarchy($light-theme);
 
 .dark-theme {
 	@include mat.all-component-colors($dark-theme);
 
 	a {
 		&.mat-color-primary {
-			color: $primary-color-dark;
-			border-bottom: 2px solid rgba(mat.get-color-from-palette($dark-primary), 0.25);
+			color: mat.get-theme-color($dark-theme, primary, 80);
+			border-bottom: 2px solid rgba(mat.get-theme-color($dark-theme, primary, 100), 0.25);
 
 			&:hover {
-				border-bottom: 2px solid rgba(mat.get-color-from-palette($dark-primary), 1);
+				border-bottom: 2px solid rgba(mat.get-theme-color($dark-theme, primary, 100), 1);
 			}
 		}
 
@@ -182,8 +186,8 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 	}
 
 	.ngx-mtp-top, footer {
-		background-color: $primary-color-dark;
-		color: mat.get-color-from-palette($dark-primary, default-contrast);
+		background-color: mat.get-theme-color($dark-theme, primary-container);
+		color: mat.get-theme-color($dark-theme, on-primary-container);
 	}
 
 	.mat-color-primary {
@@ -195,6 +199,6 @@ mat-icon.mat-icon.ngx-mtp-theme-example {
 	}
 
 	.mat-color-warn {
-		color: mat.get-color-from-palette($dark-warn);
+		// color: mat.get-color-from-palette($dark-warn);
 	}
 }

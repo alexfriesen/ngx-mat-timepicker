@@ -1,24 +1,27 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
-  Output,
   SimpleChanges,
+  booleanAttribute,
+  input,
+  output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 import { ThemePalette } from '@angular/material/core';
 import {
   FloatLabelType,
-  MatFormFieldModule,
+  MatFormField,
+  MatLabel,
+  MatSuffix,
 } from '@angular/material/form-field';
 
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { isDigit } from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
 
 function concatTime(currentTime: string, nextTime: string): number | undefined {
@@ -41,51 +44,38 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
   providers: [NgxMatTimepickerParserPipe],
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
     FormsModule,
+    MatFormField,
+    MatLabel,
+    MatSuffix,
+    MatInput,
     NgxMatTimepickerParserPipe,
     NgxMatTimepickerTimeLocalizerPipe,
   ],
 })
 export class NgxMatTimepickerControlComponent implements OnChanges {
-  static nextId: number = 0;
+  static nextId = 0;
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
+  readonly color = input<ThemePalette>('primary');
+  readonly floatLabel = input<FloatLabelType>('auto');
 
-  get color(): ThemePalette {
-    return this._color;
-  }
-
-  @Input() disabled: boolean;
-
-  @Input()
-  set floatLabel(newValue: FloatLabelType) {
-    this._floatLabel = newValue;
-  }
-
-  get floatLabel(): FloatLabelType {
-    return this._floatLabel;
-  }
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
   id: number = NgxMatTimepickerControlComponent.nextId++;
   isFocused: boolean;
   @Input() max: number;
   @Input() min: number;
   @Input() placeholder: string;
-  @Input() preventTyping: boolean;
+  @Input({ transform: booleanAttribute }) preventTyping: boolean;
 
   @Input() time: number;
 
-  @Output() timeChanged = new EventEmitter<number>();
   @Input() timeList: NgxMatTimepickerClockFace[];
   @Input() timeUnit: NgxMatTimepickerUnits;
 
-  private _color: ThemePalette = 'primary';
-  private _floatLabel: FloatLabelType = 'auto';
+  readonly timeChanged = output<number>();
+
   private _previousTime: number;
 
   constructor(private _timeParser: NgxMatTimepickerParserPipe) {}
@@ -165,7 +155,7 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
   onKeydown(event: KeyboardEvent): void {
     event.stopPropagation();
 
-    if (!NgxMatTimepickerUtils.isDigit(event)) {
+    if (!isDigit(event)) {
       event.preventDefault();
     }
 

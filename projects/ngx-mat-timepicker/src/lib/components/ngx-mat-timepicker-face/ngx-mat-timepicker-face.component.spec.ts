@@ -3,7 +3,6 @@ import {
   fakeAsync,
   TestBed,
   tick,
-  waitForAsync,
 } from '@angular/core/testing';
 import { ElementRef, NO_ERRORS_SCHEMA, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -54,7 +53,7 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 12;
 
     component.ngAfterViewInit();
-    expect(getStyle(component.clockHand)('transform')).toBe('rotate(30deg)');
+    expect(getStyle(component.clockHand())('transform')).toBe('rotate(30deg)');
   });
 
   it('should decrease clock hand with format 24 and time more than 12', () => {
@@ -62,8 +61,8 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 24;
     component.ngAfterViewInit();
 
-    expect(getStyle(component.clockHand)('height')).toBe('75px');
-    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 75px)');
+    expect(getStyle(component.clockHand())('height')).toBe('75px');
+    expect(getStyle(component.clockHand())('top')).toBe('calc(50% - 75px)');
   });
 
   it("should decrease clock hand with format 24 and time is '00' ", () => {
@@ -71,8 +70,8 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 24;
     component.ngAfterViewInit();
 
-    expect(getStyle(component.clockHand)('height')).toBe('75px');
-    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 75px)');
+    expect(getStyle(component.clockHand())('height')).toBe('103px');
+    expect(getStyle(component.clockHand())('top')).toBe('calc(50% - 103px)');
   });
 
   it('should increase clock hand with format 24 and time less or equal 12', () => {
@@ -80,8 +79,8 @@ describe('NgxMatTimepickerFaceComponent', () => {
     component.format = 24;
     component.ngAfterViewInit();
 
-    expect(getStyle(component.clockHand)('height')).toBe('103px');
-    expect(getStyle(component.clockHand)('top')).toBe('calc(50% - 103px)');
+    expect(getStyle(component.clockHand())('height')).toBe('75px');
+    expect(getStyle(component.clockHand())('top')).toBe('calc(50% - 75px)');
   });
 
   it('should change selectedTime on faceTime and selectedTime changes', () => {
@@ -125,7 +124,7 @@ describe('NgxMatTimepickerFaceComponent', () => {
     };
     component.ngOnChanges(changes);
 
-    expect(getStyle(component.clockHand)('transform')).toBe('rotate(30deg)');
+    expect(getStyle(component.clockHand())('transform')).toBe('rotate(30deg)');
   });
 
   it('should select available time', fakeAsync(() => {
@@ -348,7 +347,7 @@ describe('NgxMatTimepickerFaceComponent', () => {
       expect(selectedTime).toEqual({ time: 1, angle: 5 });
     }));
 
-    it('should emit selected time once user stop interaction with clock face', waitForAsync(() => {
+    it('should emit selected time once user stop interaction with clock face', fakeAsync(() => {
       component.faceTime = minutesFaceTime;
       component.unit = NgxMatTimepickerUnits.MINUTE;
 

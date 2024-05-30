@@ -9,21 +9,21 @@ import {
   OnDestroy,
   SimpleChanges,
   Optional,
+  booleanAttribute,
 } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { MatFormField } from '@angular/material/form-field';
-//
+import { Subject, takeUntil } from 'rxjs';
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerComponent } from '../components/ngx-mat-timepicker/ngx-mat-timepicker.component';
 import { NgxMatTimepickerFormatType } from '../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerAdapter } from '../services/ngx-mat-timepicker-adapter';
 import { NgxMatTimepickerLocaleService } from '../services/ngx-mat-timepicker-locale.service';
-//
-import { Subject, takeUntil } from 'rxjs';
-import { DateTime } from 'luxon';
 
 @Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[ngxMatTimepicker]',
   providers: [
     {
@@ -32,7 +32,6 @@ import { DateTime } from 'luxon';
       multi: true,
     },
   ],
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[disabled]': 'disabled',
     '(blur)': 'onTouched()',
@@ -164,8 +163,11 @@ export class NgxMatTimepickerDirective
         ? this._matFormField.getConnectedOverlayOrigin()
         : this._elementRef,
     );
-  @Input() disableClick: boolean;
-  @Input() disabled: boolean;
+
+  @Input({ transform: booleanAttribute })
+  disableClick: boolean;
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
   private _format: NgxMatTimepickerFormatType = 12;
   private _max: string | DateTime;
@@ -173,7 +175,7 @@ export class NgxMatTimepickerDirective
   private _previousFormat: number;
   private _subsCtrl$: Subject<void> = new Subject<void>();
   private _timepicker: NgxMatTimepickerComponent;
-  private _value: string = '';
+  private _value = '';
 
   constructor(
     private _elementRef: ElementRef,
@@ -202,7 +204,9 @@ export class NgxMatTimepickerDirective
     }
   }
 
-  onTouched = () => {};
+  onTouched = () => {
+    // ignore
+  };
 
   registerOnChange(fn: (value: string) => void): void {
     this._onChange = fn;
@@ -229,13 +233,15 @@ export class NgxMatTimepickerDirective
     }
   }
 
-  private _onChange: (value: string) => void = () => {};
+  private _onChange: (value: string) => void = () => {
+    // ignore
+  };
 
   private _registerTimepicker(picker: NgxMatTimepickerComponent): void {
     if (picker) {
       this._timepicker = picker;
       this._timepicker.registerInput(this);
-      this._timepicker.timeSet
+      outputToObservable(this._timepicker.timeSet)
         .pipe(takeUntil(this._subsCtrl$))
         .subscribe((time: string) => {
           this.value = time;

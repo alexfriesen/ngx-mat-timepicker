@@ -1,26 +1,30 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
   TemplateRef,
+  computed,
+  inject,
+  input,
+  output,
+  signal,
 } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { ThemePalette } from '@angular/material/core';
+import { DateTime, Info } from 'luxon';
 
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import {
+  disableHours,
+  disableMinutes,
+  getHours,
+  getMinutes,
+} from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerPeriodComponent } from '../ngx-mat-timepicker-period/ngx-mat-timepicker-period.component';
 import { NgxMatTimepickerDialControlComponent } from '../ngx-mat-timepicker-dial-control/ngx-mat-timepicker-dial-control.component';
-//
-import { DateTime, Info } from 'luxon';
 
 @Component({
   selector: 'ngx-mat-timepicker-dial',
@@ -34,108 +38,78 @@ import { DateTime, Info } from 'luxon';
     NgxMatTimepickerPeriodComponent,
   ],
 })
-export class NgxMatTimepickerDialComponent implements OnChanges {
-  @Input() activeTimeUnit: NgxMatTimepickerUnits;
+export class NgxMatTimepickerDialComponent {
+  private locale = inject(NgxMatTimepickerLocaleService).locale;
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-
-  get color(): ThemePalette {
-    return this._color;
-  }
-
-  get hourString() {
-    return `${this.hour}`;
-  }
-
-  get minuteString() {
-    return `${this.minute}`;
-  }
-
-  private get _locale(): string {
-    return this._localeSrv.locale;
-  }
-
-  @Input() editableHintTmpl: TemplateRef<Node>;
-  @Input() format: NgxMatTimepickerFormatType;
-  @Input() hour: number | string;
-  @Output() hourChanged = new EventEmitter<NgxMatTimepickerClockFace>();
-
-  hours: NgxMatTimepickerClockFace[];
-  @Input() hoursOnly: boolean;
-  @Input() isEditable: boolean;
-
-  isHintVisible: boolean;
-  @Input() maxTime: DateTime;
-  meridiems = Info.meridiems({ locale: this._locale });
-  @Input() minTime: DateTime;
-  @Input() minute: number | string;
-  @Output() minuteChanged = new EventEmitter<NgxMatTimepickerClockFace>();
-  minutes: NgxMatTimepickerClockFace[];
-  @Input() minutesGap: number;
-  @Input() period: NgxMatTimepickerPeriods;
-
-  @Output() periodChanged = new EventEmitter<NgxMatTimepickerPeriods>();
-
+  meridiems = Info.meridiems({ locale: this.locale });
   timeUnit = NgxMatTimepickerUnits;
-  @Output() timeUnitChanged = new EventEmitter<NgxMatTimepickerUnits>();
 
-  private _color: ThemePalette = 'primary';
+  readonly color = input<ThemePalette>('primary');
 
-  constructor(private _localeSrv: NgxMatTimepickerLocaleService) {}
+  readonly editableHintTmpl = input<TemplateRef<Node>>();
+  readonly format = input<NgxMatTimepickerFormatType>();
+  readonly hour = input<number | string>();
+  readonly minute = input<number | string>();
+  readonly minutesGap = input<number>();
+  readonly period = input<NgxMatTimepickerPeriods>();
+  readonly activeTimeUnit = input<NgxMatTimepickerUnits>();
+
+  readonly hoursOnly = input<boolean>();
+  readonly isEditable = input<boolean>();
+
+  readonly maxTime = input<DateTime>();
+  readonly minTime = input<DateTime>();
+
+  readonly isHintVisible = signal(false);
+
+  readonly hourString = computed(() => `${this.hour()}`);
+  readonly minuteString = computed(() => `${this.minute()}`);
+
+  readonly hours = computed(() => {
+    const hours = getHours(this.format());
+    return disableHours(hours, {
+      min: this.minTime(),
+      max: this.maxTime(),
+      format: this.format(),
+      period: this.period(),
+    });
+  });
+  readonly minutes = computed(() => {
+    const minutes = getMinutes(this.minutesGap());
+    return disableMinutes(minutes, +this.hour(), {
+      min: this.minTime(),
+      max: this.maxTime(),
+      format: this.format(),
+      period: this.period(),
+    });
+  });
+
+  readonly hourChanged = output<NgxMatTimepickerClockFace>();
+  readonly minuteChanged = output<NgxMatTimepickerClockFace>();
+  readonly periodChanged = output<NgxMatTimepickerPeriods>();
+  readonly timeUnitChanged = output<NgxMatTimepickerUnits>();
 
   changeHour(hour: NgxMatTimepickerClockFace): void {
-    this.hourChanged.next(hour);
+    this.hourChanged.emit(hour);
   }
 
   changeMinute(minute: NgxMatTimepickerClockFace): void {
-    this.minuteChanged.next(minute);
+    this.minuteChanged.emit(minute);
   }
 
   changePeriod(period: NgxMatTimepickerPeriods): void {
-    this.periodChanged.next(period);
+    this.periodChanged.emit(period);
   }
 
   changeTimeUnit(unit: NgxMatTimepickerUnits): void {
-    this.timeUnitChanged.next(unit);
+    this.timeUnitChanged.emit(unit);
   }
 
   hideHint(): void {
-    this.isHintVisible = false;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    const periodChanged = changes['period'] && changes['period'].currentValue;
-
-    if (
-      periodChanged ||
-      (changes['format'] && changes['format'].currentValue)
-    ) {
-      const hours = NgxMatTimepickerUtils.getHours(this.format);
-
-      this.hours = NgxMatTimepickerUtils.disableHours(hours, {
-        min: this.minTime,
-        max: this.maxTime,
-        format: this.format,
-        period: this.period,
-      });
-    }
-
-    if (periodChanged || (changes['hour'] && changes['hour'].currentValue)) {
-      const minutes = NgxMatTimepickerUtils.getMinutes(this.minutesGap);
-
-      this.minutes = NgxMatTimepickerUtils.disableMinutes(minutes, +this.hour, {
-        min: this.minTime,
-        max: this.maxTime,
-        format: this.format,
-        period: this.period,
-      });
-    }
+    this.isHintVisible.set(false);
   }
 
   showHint(): void {
-    this.isHintVisible = true;
+    this.isHintVisible.set(true);
   }
 }

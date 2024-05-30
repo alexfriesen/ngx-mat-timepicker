@@ -3,21 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   Input,
   OnChanges,
   OnDestroy,
-  Output,
   SimpleChanges,
-  ViewChild,
-  ViewEncapsulation,
+  output,
+  viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet, SlicePipe } from '@angular/common';
 import { ThemePalette } from '@angular/material/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-//
+import { MatMiniFabButton } from '@angular/material/button';
+
 import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
 import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
@@ -69,13 +66,11 @@ const CLOCK_HAND_STYLES = {
   templateUrl: './ngx-mat-timepicker-face.component.html',
   styleUrls: ['./ngx-mat-timepicker-face.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     NgTemplateOutlet,
     SlicePipe,
-    MatButtonModule,
-    MatToolbarModule,
+    MatMiniFabButton,
     NgxMatTimepickerActiveHourPipe,
     NgxMatTimepickerActiveMinutePipe,
     NgxMatTimepickerMinutesFormatterPipe,
@@ -85,30 +80,27 @@ const CLOCK_HAND_STYLES = {
 export class NgxMatTimepickerFaceComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
-  @ViewChild('clockFace', { static: true }) clockFace: ElementRef;
-  @ViewChild('clockHand', { static: true, read: ElementRef })
-  clockHand: ElementRef;
+  readonly clockFace = viewChild.required<ElementRef>('clockFace');
+  readonly clockHand = viewChild.required<ElementRef>('clockHand');
 
   @Input() color: ThemePalette = 'primary';
 
   @Input() faceTime: NgxMatTimepickerClockFace[];
 
+  @Input() unit: NgxMatTimepickerUnits;
   @Input() format: NgxMatTimepickerFormatType;
-
-  innerClockFaceSize = 85;
-  isClockFaceDisabled: boolean;
 
   @Input() minutesGap: number;
 
   @Input() selectedTime: NgxMatTimepickerClockFace;
 
-  @Output() timeChange = new EventEmitter<NgxMatTimepickerClockFace>();
+  readonly timeChange = output<NgxMatTimepickerClockFace>();
 
-  @Output() timeSelected = new EventEmitter<number>();
+  readonly timeSelected = output<number>();
 
+  innerClockFaceSize = 85;
+  isClockFaceDisabled: boolean;
   timeUnit = NgxMatTimepickerUnits;
-
-  @Input() unit: NgxMatTimepickerUnits;
 
   private _isStarted: boolean;
   private _touchEndHandler: (e: MouseEvent) => void;
@@ -167,11 +159,12 @@ export class NgxMatTimepickerFaceComponent
     if (!this._isStarted && e instanceof MouseEvent && e.type !== 'click') {
       return;
     }
-    const clockFaceCords = this.clockFace.nativeElement.getBoundingClientRect();
+    const clockFaceCords = this.clockFace().nativeElement.getBoundingClientRect();
 
     /* Get x0 and y0 of the circle */
     const centerX = clockFaceCords.left + clockFaceCords.width / 2;
     const centerY = clockFaceCords.top + clockFaceCords.height / 2;
+
     /* Counting the arctangent and convert it to from radian to deg */
     const arctangent =
       (Math.atan(
@@ -202,11 +195,11 @@ export class NgxMatTimepickerFaceComponent
     const selectedTime = this.faceTime.find((val) => val.angle === angle);
 
     if (selectedTime && !selectedTime.disabled) {
-      this.timeChange.next(selectedTime);
+      this.timeChange.emit(selectedTime);
 
       /* To let know whether user ended interaction with clock face */
       if (!this._isStarted) {
-        this.timeSelected.next(selectedTime.time);
+        this.timeSelected.emit(selectedTime.time);
       }
     }
   }
@@ -215,24 +208,24 @@ export class NgxMatTimepickerFaceComponent
     this._touchStartHandler = this.onMousedown.bind(this);
     this._touchEndHandler = this.onMouseup.bind(this);
 
-    this.clockFace.nativeElement.addEventListener(
+    this.clockFace().nativeElement.addEventListener(
       'touchstart',
       this._touchStartHandler,
     );
-    this.clockFace.nativeElement.addEventListener(
+    this.clockFace().nativeElement.addEventListener(
       'touchend',
       this._touchEndHandler,
     );
   }
 
   private _decreaseClockHand(): void {
-    this.clockHand.nativeElement.style.height = CLOCK_HAND_STYLES.small.height;
-    this.clockHand.nativeElement.style.top = CLOCK_HAND_STYLES.small.top;
+    this.clockHand().nativeElement.style.height = CLOCK_HAND_STYLES.small.height;
+    this.clockHand().nativeElement.style.top = CLOCK_HAND_STYLES.small.top;
   }
 
   private _increaseClockHand(): void {
-    this.clockHand.nativeElement.style.height = CLOCK_HAND_STYLES.large.height;
-    this.clockHand.nativeElement.style.top = CLOCK_HAND_STYLES.large.top;
+    this.clockHand().nativeElement.style.height = CLOCK_HAND_STYLES.large.height;
+    this.clockHand().nativeElement.style.top = CLOCK_HAND_STYLES.large.top;
   }
 
   private _isInnerClockFace(
@@ -249,11 +242,11 @@ export class NgxMatTimepickerFaceComponent
   }
 
   private _removeTouchEvents(): void {
-    this.clockFace.nativeElement.removeEventListener(
+    this.clockFace().nativeElement.removeEventListener(
       'touchstart',
       this._touchStartHandler,
     );
-    this.clockFace.nativeElement.removeEventListener(
+    this.clockFace().nativeElement.removeEventListener(
       'touchend',
       this._touchEndHandler,
     );
@@ -268,13 +261,13 @@ export class NgxMatTimepickerFaceComponent
     if (currentTime && currentTime.disabled && !this.isClockFaceDisabled) {
       const availableTime = this.faceTime.find((time) => !time.disabled);
 
-      this.timeChange.next(availableTime);
+      this.timeChange.emit(availableTime);
     }
   }
 
   private _setClockHandPosition(): void {
     if (NgxMatTimepickerAdapter.isTwentyFour(this.format)) {
-      if (this.selectedTime.time > 12 || this.selectedTime.time === 0) {
+      if (this.selectedTime.time > 11) {
         this._decreaseClockHand();
       } else {
         this._increaseClockHand();
@@ -282,7 +275,7 @@ export class NgxMatTimepickerFaceComponent
     }
 
     if (this.selectedTime) {
-      this.clockHand.nativeElement.style.transform = `rotate(${this.selectedTime.angle}deg)`;
+      this.clockHand().nativeElement.style.transform = `rotate(${this.selectedTime.angle}deg)`;
     }
   }
 }

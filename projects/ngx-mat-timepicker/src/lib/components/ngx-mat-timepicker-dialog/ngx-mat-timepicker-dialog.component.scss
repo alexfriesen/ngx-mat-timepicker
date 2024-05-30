@@ -1,32 +1,27 @@
-div.ngx-mat-timepicker-dialog {
-  > mat-dialog-container {
-    padding-top: 0;
-
-    [mat-dialog-content] {
-      padding: 0;
-      max-height: 85vh;
-
-      mat-toolbar.timepicker-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &.is-editable {
-          height: auto;
-        }
-      }
-
-      .clock-face {
-        margin: 16px;
-      }
-    }
-
-    div[mat-dialog-actions] {
-      justify-content: flex-end;
-      display: flex;
-    }
-  }
+:host {
+  display: block;
+  background-color: var(--mat-datepicker-calendar-container-background-color);
+  color: var(--mat-datepicker-calendar-container-text-color);
+  box-shadow: var(--mat-datepicker-calendar-container-elevation-shadow);
+  border-radius: var(--mat-datepicker-calendar-container-shape);
 }
 
+[mat-dialog-content] {
+  max-height: 85vh;
+}
 
+.timepicker {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
 
+.timepicker-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.is-editable {
+    height: auto;
+  }
+}

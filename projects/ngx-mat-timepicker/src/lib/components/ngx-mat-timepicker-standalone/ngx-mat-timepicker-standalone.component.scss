@@ -1,36 +1,41 @@
-ngx-mat-timepicker-standalone {
+:host {
   display: block;
-  border-radius: 4px;
-  box-shadow: 0 0 5px 2px rgb(0 0 0 / 25%);
   overflow: hidden;
+  padding: 1.5rem;
 
-  ngx-mat-timepicker-content {
-    display: block;
+  background-color: var(--mat-datepicker-calendar-container-background-color);
+  color: var(--mat-datepicker-calendar-container-text-color);
+  box-shadow: var(--mat-datepicker-calendar-container-elevation-shadow);
+  border-radius: var(--mat-datepicker-calendar-container-shape);
+}
 
-    mat-toolbar.timepicker-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+.timepicker {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
 
-      &.is-editable {
-        height: auto;
-      }
-    }
+ngx-mat-timepicker-content {
+  display: block;
 
-    .clock-face {
-      margin: 16px;
+  .timepicker-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.is-editable {
+      height: auto;
     }
   }
 
-  .ngx-mat-timepicker-standalone-actions {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    padding: 0 16px 16px 16px;
+  .clock-face {
+    margin: 1rem;
   }
 }
 
-
-
-
-
+.ngx-mat-timepicker-standalone-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+}

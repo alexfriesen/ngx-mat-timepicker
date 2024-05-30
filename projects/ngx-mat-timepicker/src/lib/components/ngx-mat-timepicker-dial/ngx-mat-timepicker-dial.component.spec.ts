@@ -1,146 +1,140 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
-import {NO_ERRORS_SCHEMA, SimpleChanges} from "@angular/core";
-//
-import {NgxMatTimepickerDialComponent} from "./ngx-mat-timepicker-dial.component";
-import {NgxMatTimepickerPeriods} from "../../models/ngx-mat-timepicker-periods.enum";
-import {NgxMatTimepickerUnits} from "../../models/ngx-mat-timepicker-units.enum";
-import {NGX_MAT_TIMEPICKER_LOCALE} from "../../tokens/ngx-mat-timepicker-time-locale.token";
-import {NgxMatTimepickerAdapter} from "../../services/ngx-mat-timepicker-adapter";
-import {NgxMatTimepickerUtils} from "../../utils/ngx-mat-timepicker.utils";
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe("NgxMatTimepickerDialComponent", () => {
-    let fixture: ComponentFixture<NgxMatTimepickerDialComponent>;
-    let component: NgxMatTimepickerDialComponent;
-    beforeEach(() => {
+import { NgxMatTimepickerDialComponent } from './ngx-mat-timepicker-dial.component';
+import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
+import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-locale.token';
+import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
+import {
+  disableHours,
+  disableMinutes,
+  getHours,
+  getMinutes,
+} from '../../utils/ngx-mat-timepicker.utils';
 
-        fixture = TestBed.configureTestingModule({
-            imports: [NgxMatTimepickerDialComponent],
-            providers: [
-                {provide: NGX_MAT_TIMEPICKER_LOCALE, useValue: NgxMatTimepickerAdapter.defaultLocale}
-            ],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).createComponent(NgxMatTimepickerDialComponent);
+describe('NgxMatTimepickerDialComponent', () => {
+  let fixture: ComponentFixture<NgxMatTimepickerDialComponent>;
+  let component: NgxMatTimepickerDialComponent;
+  beforeEach(() => {
+    fixture = TestBed.configureTestingModule({
+      imports: [NgxMatTimepickerDialComponent],
+      providers: [
+        {
+          provide: NGX_MAT_TIMEPICKER_LOCALE,
+          useValue: NgxMatTimepickerAdapter.defaultLocale,
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).createComponent(NgxMatTimepickerDialComponent);
 
-        component = fixture.componentInstance;
-    });
+    component = fixture.componentInstance;
+  });
 
-    it("should call disableHours and disableMinutes on period change", () => {
-        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
-        const spyOnFunctionMinutes = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
-        const changes: SimpleChanges = {
-            period: {
-                currentValue: NgxMatTimepickerPeriods.AM,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
+  it('should calculate hours and minutes on period change', () => {
+    fixture.componentRef.setInput('period', NgxMatTimepickerPeriods.AM);
 
-        component.ngOnChanges(changes);
-        expect(spyOnFunctionHours).toHaveBeenCalled();
-        expect(spyOnFunctionMinutes).toHaveBeenCalled();
-    });
+    expect(component.hours()).toStrictEqual(
+      disableHours(getHours(component.format()), {
+        min: component.minTime(),
+        max: component.maxTime(),
+        format: component.format(),
+        period: component.period(),
+      }),
+    );
+    expect(component.minutes()).toStrictEqual(
+      disableMinutes(getMinutes(component.minutesGap()), +component.hour(), {
+        min: component.minTime(),
+        max: component.maxTime(),
+        format: component.format(),
+        period: component.period(),
+      }),
+    );
+  });
 
-    it("should call disableHours on format change", () => {
-        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
-        const changes: SimpleChanges = {
-            format: {
-                currentValue: 24,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
+  it('should calculate hours on format change', () => {
+    fixture.componentRef.setInput('format', 24);
 
-        component.ngOnChanges(changes);
-        expect(spyOnFunctionHours).toHaveBeenCalled();
-    });
+    expect(component.hours()).toStrictEqual(
+      disableHours(getHours(24), {
+        min: component.minTime(),
+        max: component.maxTime(),
+        format: component.format(),
+        period: component.period(),
+      }),
+    );
+  });
 
-    it("should call disableMinutes on hour change", () => {
-        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
-        const changes: SimpleChanges = {
-            hour: {
-                currentValue: 24,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
+  it('should calculate minutes on hour change', () => {
+    fixture.componentRef.setInput('hour', 24);
 
-        component.ngOnChanges(changes);
-        expect(spy).toHaveBeenCalled();
-    });
+    expect(component.minutes()).toStrictEqual(
+      disableMinutes(getMinutes(component.minutesGap()), +component.hour(), {
+        min: component.minTime(),
+        max: component.maxTime(),
+        format: component.format(),
+        period: component.period(),
+      }),
+    );
+  });
 
-    it("should not call disableHours and disableMinutes", () => {
-        const spyOnFunctionHours = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
-        const spyOnFunctionMinutes = jest.spyOn(NgxMatTimepickerUtils, "disableMinutes");
-        const changes: SimpleChanges = {
-            minTime: {
-                currentValue: null,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
+  it('should emit changed time unit', fakeAsync(() => {
+    let timeUnit = null;
 
-        component.ngOnChanges(changes);
-        expect(spyOnFunctionHours).toHaveBeenCalledTimes(0);
-        expect(spyOnFunctionMinutes).toHaveBeenCalledTimes(0);
-    });
+    component.timeUnitChanged.subscribe((unit) => (timeUnit = unit));
+    component.changeTimeUnit(NgxMatTimepickerUnits.MINUTE);
 
-    it("should emit changed time unit", fakeAsync(() => {
-        let timeUnit = null;
+    expect(timeUnit).toBe(NgxMatTimepickerUnits.MINUTE);
+  }));
 
-        component.timeUnitChanged.subscribe(unit => timeUnit = unit);
-        component.changeTimeUnit(NgxMatTimepickerUnits.MINUTE);
+  it('should emit changed period', fakeAsync(() => {
+    let period = NgxMatTimepickerPeriods.AM;
 
-        expect(timeUnit).toBe(NgxMatTimepickerUnits.MINUTE);
-    }));
+    component.periodChanged.subscribe((p) => (period = p));
+    component.changePeriod(NgxMatTimepickerPeriods.PM);
 
-    it("should emit changed period", fakeAsync(() => {
-        let period = NgxMatTimepickerPeriods.AM;
+    tick();
+    expect(period).toBe(NgxMatTimepickerPeriods.PM);
+  }));
 
-        component.periodChanged.subscribe(p => period = p);
-        component.changePeriod(NgxMatTimepickerPeriods.PM);
+  it('should emit changed hour', fakeAsync(() => {
+    let hour = { time: 1, angle: 30 };
 
-        tick();
-        expect(period).toBe(NgxMatTimepickerPeriods.PM);
-    }));
+    component.hourChanged.subscribe((h) => (hour = h));
+    component.changeHour({ time: 2, angle: 60 });
 
-    it("should emit changed hour", fakeAsync(() => {
-        let hour = {time: 1, angle: 30};
+    tick();
+    expect(hour).toEqual({ time: 2, angle: 60 });
+  }));
 
-        component.hourChanged.subscribe(h => hour = h);
-        component.changeHour({time: 2, angle: 60});
+  it('should emit changed minute', fakeAsync(() => {
+    let minute = { time: 10, angle: 30 };
 
-        tick();
-        expect(hour).toEqual({time: 2, angle: 60});
-    }));
+    component.minuteChanged.subscribe((m) => (minute = m));
+    component.changeMinute({ time: 20, angle: 60 });
 
-    it("should emit changed minute", fakeAsync(() => {
-        let minute = {time: 10, angle: 30};
+    tick();
+    expect(minute).toEqual({ time: 20, angle: 60 });
+  }));
 
-        component.minuteChanged.subscribe(m => minute = m);
-        component.changeMinute({time: 20, angle: 60});
+  it('should set isHintVisible true', () => {
+    expect(component.isHintVisible()).toBeFalsy();
 
-        tick();
-        expect(minute).toEqual({time: 20, angle: 60});
-    }));
+    component.showHint();
 
-    it("should set isHintVisible true", () => {
-        expect(component.isHintVisible).toBeFalsy();
+    expect(component.isHintVisible()).toBeTruthy();
+  });
 
-        component.showHint();
+  it('should set isHintVisible false', () => {
+    component.isHintVisible.set(true);
 
-        expect(component.isHintVisible).toBeTruthy();
-    });
+    component.hideHint();
 
-    it("should set isHintVisible false", () => {
-        component.isHintVisible = true;
-
-        component.hideHint();
-
-        expect(component.isHintVisible).toBeFalsy();
-    });
-
+    expect(component.isHintVisible()).toBeFalsy();
+  });
 });

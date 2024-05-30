@@ -14,7 +14,7 @@ import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicke
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NGX_MAT_TIMEPICKER_LOCALE } from '../../tokens/ngx-mat-timepicker-time-locale.token';
 import { NGX_MAT_TIMEPICKER_NUMBERINGSYSTEM } from '../../tokens/ngx-mat-timepicker-time-numberingsystem.token';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { getHours } from '../../utils/ngx-mat-timepicker.utils';
 
 describe('NgxMatTimepickerDialControlComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepickerDialControlComponent>;
@@ -94,7 +94,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
 
     beforeEach(() => {
       counter = 0;
-      component.timeList = NgxMatTimepickerUtils.getHours(24);
+      component.timeList = getHours(24);
     });
 
     it('should call preventDefault if no time exist or time disabled', () => {
@@ -130,7 +130,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
 
     beforeEach(() => {
       counter = 0;
-      component.timeList = NgxMatTimepickerUtils.getHours(24);
+      component.timeList = getHours(24);
     });
 
     it('should call preventDefault when trying to write not a number', () => {

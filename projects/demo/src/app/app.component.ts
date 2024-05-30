@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import { injectIcons } from './utils/inject-icons';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,4 +10,8 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {
+    injectIcons();
+  }
+}

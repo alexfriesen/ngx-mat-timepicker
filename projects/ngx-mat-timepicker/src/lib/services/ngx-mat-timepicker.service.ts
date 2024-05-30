@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-//
+import { toSignal } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
+import { DateTime } from 'luxon';
+
 import { NgxMatTimepickerClockFace } from '../models/ngx-mat-timepicker-clock-face.interface';
 import { NgxMatTimepickerPeriods } from '../models/ngx-mat-timepicker-periods.enum';
 import { NgxMatTimepickerAdapter } from './ngx-mat-timepicker-adapter';
-//
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DateTime } from 'luxon';
 
 const DEFAULT_HOUR: NgxMatTimepickerClockFace = {
   time: 12,
@@ -20,51 +20,43 @@ const DEFAULT_MINUTE: NgxMatTimepickerClockFace = {
   providedIn: 'root',
 })
 export class NgxMatTimepickerService {
-  set hour(hour: NgxMatTimepickerClockFace) {
-    this._hour$.next(hour);
+  setHour(hour: NgxMatTimepickerClockFace) {
+    this.hour$.next(hour);
   }
 
-  set minute(minute: NgxMatTimepickerClockFace) {
-    this._minute$.next(minute);
+  setMinute(minute: NgxMatTimepickerClockFace) {
+    this.minute$.next(minute);
   }
 
-  set period(period: NgxMatTimepickerPeriods) {
+  setPeriod(period: NgxMatTimepickerPeriods) {
     const isPeriodValid =
       period === NgxMatTimepickerPeriods.AM ||
       period === NgxMatTimepickerPeriods.PM;
 
     if (isPeriodValid) {
-      this._period$.next(period);
+      this.period$.next(period);
     }
   }
 
-  get selectedHour(): Observable<NgxMatTimepickerClockFace> {
-    return this._hour$.asObservable();
-  }
-
-  get selectedMinute(): Observable<NgxMatTimepickerClockFace> {
-    return this._minute$.asObservable();
-  }
-
-  get selectedPeriod(): Observable<NgxMatTimepickerPeriods> {
-    return this._period$.asObservable();
-  }
-
-  private _hour$ = new BehaviorSubject<NgxMatTimepickerClockFace>(DEFAULT_HOUR);
-  private _minute$ = new BehaviorSubject<NgxMatTimepickerClockFace>(
+  readonly hour$ = new BehaviorSubject<NgxMatTimepickerClockFace>(DEFAULT_HOUR);
+  readonly minute$ = new BehaviorSubject<NgxMatTimepickerClockFace>(
     DEFAULT_MINUTE,
   );
-  private _period$ = new BehaviorSubject<NgxMatTimepickerPeriods>(
+  readonly period$ = new BehaviorSubject<NgxMatTimepickerPeriods>(
     NgxMatTimepickerPeriods.AM,
   );
 
+  readonly hour = toSignal(this.hour$);
+  readonly minute = toSignal(this.minute$);
+  readonly period = toSignal(this.period$);
+
   getFullTime(format: number): string {
-    const selectedHour = this._hour$.getValue().time;
-    const selectedMinute = this._minute$.getValue().time;
+    const selectedHour = this.hour().time;
+    const selectedMinute = this.minute().time;
     const hour = selectedHour != null ? selectedHour : DEFAULT_HOUR.time;
     const minute =
       selectedMinute != null ? selectedMinute : DEFAULT_MINUTE.time;
-    const period = format === 12 ? this._period$.getValue() : '';
+    const period = format === 12 ? this.period() : '';
     const time = `${hour}:${minute} ${period}`.trim();
 
     return NgxMatTimepickerAdapter.formatTime(time, { format });
@@ -77,7 +69,9 @@ export class NgxMatTimepickerService {
     format: number,
     minutesGap?: number,
   ) {
-    time || this._resetTime();
+    if (!time) {
+      this._resetTime();
+    }
     /* Workaround to double error message*/
     try {
       if (
@@ -97,9 +91,9 @@ export class NgxMatTimepickerService {
   }
 
   private _resetTime(): void {
-    this.hour = { ...DEFAULT_HOUR };
-    this.minute = { ...DEFAULT_MINUTE };
-    this.period = NgxMatTimepickerPeriods.AM;
+    this.setHour({ ...DEFAULT_HOUR });
+    this.setMinute({ ...DEFAULT_MINUTE });
+    this.setPeriod(NgxMatTimepickerPeriods.AM);
   }
 
   private _setDefaultTime(time: string, format: number) {
@@ -109,12 +103,12 @@ export class NgxMatTimepickerService {
       const period = time.substring(time.length - 2).toUpperCase();
       const hour = defaultDto.hour;
 
-      this.hour = {
+      this.setHour({
         ...DEFAULT_HOUR,
         time: formatHourByPeriod(hour, period as NgxMatTimepickerPeriods),
-      };
-      this.minute = { ...DEFAULT_MINUTE, time: defaultDto.minute };
-      this.period = period as NgxMatTimepickerPeriods;
+      });
+      this.setMinute({ ...DEFAULT_MINUTE, time: defaultDto.minute });
+      this.setPeriod(period as NgxMatTimepickerPeriods);
     } else {
       this._resetTime();
     }

@@ -18,8 +18,8 @@ export class NgxMatTimepickerEventService {
       .pipe(shareReplay({ bufferSize: 1, refCount: true }));
   }
 
-  private _backdropClick$: Subject<MouseEvent> = new Subject();
-  private _keydownEvent$: Subject<KeyboardEvent> = new Subject();
+  private _backdropClick$ = new Subject<MouseEvent>();
+  private _keydownEvent$ = new Subject<KeyboardEvent>();
 
   dispatchEvent(event: KeyboardEvent | MouseEvent): void {
     switch (event.type) {

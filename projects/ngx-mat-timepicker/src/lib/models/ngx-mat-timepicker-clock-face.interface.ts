@@ -1,5 +1,5 @@
 export interface NgxMatTimepickerClockFace {
-    angle: number;
-    disabled?: boolean;
-    time: number;
+  time: number;
+  angle: number;
+  disabled?: boolean;
 }

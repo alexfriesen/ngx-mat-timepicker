@@ -1,11 +1,6 @@
-import {
-  Component,
-  ContentChild,
-  Input,
-  ViewEncapsulation,
-} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-//
+import { Component, ContentChild, Input } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+
 import { NgxMatTimepickerToggleIconDirective } from '../../directives/ngx-mat-timepicker-toggle-icon.directive';
 import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepicker.component';
 
@@ -13,20 +8,18 @@ import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepic
   selector: 'ngx-mat-timepicker-toggle',
   templateUrl: 'ngx-mat-timepicker-toggle.component.html',
   styleUrls: ['ngx-mat-timepicker-toggle.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatIconButton],
 })
 export class NgxMatTimepickerToggleComponent {
   @Input()
-  get disabled(): boolean {
-    return this._disabled === void 0
-      ? this.timepicker?.disabled
-      : this._disabled;
-  }
-
   set disabled(value: boolean) {
     this._disabled = value;
+  }
+  get disabled(): boolean {
+    return this._disabled === undefined
+      ? this.timepicker?.disabled
+      : this._disabled;
   }
 
   @ContentChild(NgxMatTimepickerToggleIconDirective, { static: true })

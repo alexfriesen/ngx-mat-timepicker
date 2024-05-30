@@ -43,13 +43,13 @@ describe('NgxMatTimepickerHoursFace', () => {
   it('should generate array with 12 items', () => {
     const { directive } = setup({ format: 12 });
 
-    expect(directive.hoursList.length).toBe(12);
+    expect(directive.hoursList().length).toBe(12);
   });
 
   it('should generate array with 24 items', () => {
     const { directive } = setup({ format: 24 });
 
-    expect(directive.hoursList.length).toBe(24);
+    expect(directive.hoursList().length).toBe(24);
   });
 
   it('should emit selected hour (12hr format)', waitForAsync(() => {

@@ -1,10 +1,6 @@
 <mat-toolbar class="ngx-mtp-header mat-elevation-z6" color="primary">
   <div>
-    <img
-      class="ngx-mtp-ng-logo"
-      src="assets/angular-white-transparent.svg"
-      alt=""
-    />
+    <mat-icon class="logo" svgIcon="logo" />
     <span class="ngx-mtp-header-title" title="toggle locale">
       {{ npmPackage }}
     </span>
@@ -23,54 +19,17 @@
             <mat-icon>radio_button_unchecked</mat-icon>
           }
           {{ theme.description }}
-          <mat-icon class="ngx-mtp-theme-example mat-elevation-z1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="100%"
-              height="100%"
-              viewBox="0 0 80 80"
-              fit=""
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-            >
-              <defs>
-                <path
-                  d="M77.87 0C79.05 0 80 .95 80 2.13v75.74c0 1.17-.95 2.13-2.13 2.13H2.13C.96 80 0 79.04 0 77.87V2.13C0 .95.96 0 2.13 0h75.74z"
-                  id="a"
-                ></path>
-                <path
-                  d="M54 40c3.32 0 6 2.69 6 6 0 1.2 0-1.2 0 0 0 3.31-2.68 6-6 6H26c-3.31 0-6-2.69-6-6 0-1.2 0 1.2 0 0 0-3.31 2.69-6 6-6h28z"
-                  id="b"
-                ></path>
-                <path d="M0 0h80v17.24H0V0z" id="c"></path>
-              </defs>
-              <use
-                xlink:href="#a"
-                [attr.fill]="theme.value ? '#444' : '#fff'"
-                class="docs-theme-icon-background"
-              ></use>
-              <use
-                xlink:href="#b"
-                fill="#ff4081"
-                class="docs-theme-icon-button"
-              ></use>
-              <use
-                xlink:href="#c"
-                fill="#3f51b5"
-                class="docs-theme-icon-toolbar"
-              ></use>
-            </svg>
-          </mat-icon>
+          <mat-icon
+            class="ngx-mtp-theme-example mat-elevation-z1"
+            svgIcon="theme"
+            [style.color]="theme.hexColor"
+          />
         </button>
       }
     </mat-menu>
+
     <a mat-button class="ngx-mtp-github-link-desktop" [href]="githubLink">
-      <img
-        src="assets/github-circle-white-transparent.svg"
-        class="ngx-mtp-github-logo"
-        alt=""
-      />
+      <mat-icon svgIcon="github-circle" />
       <span class="ngx-mtp-github-logo-text">Github</span>
     </a>
   </div>
@@ -98,22 +57,7 @@
     class="ngx-mtp-padding ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-justify-center"
   >
     <a mat-raised-button [href]="githubLink">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="ngx-mtp-github-logo"
-      >
-        <path
-          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-        ></path>
-      </svg>
+      <mat-icon svgIcon="github-round" />
       Star on Github
     </a>
   </div>
@@ -131,12 +75,13 @@
     <p>Dynamic locale (v >= 12.2.0)</p>
     <p>
       @for (locale of myLocaleKeys; track locale; let last = $last) {
-        <span
+        <button
           class="locale"
           [class.active]="locale === currentLocaleKey"
           (click)="updateLocale(locale)"
-          >{{ locale }}</span
         >
+          {{ locale }}
+        </button>
         @if (!last) {
           <span class="separator"> | </span>
         }

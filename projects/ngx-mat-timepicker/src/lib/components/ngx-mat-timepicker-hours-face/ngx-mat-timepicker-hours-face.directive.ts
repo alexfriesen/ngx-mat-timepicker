@@ -1,53 +1,41 @@
-import {Directive, EventEmitter, Input, Output} from "@angular/core";
-import {ThemePalette} from "@angular/material/core";
-//
-import {NgxMatTimepickerClockFace} from "../../models/ngx-mat-timepicker-clock-face.interface";
-import {NgxMatTimepickerFormatType} from "../../models/ngx-mat-timepicker-format.type";
-import {NgxMatTimepickerUtils} from "../../utils/ngx-mat-timepicker.utils";
-//
-import {DateTime} from 'luxon';
+import { Directive, computed, input, model, output } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { DateTime } from 'luxon';
+
+import { NgxMatTimepickerUnits } from '../../models/ngx-mat-timepicker-units.enum';
+import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock-face.interface';
+import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
+import { getHours } from '../../utils/ngx-mat-timepicker.utils';
 
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: "[ngxMatTimepickerHoursFace]",
-    standalone: true
+  selector: '[ngxMatTimepickerHoursFace]',
+  standalone: true,
 })
 export class NgxMatTimepickerHoursFaceDirective {
+  readonly color = input<ThemePalette>('primary');
 
-    @Input()
-    set color(newValue: ThemePalette) {
-        this._color = newValue;
-    }
+  readonly format = model<NgxMatTimepickerFormatType>(24);
+  readonly availableHours = computed(() => {
+    return getHours(this.format());
+  });
+  readonly hoursList = computed(() => {
+    return this.computeHoursList();
+  });
 
-    get color(): ThemePalette {
-        return this._color;
-    }
+  readonly maxTime = input<DateTime>();
+  readonly minTime = input<DateTime>();
+  readonly selectedHour = input<NgxMatTimepickerClockFace>();
 
-    @Input()
-    set format(newValue: NgxMatTimepickerFormatType) {
-        this._format = newValue;
-        this.hoursList = NgxMatTimepickerUtils.getHours(this._format);
-    }
+  readonly hourChange = output<NgxMatTimepickerClockFace>();
+  readonly hourSelected = output<number>();
 
-    get format(): NgxMatTimepickerFormatType {
-        return this._format;
-    }
+  timeUnit = NgxMatTimepickerUnits;
 
-    @Output() hourChange = new EventEmitter<NgxMatTimepickerClockFace>();
-    @Output() hourSelected = new EventEmitter<number>();
+  onTimeSelected(time: number): void {
+    this.hourSelected.emit(time);
+  }
 
-    hoursList: NgxMatTimepickerClockFace[] = [];
-    @Input() maxTime: DateTime;
-    @Input() minTime: DateTime;
-    @Input() selectedHour: NgxMatTimepickerClockFace;
-
-    protected _color: ThemePalette = "primary";
-    protected _format: NgxMatTimepickerFormatType = 24;
-
-    constructor() {
-    }
-
-    onTimeSelected(time: number): void {
-        this.hourSelected.next(time);
-    }
+  protected computeHoursList(): NgxMatTimepickerClockFace[] {
+    return this.availableHours();
+  }
 }

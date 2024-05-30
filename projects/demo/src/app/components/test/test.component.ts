@@ -1,21 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormControl, Validators, FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-//
+
 import {
   NgxMatTimepickerComponent,
   NgxMatTimepickerDirective,
-  NgxMatTimepickerLocaleService,
   NgxMatTimepickerFieldComponent,
 } from '@alexfriesen/ngx-mat-timepicker';
-//
+
 import { DemoComponent } from '../demo/demo.component';
+import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 
 @Component({
   selector: 'app-dialog',
@@ -51,7 +50,7 @@ import { DemoComponent } from '../demo/demo.component';
   ],
 })
 export class NgxMatTimepickerTestDialogComponent {
-  date: string = '2:00';
+  date = '2:00';
 }
 
 @Component({
@@ -68,26 +67,25 @@ export class NgxMatTimepickerTestDialogComponent {
   ],
 })
 export class TestComponent extends DemoComponent {
-  formControlItem: FormControl = new FormControl('', [
+  private _matDialog = inject(MatDialog);
+
+  formControlItem = new FormControl('', [
     Validators.pattern(/([0-9]|[1-2]\d):[0-5]\d/),
   ]);
-  time: string = '00:00';
-  @ViewChild('timepicker') timepicker: NgxMatTimepickerComponent;
 
-  constructor(
-    private _matDialog: MatDialog,
-    localeOverrideSrv: NgxMatTimepickerLocaleService,
-  ) {
-    super(localeOverrideSrv);
-  }
+  time = '00:00';
+
+  @ViewChild('timepicker')
+  timepicker: NgxMatTimepickerComponent;
 
   onClear() {
     this.formControlItem.setValue(null);
   }
 
   onFieldBlur(): void {
-    this.formControlItem.valid &&
+    if (this.formControlItem.valid) {
       this.pickerFreeInput.updateTime(this.formControlItem.value);
+    }
   }
 
   openDialog() {

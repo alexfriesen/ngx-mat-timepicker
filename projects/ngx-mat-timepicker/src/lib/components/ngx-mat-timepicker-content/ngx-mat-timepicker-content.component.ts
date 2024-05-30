@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, booleanAttribute } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -8,6 +8,6 @@ import { NgTemplateOutlet } from '@angular/common';
   imports: [NgTemplateOutlet],
 })
 export class NgxMatTimepickerContentComponent {
-  @Input() appendToInput: boolean;
+  @Input({ transform: booleanAttribute }) appendToInput: boolean;
   @Input() inputElement: HTMLInputElement;
 }

@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepicker24HoursFaceComponent } from './ngx-mat-timepicker-24-hours-face.component';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
-
-import { DateTime } from 'luxon';
+import { disableHours, getHours } from '../../utils/ngx-mat-timepicker.utils';
 
 describe('NgxMatTimepicker24HoursFaceComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepicker24HoursFaceComponent>;
@@ -20,18 +19,14 @@ describe('NgxMatTimepicker24HoursFaceComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should call disableHours', () => {
-    const spy = jest.spyOn(NgxMatTimepickerUtils, 'disableHours');
+  it('should compute correct hours', () => {
     const time = DateTime.fromJSDate(new Date());
-    const format = 24;
-    const hours = NgxMatTimepickerUtils.getHours(format);
 
-    component.minTime = time;
-    component.maxTime = time;
-    component.format = format;
-    component.hoursList = hours;
+    fixture.componentRef.setInput('minTime', time);
+    fixture.componentRef.setInput('maxTime', time);
 
-    component.ngAfterContentInit();
-    expect(spy).toHaveBeenCalledWith(hours, { min: time, max: time, format });
+    expect(component.hoursList()).toStrictEqual(
+      disableHours(getHours(24), { min: time, max: time, format: 24 }),
+    );
   });
 });

@@ -13,7 +13,7 @@ import {
 // @dynamic
 export class NgxMatTimepickerAdapter {
   static defaultFormat: NgxMatTimepickerFormatType = 12;
-  static defaultLocale: string = 'en-US';
+  static defaultLocale = 'en-US';
   static defaultNumberingSystem: NumberingSystem = 'latn';
 
   /***
@@ -91,7 +91,7 @@ export class NgxMatTimepickerAdapter {
     unit: DateTimeUnitWithDeprecatedTypes = 'minute',
   ): boolean {
     unit = fixDateTimeUnit(unit);
-    const innerUnit = unit === 'hour' ? unit : void 0;
+    const innerUnit = unit === 'hour' ? unit : undefined;
 
     return (
       this.isSameOrBefore(time, after, innerUnit) &&
@@ -138,7 +138,7 @@ export class NgxMatTimepickerAdapter {
     format?: number,
   ): boolean {
     if (!time) {
-      return void 0;
+      return undefined;
     }
 
     const convertedTime = this.parseTime(time, { format });

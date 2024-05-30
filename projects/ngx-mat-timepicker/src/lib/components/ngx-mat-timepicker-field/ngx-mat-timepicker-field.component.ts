@@ -1,29 +1,29 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   TemplateRef,
-  ViewEncapsulation,
+  booleanAttribute,
+  input,
+  output,
+  signal,
 } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
   FormsModule,
 } from '@angular/forms';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { ThemePalette, MatOptionModule } from '@angular/material/core';
-import {
-  FloatLabelType,
-  MatFormFieldModule,
-} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
+import { ThemePalette, MatOption } from '@angular/material/core';
+import { FloatLabelType, MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { Subject } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerLocaleService } from '../../services/ngx-mat-timepicker-locale.service';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
@@ -38,8 +38,6 @@ import { NgxMatTimepickerToggleIconDirective } from '../../directives/ngx-mat-ti
 import { NgxMatTimepickerToggleComponent } from '../ngx-mat-timepicker-toggle/ngx-mat-timepicker-toggle.component';
 import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/ngx-mat-timepicker-control.component';
 
-import { DateTime } from 'luxon';
-
 @Component({
   selector: 'ngx-mat-timepicker-field',
   templateUrl: './ngx-mat-timepicker-field.component.html',
@@ -53,16 +51,14 @@ import { DateTime } from 'luxon';
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
-    NgClass,
     NgTemplateOutlet,
     FormsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    MatOptionModule,
+    MatFormField,
+    MatSelect,
+    MatIcon,
+    MatOption,
     NgxMatTimepickerControlComponent,
     NgxMatTimepickerToggleComponent,
     NgxMatTimepickerToggleIconDirective,
@@ -72,14 +68,7 @@ import { DateTime } from 'luxon';
 export class NgxMatTimepickerFieldComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
-  get color(): ThemePalette {
-    return this._color;
-  }
-
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
+  readonly color = input<ThemePalette>('primary');
 
   get defaultTime(): string {
     return this._defaultTime;
@@ -91,14 +80,7 @@ export class NgxMatTimepickerFieldComponent
     this._isDefaultTime = !!val;
   }
 
-  get floatLabel(): FloatLabelType {
-    return this._floatLabel;
-  }
-
-  @Input()
-  set floatLabel(newValue: FloatLabelType) {
-    this._floatLabel = newValue;
-  }
+  readonly floatLabel = input<FloatLabelType>('auto');
 
   get format(): NgxMatTimepickerFormatType {
     return this._format;
@@ -167,20 +149,22 @@ export class NgxMatTimepickerFieldComponent
 
   @Input() confirmBtnTmpl: TemplateRef<Node>;
 
-  @Input() controlOnly: boolean;
+  @Input({ transform: booleanAttribute }) controlOnly: boolean;
 
-  @Input() disabled: boolean;
+  @Input({ transform: booleanAttribute }) disabled: boolean;
 
-  hour$: BehaviorSubject<NgxMatTimepickerClockFace> =
-    new BehaviorSubject<NgxMatTimepickerClockFace>(void 0);
+  readonly hour = signal<NgxMatTimepickerClockFace>(undefined);
+  readonly hour$ = toObservable(this.hour);
 
   hoursList: NgxMatTimepickerClockFace[];
   isChangePeriodDisabled: boolean;
   isTimeRangeSet: boolean;
   maxHour = 12;
   minHour = 1;
-  minute$: BehaviorSubject<NgxMatTimepickerClockFace> =
-    new BehaviorSubject<NgxMatTimepickerClockFace>(void 0);
+
+  readonly minute = signal<NgxMatTimepickerClockFace>(undefined);
+  readonly minute$ = toObservable(this.minute);
+
   minutesList: NgxMatTimepickerClockFace[];
   period: NgxMatTimepickerPeriods = NgxMatTimepickerPeriods.AM;
   periods: NgxMatTimepickerPeriods[] = [
@@ -188,18 +172,16 @@ export class NgxMatTimepickerFieldComponent
     NgxMatTimepickerPeriods.PM,
   ];
 
-  @Output() timeChanged = new EventEmitter<string>();
+  readonly timeChanged = output<string>();
   timepickerTime: string;
 
   timeUnit = NgxMatTimepickerUnits;
   @Input() toggleIcon: TemplateRef<HTMLObjectElement>;
 
-  private _color: ThemePalette = 'primary';
   private _defaultTime: string;
-  private _floatLabel: FloatLabelType = 'auto';
   private _format: NgxMatTimepickerFormatType = 12;
   private _isDefaultTime: boolean;
-  private _isFirstTimeChange: boolean = true;
+  private _isFirstTimeChange = true;
   private _max: DateTime;
   private _min: DateTime;
   private _previousFormat: number;
@@ -212,19 +194,21 @@ export class NgxMatTimepickerFieldComponent
   ) {}
 
   changeHour(hour: number): void {
-    this._timepickerService.hour = this.hoursList.find((h) => h.time === hour);
-    this._changeTime();
-  }
-
-  changeMinute(minute: number): void {
-    this._timepickerService.minute = this.minutesList.find(
-      (m) => m.time === minute,
+    this._timepickerService.setHour(
+      this.hoursList.find((h) => h.time === hour),
     );
     this._changeTime();
   }
 
-  changePeriod(event: MatSelectChange): void {
-    this._timepickerService.period = event.value as NgxMatTimepickerPeriods;
+  changeMinute(minute: number): void {
+    this._timepickerService.setMinute(
+      this.minutesList.find((m) => m.time === minute),
+    );
+    this._changeTime();
+  }
+
+  changePeriod(value: NgxMatTimepickerPeriods): void {
+    this._timepickerService.setPeriod(value);
     this._changeTime();
   }
 
@@ -240,7 +224,7 @@ export class NgxMatTimepickerFieldComponent
     this.minutesList = NgxMatTimepickerUtils.getMinutes();
     this.isTimeRangeSet = !!(this.min || this.max);
 
-    this._timepickerService.selectedHour
+    this._timepickerService.hour$
       .pipe(
         tap(
           (clockTime: NgxMatTimepickerClockFace) =>
@@ -250,19 +234,19 @@ export class NgxMatTimepickerFieldComponent
         tap(() => this.isTimeRangeSet && this._updateAvailableMinutes()),
       )
       .subscribe({
-        next: (v: NgxMatTimepickerClockFace) => this.hour$.next(v),
+        next: (v: NgxMatTimepickerClockFace) => this.hour.set(v),
       });
-    this._timepickerService.selectedMinute
+    this._timepickerService.minute$
       .pipe(
         map(this._changeDefaultTimeValue.bind(this)),
         tap(() => (this._isFirstTimeChange = false)),
       )
       .subscribe({
-        next: (v: NgxMatTimepickerClockFace) => this.minute$.next(v),
+        next: (v: NgxMatTimepickerClockFace) => this.minute.set(v),
       });
 
     if (this.format === 12) {
-      this._timepickerService.selectedPeriod
+      this._timepickerService.period$
         .pipe(
           distinctUntilChanged<NgxMatTimepickerPeriods>(),
           tap((period: NgxMatTimepickerPeriods) => (this.period = period)),
@@ -312,10 +296,7 @@ export class NgxMatTimepickerFieldComponent
   }
 
   private _changeTime(): void {
-    if (
-      !isNaN(this.hour$.getValue()?.time) &&
-      !isNaN(this.minute$.getValue()?.time)
-    ) {
+    if (!isNaN(this.hour()?.time) && !isNaN(this.minute()?.time)) {
       const time = this._timepickerService.getFullTime(this.format);
       this.timepickerTime = time;
       this._emitLocalTimeChange(time);
@@ -382,13 +363,16 @@ export class NgxMatTimepickerFieldComponent
     ).every((time) => time.disabled);
   }
 
-  private _onChange: (value: string) => void = () => {};
-
-  private _onTouched: (value: string) => void = () => {};
+  private _onChange: (value: string) => void = () => {
+    // ignore
+  };
+  private _onTouched: (value: string) => void = () => {
+    // ignore
+  };
 
   private _resetTime(): void {
-    this._timepickerService.hour = { angle: 0, time: null };
-    this._timepickerService.minute = { angle: 0, time: null };
+    this._timepickerService.setHour({ angle: 0, time: null });
+    this._timepickerService.setMinute({ angle: 0, time: null });
   }
 
   private _updateAvailableHours(): void {

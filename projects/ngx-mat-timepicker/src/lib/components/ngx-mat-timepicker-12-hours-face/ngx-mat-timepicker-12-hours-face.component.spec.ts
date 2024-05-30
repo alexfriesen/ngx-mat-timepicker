@@ -1,61 +1,41 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
-import {NO_ERRORS_SCHEMA, SimpleChanges} from "@angular/core";
-//
-import {NgxMatTimepicker12HoursFaceComponent} from "./ngx-mat-timepicker-12-hours-face.component";
-import {NgxMatTimepickerPeriods} from "../../models/ngx-mat-timepicker-periods.enum";
-import {NgxMatTimepickerUtils} from "../../utils/ngx-mat-timepicker.utils";
-//
-import {DateTime} from 'luxon';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DateTime } from 'luxon';
 
-describe("NgxMatTimepicker12HoursFaceComponent", () => {
-    let fixture: ComponentFixture<NgxMatTimepicker12HoursFaceComponent>;
-    let component: NgxMatTimepicker12HoursFaceComponent;
+import { NgxMatTimepicker12HoursFaceComponent } from './ngx-mat-timepicker-12-hours-face.component';
+import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
+import { disableHours, getHours } from '../../utils/ngx-mat-timepicker.utils';
 
-    beforeEach(() => {
-        fixture = TestBed.configureTestingModule({
-            imports: [NgxMatTimepicker12HoursFaceComponent],
-            schemas: [NO_ERRORS_SCHEMA]
-        }).createComponent(NgxMatTimepicker12HoursFaceComponent);
+describe('NgxMatTimepicker12HoursFaceComponent', () => {
+  let fixture: ComponentFixture<NgxMatTimepicker12HoursFaceComponent>;
+  let component: NgxMatTimepicker12HoursFaceComponent;
 
-        component = fixture.componentInstance;
-    });
+  beforeEach(() => {
+    fixture = TestBed.configureTestingModule({
+      imports: [NgxMatTimepicker12HoursFaceComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).createComponent(NgxMatTimepicker12HoursFaceComponent);
 
-    it("should call disabledHours once period changed", () => {
-        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
-        const changes: SimpleChanges = {
-            period: {
-                currentValue: NgxMatTimepickerPeriods.PM,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
-        const time = DateTime.fromJSDate(new Date());
-        const format = 12;
-        const period = NgxMatTimepickerPeriods.PM;
-        const hours = NgxMatTimepickerUtils.getHours(format);
-        component.minTime = time;
-        component.maxTime = time;
-        component.format = format;
-        component.period = period;
-        component.hoursList = hours;
+    component = fixture.componentInstance;
+  });
 
-        component.ngOnChanges(changes);
-        expect(spy).toHaveBeenCalledWith(hours, {min: time, max: time, format, period});
-    });
+  it('should callculate hours once period changed', () => {
+    const time = DateTime.fromJSDate(new Date());
+    const format = 12;
+    const period = NgxMatTimepickerPeriods.PM;
 
-    it("should not call disabledHours", () => {
-        const spy = jest.spyOn(NgxMatTimepickerUtils, "disableHours");
-        const changes: SimpleChanges = {
-            minTime: {
-                currentValue: null,
-                previousValue: undefined,
-                firstChange: true,
-                isFirstChange: () => null
-            }
-        };
+    fixture.componentRef.setInput('minTime', time);
+    fixture.componentRef.setInput('maxTime', time);
 
-        component.ngOnChanges(changes);
-        expect(spy).toHaveBeenCalledTimes(0);
-    });
+    fixture.componentRef.setInput('period', period);
+
+    expect(component.hoursList()).toStrictEqual(
+      disableHours(getHours(format), {
+        format: 12,
+        min: time,
+        max: time,
+        period,
+      }),
+    );
+  });
 });

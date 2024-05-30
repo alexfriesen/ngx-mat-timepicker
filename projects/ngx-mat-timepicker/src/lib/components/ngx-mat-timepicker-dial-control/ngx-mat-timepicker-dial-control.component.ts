@@ -1,11 +1,11 @@
 import {
   Component,
-  EventEmitter,
   OnDestroy,
   Input,
-  Output,
   ElementRef,
   AfterViewInit,
+  output,
+  booleanAttribute,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +14,7 @@ import { NgxMatTimepickerClockFace } from '../../models/ngx-mat-timepicker-clock
 import { NgxMatTimepickerParserPipe } from '../../pipes/ngx-mat-timepicker-parser.pipe';
 import { NgxMatTimepickerTimeLocalizerPipe } from '../../pipes/ngx-mat-timepicker-time-localizer.pipe';
 import { NgxMatTimepickerAutofocusDirective } from '../../directives/ngx-mat-timepicker-autofocus.directive';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
+import { isDigit } from '../../utils/ngx-mat-timepicker.utils';
 
 function retainSelection(this: HTMLInputElement) {
   this.selectionStart = this.selectionEnd;
@@ -44,13 +44,14 @@ export class NgxMatTimepickerDialControlComponent
     return undefined;
   }
 
-  @Input() disabled: boolean;
+  @Input({ transform: booleanAttribute })
+  disabled: boolean;
 
-  @Output() focused = new EventEmitter<void>();
+  @Input({ transform: booleanAttribute })
+  isActive: boolean;
 
-  @Input() isActive: boolean;
-
-  @Input() isEditable: boolean;
+  @Input({ transform: booleanAttribute })
+  isEditable: boolean;
 
   @Input() minutesGap: number;
 
@@ -58,15 +59,14 @@ export class NgxMatTimepickerDialControlComponent
 
   @Input() time: string;
 
-  @Output() timeChanged = new EventEmitter<NgxMatTimepickerClockFace>();
-
   @Input() timeList: NgxMatTimepickerClockFace[];
 
   @Input() timeUnit: NgxMatTimepickerUnits;
 
-  @Output() timeUnitChanged = new EventEmitter<NgxMatTimepickerUnits>();
-
-  @Output() unfocused = new EventEmitter<void>();
+  readonly focused = output<void>();
+  readonly timeChanged = output<NgxMatTimepickerClockFace>();
+  readonly timeUnitChanged = output<NgxMatTimepickerUnits>();
+  readonly unfocused = output<void>();
 
   constructor(
     private _elRef: ElementRef,
@@ -94,7 +94,7 @@ export class NgxMatTimepickerDialControlComponent
   }
 
   onKeydown(e: KeyboardEvent): void {
-    if (!NgxMatTimepickerUtils.isDigit(e)) {
+    if (!isDigit(e)) {
       e.preventDefault();
     } else {
       this._changeTimeByArrow(e.keyCode);
@@ -111,19 +111,19 @@ export class NgxMatTimepickerDialControlComponent
   ): void {
     event.preventDefault();
     this.previousTime = this.time;
-    this.timeUnitChanged.next(unit);
-    this.focused.next();
+    this.timeUnitChanged.emit(unit);
+    this.focused.emit();
   }
 
   updateTime(): void {
     if (this._selectedTime) {
-      this.timeChanged.next(this._selectedTime);
+      this.timeChanged.emit(this._selectedTime);
       this.previousTime = this._selectedTime.time;
     }
   }
 
   private _addTime(amount: number): string {
-    return `0${+this.time + amount}`.substr(-2);
+    return `${+this.time + amount}`.padStart(2, '0');
   }
 
   private _changeTimeByArrow(keyCode: number): void {

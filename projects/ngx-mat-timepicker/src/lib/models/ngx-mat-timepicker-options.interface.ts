@@ -1,5 +1,5 @@
-import { LocaleOptions } from 'luxon';
+import type { LocaleOptions } from 'luxon';
 
 export interface NgxMatTimepickerOptions extends LocaleOptions {
-    format?: number;
+  format?: number;
 }

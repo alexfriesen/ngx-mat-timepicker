@@ -1,11 +1,13 @@
-import { NO_ERRORS_SCHEMA, SimpleChanges } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DateTime } from 'luxon';
 
 import { NgxMatTimepickerMinutesFaceComponent } from './ngx-mat-timepicker-minutes-face.component';
-import { NgxMatTimepickerUtils } from '../../utils/ngx-mat-timepicker.utils';
 import { NgxMatTimepickerPeriods } from '../../models/ngx-mat-timepicker-periods.enum';
-
-import { DateTime } from 'luxon';
+import {
+  disableMinutes,
+  getMinutes,
+} from '../../utils/ngx-mat-timepicker.utils';
 
 describe('NgxMatTimepickerMinutesFaceComponent', () => {
   let fixture: ComponentFixture<NgxMatTimepickerMinutesFaceComponent>;
@@ -20,48 +22,21 @@ describe('NgxMatTimepickerMinutesFaceComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should call disableMinutes once period changed', () => {
-    const spy = jest.spyOn(NgxMatTimepickerUtils, 'disableMinutes');
-    const changes: SimpleChanges = {
-      period: {
-        currentValue: NgxMatTimepickerPeriods.PM,
-        previousValue: undefined,
-        firstChange: true,
-        isFirstChange: () => null,
-      },
-    };
+  it('should calculate minutes once period changed', () => {
     const time = DateTime.fromJSDate(new Date());
-    const format = 12;
     const period = NgxMatTimepickerPeriods.PM;
-    const minutes = NgxMatTimepickerUtils.getMinutes();
-    component.minTime = time;
-    component.maxTime = time;
-    component.format = format;
-    component.period = period;
-    component.minutesList = minutes;
-    component.selectedHour = 1;
 
-    component.ngOnChanges(changes);
-    expect(spy).toHaveBeenCalledWith(minutes, 1, {
-      min: time,
-      max: time,
-      format,
-      period,
-    });
-  });
+    fixture.componentRef.setInput('minTime', time);
+    fixture.componentRef.setInput('maxTime', time);
+    fixture.componentRef.setInput('selectedHour', 1);
 
-  it('should not call disableMinutes', () => {
-    const spy = jest.spyOn(NgxMatTimepickerUtils, 'disableMinutes');
-    const changes: SimpleChanges = {
-      minTime: {
-        currentValue: null,
-        previousValue: undefined,
-        firstChange: true,
-        isFirstChange: () => null,
-      },
-    };
-
-    component.ngOnChanges(changes);
-    expect(spy).toHaveBeenCalledTimes(0);
+    expect(component.minutesList()).toStrictEqual(
+      disableMinutes(getMinutes(), 1, {
+        format: 12,
+        min: time,
+        max: time,
+        period,
+      }),
+    );
   });
 });

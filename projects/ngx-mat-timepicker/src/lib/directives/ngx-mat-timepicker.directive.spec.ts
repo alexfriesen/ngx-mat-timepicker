@@ -148,7 +148,7 @@ describe('NgxMatTimepickerDirective', () => {
   it('should change value and default time on timeSet output', () => {
     const time = '12:12 PM';
     directive.timepicker = timepickerComponent;
-    timepickerComponent.timeSet.next(time);
+    timepickerComponent.timeSet.emit(time);
     expect(directive.value).toBe(time);
     expect(timepickerComponent.defaultTime).toBe(time);
   });

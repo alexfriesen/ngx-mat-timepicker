@@ -1,26 +1,27 @@
 <ng-template #cancelBtnDefault>
-  <button mat-button [color]="color">CANCEL</button>
+  <button mat-button [color]="color()">CANCEL</button>
 </ng-template>
+
 <ng-template #confirmBtnDefault>
-  <button mat-button [color]="color">OK</button>
+  <button mat-button [color]="color()">OK</button>
 </ng-template>
+
 <div cdkTrapFocus>
   <ngx-mat-timepicker-content
     [appendToInput]="data.appendToInput"
     [inputElement]="data.inputElement"
   >
-    <div class="timepicker" [ngClass]="data.timepickerClass">
-      <mat-toolbar
-        [color]="color"
+    <div class="timepicker" [class]="data.timepickerClass">
+      <div
         [class.is-editable]="data.enableKeyboardInput"
         class="timepicker-header"
       >
         <ngx-mat-timepicker-dial
-          [color]="color"
+          [color]="color()"
           [format]="data.format"
-          [hour]="(selectedHour | async)?.time"
-          [minute]="(selectedMinute | async)?.time"
-          [period]="selectedPeriod | async"
+          [hour]="selectedHour()?.time"
+          [minute]="selectedMinute()?.time"
+          [period]="selectedPeriod()"
           [activeTimeUnit]="activeTimeUnit"
           [minTime]="data.minTime"
           [maxTime]="data.maxTime"
@@ -33,7 +34,7 @@
           (hourChanged)="onHourChange($event)"
           (minuteChanged)="onMinuteChange($event)"
         />
-      </mat-toolbar>
+      </div>
       <div class="timepicker__main-content">
         <div class="timepicker__body">
           @switch (activeTimeUnit) {
@@ -41,9 +42,9 @@
               <div>
                 @if (data.format === 24) {
                   <ngx-mat-timepicker-24-hours-face
-                    [color]="color"
+                    [color]="color()"
                     (hourChange)="onHourChange($event)"
-                    [selectedHour]="selectedHour | async"
+                    [selectedHour]="selectedHour()"
                     [minTime]="data.minTime"
                     [maxTime]="data.maxTime"
                     [format]="data.format"
@@ -51,10 +52,10 @@
                   />
                 } @else {
                   <ngx-mat-timepicker-12-hours-face
-                    [color]="color"
+                    [color]="color()"
                     (hourChange)="onHourChange($event)"
-                    [selectedHour]="selectedHour | async"
-                    [period]="selectedPeriod | async"
+                    [selectedHour]="selectedHour()"
+                    [period]="selectedPeriod()"
                     [minTime]="data.minTime"
                     [maxTime]="data.maxTime"
                     (hourSelected)="onHourSelected($event)"
@@ -64,13 +65,13 @@
             }
             @case (timeUnit.MINUTE) {
               <ngx-mat-timepicker-minutes-face
-                [color]="color"
-                [selectedMinute]="selectedMinute | async"
-                [selectedHour]="(selectedHour | async)?.time"
+                [color]="color()"
+                [selectedMinute]="selectedMinute()"
+                [selectedHour]="selectedHour()?.time"
                 [minTime]="data.minTime"
                 [maxTime]="data.maxTime"
                 [format]="data.format"
-                [period]="selectedPeriod | async"
+                [period]="selectedPeriod()"
                 [minutesGap]="data.minutesGap"
                 (minuteChange)="onMinuteChange($event)"
               />
@@ -82,6 +83,7 @@
   </ngx-mat-timepicker-content>
 
   <div class="ngx-mat-timepicker-standalone-actions">
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div (click)="close()">
       <ng-container
         *ngTemplateOutlet="
@@ -89,6 +91,7 @@
         "
       />
     </div>
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div (click)="setTime()">
       <ng-container
         *ngTemplateOutlet="

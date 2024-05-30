@@ -43,7 +43,7 @@ jobs:
             ${{ runner.os }}-angular-build-
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Build
         run: npm run build:demo:gh-pages

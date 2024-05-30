@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateTime } from 'luxon';
 
@@ -23,6 +23,8 @@ import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
 interface NgxMatTimepickerTheme {
   description: string;
   value: string;
+  dark: boolean;
+  hexColor: string;
 }
 
 @Component({
@@ -35,10 +37,10 @@ interface NgxMatTimepickerTheme {
     MatButtonModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
+    MatIcon,
+    MatInput,
     MatMenuModule,
-    MatToolbarModule,
+    MatToolbar,
     NgxMatTimepickerDirective,
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
@@ -47,26 +49,25 @@ interface NgxMatTimepickerTheme {
   ],
 })
 export class DemoComponent implements OnInit {
+  private readonly localeOverrideSrv = inject(NgxMatTimepickerLocaleService);
   private readonly document = inject(DOCUMENT, { optional: true });
 
-  get currentLocale(): string {
-    return this._localeOverrideSrv.locale;
-  }
+  currentLocale = this.localeOverrideSrv.locale;
 
   get currentLocaleKey(): string {
     return this.myLocalesReversed[this.currentLocale];
   }
 
   npmPackage = '@alexfriesen/ngx-mat-timepicker';
-  npmLink: string = `https://www.npmjs.com/package/${this.npmPackage}`;
-  githubLink: string = `https://github.com/alexfriesen/ngx-mat-timepicker`;
+  npmLink = `https://www.npmjs.com/package/${this.npmPackage}`;
+  githubLink = `https://github.com/alexfriesen/ngx-mat-timepicker`;
 
-  maxTime: DateTime = DateTime.local().startOf('day').set({
+  maxTime = DateTime.local().startOf('day').set({
     hour: 16,
-    minute: 0,
+    minute: 20,
   });
 
-  minTime: DateTime = this.maxTime.set({ hour: 14 });
+  minTime = this.maxTime.set({ hour: 14 });
 
   myLocaleKeys = ['en', 'it', 'es', 'fr'];
   myLocalesMaps: Record<string, string> = {
@@ -80,31 +81,29 @@ export class DemoComponent implements OnInit {
   );
 
   readonly themes: NgxMatTimepickerTheme[] = [
-    { value: '', description: 'Light' },
-    { value: 'dark-theme', description: 'Dark' },
+    { value: '', description: 'Light', hexColor: '#fff', dark: false },
+    { value: 'dark-theme', description: 'Dark', hexColor: '#444', dark: true },
   ];
   @ViewChild('pickerH') pickerFreeInput: NgxMatTimepickerComponent;
   selectedTheme: NgxMatTimepickerTheme;
 
   selectedTimes: Record<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H', string> =
     {
-      A: void 0,
-      B: void 0,
-      C: void 0,
-      D: void 0,
-      E: void 0,
-      F: void 0,
-      G: void 0,
-      H: void 0,
+      A: undefined,
+      B: undefined,
+      C: undefined,
+      D: undefined,
+      E: undefined,
+      F: undefined,
+      G: undefined,
+      H: undefined,
     };
 
-  showInput: boolean = !0;
-  timeRegex: RegExp = /([0-9]|1\d):[0-5]\d (AM|PM)/;
-  year: number = new Date().getFullYear();
+  showInput = true;
+  timeRegex = /([0-9]|1\d):[0-5]\d (AM|PM)/;
+  year = new Date().getFullYear();
 
-  private _nextLocale: number = 0;
-
-  constructor(private _localeOverrideSrv: NgxMatTimepickerLocaleService) {}
+  private _nextLocale = 0;
 
   ngOnInit(): void {
     this.selectedTheme = this.themes[0];
@@ -123,10 +122,12 @@ export class DemoComponent implements OnInit {
     if (localeKey) {
       this._nextLocale = this.myLocaleKeys.indexOf(localeKey) - 1;
     }
-    this._localeOverrideSrv.updateLocale(
+    this.localeOverrideSrv.updateLocale(
       this.myLocalesMaps[this.myLocaleKeys[++this._nextLocale]],
     );
-    this._nextLocale >= this.myLocaleKeys.length - 1 && (this._nextLocale = -1);
+    if (this._nextLocale >= this.myLocaleKeys.length - 1) {
+      this._nextLocale = -1;
+    }
   }
 
   updateTheme(theme: NgxMatTimepickerTheme): void {
@@ -136,6 +137,7 @@ export class DemoComponent implements OnInit {
 
   updateTime($event: string, targetProp: string): void {
     console.info('TIME SET', $event);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any)[targetProp] = $event;
   }
 }

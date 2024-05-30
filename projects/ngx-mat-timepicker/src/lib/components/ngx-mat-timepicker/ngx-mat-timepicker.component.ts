@@ -1,50 +1,50 @@
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import {
   Component,
-  EventEmitter,
   HostBinding,
   Input,
-  Output,
   TemplateRef,
+  booleanAttribute,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import {
   CdkOverlayOrigin,
   ConnectedPosition,
-  Overlay,
   OverlayRef,
   CdkConnectedOverlay,
 } from '@angular/cdk/overlay';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ThemePalette } from '@angular/material/core';
-//
+import { BehaviorSubject } from 'rxjs';
+import { DateTime } from 'luxon';
+
+import { NgxMatTimepickerRef } from '../../models/ngx-mat-timepicker-ref.interface';
 import { NgxMatTimepickerConfig } from '../../models/ngx-mat-timepicker-config.interface';
 import { NgxMatTimepickerFormatType } from '../../models/ngx-mat-timepicker-format.type';
-import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
-import { NgxMatTimepickerEventService } from '../../services/ngx-mat-timepicker-event.service';
-import { NgxMatTimepickerDirective } from '../../directives/ngx-mat-timepicker.directive';
-import { NgxMatTimepickerRef } from '../../models/ngx-mat-timepicker-ref.interface';
-import { NgxMatTimepickerDialogComponent } from '../ngx-mat-timepicker-dialog/ngx-mat-timepicker-dialog.component';
 import { NGX_MAT_TIMEPICKER_CONFIG } from '../../tokens/ngx-mat-timepicker-config.token';
-//
-import { DateTime } from 'luxon';
-import { BehaviorSubject } from 'rxjs';
+import { NgxMatTimepickerAdapter } from '../../services/ngx-mat-timepicker-adapter';
+import { NgxMatTimepickerDirective } from '../../directives/ngx-mat-timepicker.directive';
+import { NgxMatTimepickerDialogComponent } from '../ngx-mat-timepicker-dialog/ngx-mat-timepicker-dialog.component';
 import { NgxMatTimepickerStandaloneComponent } from '../ngx-mat-timepicker-standalone/ngx-mat-timepicker-standalone.component';
 
 let config: NgxMatTimepickerConfig;
 
 @Component({
   selector: 'ngx-mat-timepicker',
-  template: ` <ng-template
-    cdkConnectedOverlay
-    cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
-    [cdkConnectedOverlayOpen]="showPicker"
-    [cdkConnectedOverlayOrigin]="overlayOrigin"
-    [cdkConnectedOverlayPositions]="overlayPositions"
-    [cdkConnectedOverlayHasBackdrop]="!0"
-    (backdropClick)="close()"
-  >
-    <ngx-mat-timepicker-standalone />
-  </ng-template>`,
+  template: `
+    <ng-template
+      cdkConnectedOverlay
+      cdkConnectedOverlayHasBackdrop
+      cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+      [cdkConnectedOverlayOpen]="showPicker"
+      [cdkConnectedOverlayOrigin]="overlayOrigin"
+      [cdkConnectedOverlayPositions]="overlayPositions"
+      (backdropClick)="close()"
+    >
+      <ngx-mat-timepicker-standalone />
+    </ng-template>
+  `,
   providers: [
     {
       provide: NGX_MAT_TIMEPICKER_CONFIG,
@@ -57,43 +57,32 @@ let config: NgxMatTimepickerConfig;
   imports: [CdkConnectedOverlay, NgxMatTimepickerStandaloneComponent],
 })
 export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
-  static nextId: number = 0;
+  private readonly _dialog = inject(MatDialog);
 
-  @Input()
-  set appendToInput(newValue: boolean | string | void) {
-    this._appendToInput = coerceBooleanProperty(newValue);
-  }
+  static nextId = 0;
 
-  @Input()
-  set color(newValue: ThemePalette) {
-    this._color = newValue;
-  }
-  get color(): ThemePalette {
-    return this._color;
-  }
+  @Input({ transform: booleanAttribute })
+  appendToInput = false;
+
+  color = input<ThemePalette>('primary');
 
   get disabled(): boolean {
-    return this._timepickerInput && this._timepickerInput.disabled;
+    return this._timepickerInput?.disabled;
   }
 
-  @Input()
-  set enableKeyboardInput(newValue: boolean | string | void) {
-    this._enableKeyboardInput = coerceBooleanProperty(newValue);
-  }
-  get enableKeyboardInput(): boolean {
-    return this._enableKeyboardInput;
-  }
+  @Input({ transform: booleanAttribute })
+  enableKeyboardInput: boolean;
 
   @Input()
   set format(value: NgxMatTimepickerFormatType) {
     this._format = NgxMatTimepickerAdapter.isTwentyFour(value) ? 24 : 12;
   }
   get format(): NgxMatTimepickerFormatType {
-    return this._timepickerInput ? this._timepickerInput.format : this._format;
+    return this._timepickerInput?.format ?? this._format;
   }
 
   get inputElement(): HTMLInputElement {
-    return this._timepickerInput && this._timepickerInput.element;
+    return this._timepickerInput?.element;
   }
 
   get maxTime(): DateTime {
@@ -123,32 +112,36 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   get overlayOrigin(): CdkOverlayOrigin {
     return this._timepickerInput
       ? this._timepickerInput.cdkOverlayOrigin
-      : void 0;
+      : undefined;
   }
 
   get time(): string {
-    return this._timepickerInput && this._timepickerInput.value;
+    return this._timepickerInput?.value;
   }
 
   @Input() cancelBtnTmpl: TemplateRef<Node>;
   @Input() confirmBtnTmpl: TemplateRef<Node>;
-  @Input() defaultTime: string;
-  @Input() disableAnimation: boolean;
   @Input() editableHintTmpl: TemplateRef<Node>;
+
+  @Input() defaultTime: string;
+  @Input({ transform: booleanAttribute })
+  disableAnimation: boolean;
+  @Input({ transform: booleanAttribute })
+  preventOverlayClick: boolean;
   @Input() hoursOnly = false;
-  @Input() isEsc = !0;
+  @Input() isEsc = true;
+
   @Input() max: DateTime;
   @Input() min: DateTime;
-  @Input() preventOverlayClick: boolean;
   @Input() timepickerClass: string;
 
-  @Output() opened = new EventEmitter<void>();
-  @Output() closed = new EventEmitter<void>();
-  @Output() timeSet = new EventEmitter<string>();
-  @Output() timeChanged = new EventEmitter<string>();
-  @Output() hourSelected = new EventEmitter<number>();
+  readonly opened = output<void>();
+  readonly closed = output<void>();
+  readonly timeSet = output<string>();
+  readonly timeChanged = output<string>();
+  readonly hourSelected = output<number>();
 
-  @HostBinding('id') id: string =
+  @HostBinding('id') id =
     `ngx_mat_timepicker_${++NgxMatTimepickerComponent.nextId}`;
 
   overlayPositions: ConnectedPosition[] = [
@@ -167,32 +160,23 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       offsetY: 0,
     },
   ];
-  showPicker: boolean = !1;
-  timeUpdated = new BehaviorSubject<string>(void 0); // used in the dialog, check if a better approach can be used
+  showPicker = false;
+  timeUpdated$ = new BehaviorSubject<string>(undefined); // used in the dialog, check if a better approach can be used
 
-  private _appendToInput: boolean = !1;
-  private _color: ThemePalette = 'primary';
   private _dialogRef: MatDialogRef<NgxMatTimepickerDialogComponent, void>;
-  private _enableKeyboardInput: boolean = !1;
   private _format: NgxMatTimepickerFormatType = 12;
   private _minutesGap: number;
   private _overlayRef: OverlayRef;
   private _timepickerInput: NgxMatTimepickerDirective;
 
-  constructor(
-    private _eventService: NgxMatTimepickerEventService,
-    private _dialog: MatDialog,
-    private _overlay: Overlay,
-  ) {}
-
   close(): void {
-    if (this._appendToInput) {
-      this._overlayRef && this._overlayRef.dispose();
+    if (this.appendToInput) {
+      this._overlayRef?.dispose();
     } else {
-      this._dialogRef && this._dialogRef.close();
+      this._dialogRef?.close();
     }
     this.inputElement.focus(); // Fix ExpressionHasChangedAfterCheck error on overlay destroy
-    this.showPicker = !1;
+    this.showPicker = false;
     this.closed.emit();
   }
 
@@ -213,15 +197,15 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
       disabled: this.disabled,
       enableKeyboardInput: this.enableKeyboardInput,
       preventOverlayClick: this.preventOverlayClick,
-      appendToInput: this._appendToInput,
+      appendToInput: this.appendToInput,
       hoursOnly: this.hoursOnly,
       timepickerClass: this.timepickerClass,
       inputElement: this.inputElement,
-      color: this.color,
+      color: this.color(),
     };
 
-    if (this._appendToInput) {
-      this.showPicker = !0;
+    if (this.appendToInput) {
+      this.showPicker = true;
     } else {
       this._dialogRef = this._dialog.open(NgxMatTimepickerDialogComponent, {
         panelClass: 'ngx-mat-timepicker-dialog',
@@ -233,6 +217,7 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
         this.closed.emit();
       });
     }
+
     this.opened.emit();
   }
 
@@ -249,10 +234,10 @@ export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   }
 
   unregisterInput(): void {
-    this._timepickerInput = void 0;
+    this._timepickerInput = undefined;
   }
 
   updateTime(time: string): void {
-    this.timeUpdated.next(time);
+    this.timeUpdated$.next(time);
   }
 }
