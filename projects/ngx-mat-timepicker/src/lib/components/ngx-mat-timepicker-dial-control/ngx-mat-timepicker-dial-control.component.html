@@ -1,28 +1,30 @@
-@if (!isEditable) {
-  <input
-    readonly
-    class="control"
-    [class.active]="isActive"
-    [ngModel]="time | timeLocalizer: timeUnit : true"
-    [disabled]="disabled"
-    [ngxMatTimepickerAutofocus]="isActive"
-    (input)="updateTime()"
-    (focus)="saveTimeAndChangeTimeUnit($event, timeUnit)"
-    (ngModelChange)="time = $event"
-  />
-} @else {
-  <input
-    class="control"
-    [class.active]="isActive"
-    [ngModel]="
-      time | ngxMatTimepickerParser: timeUnit | timeLocalizer: timeUnit : true
-    "
-    [disabled]="disabled"
-    [ngxMatTimepickerAutofocus]="isActive"
-    (input)="updateTime()"
-    (focus)="saveTimeAndChangeTimeUnit($event, timeUnit)"
-    (keydown)="onKeydown($event)"
-    (keypress)="changeTimeByKeyboard($event)"
-    (ngModelChange)="onModelChange($event)"
-  />
-}
+<div class="wrapper" [class.active]="isActive()">
+  @if (!isEditable) {
+    <input
+      readonly
+      class="control"
+      [ngModel]="time | timeLocalizer: timeUnit : true"
+      [disabled]="disabled()"
+      [ngxMatTimepickerAutofocus]="isActive()"
+      (input)="updateTime()"
+      (focus)="saveTimeAndChangeTimeUnit($event, timeUnit)"
+      (blur)="focusChanged(false)"
+      (ngModelChange)="time = $event"
+    />
+  } @else {
+    <input
+      class="control"
+      [ngModel]="
+        time | ngxMatTimepickerParser: timeUnit | timeLocalizer: timeUnit : true
+      "
+      [disabled]="disabled()"
+      [ngxMatTimepickerAutofocus]="isActive()"
+      (input)="updateTime()"
+      (focus)="saveTimeAndChangeTimeUnit($event, timeUnit)"
+      (blur)="focusChanged(false)"
+      (keydown)="onKeydown($event)"
+      (keypress)="changeTimeByKeyboard($event)"
+      (ngModelChange)="onModelChange($event)"
+    />
+  }
+</div>

@@ -59,7 +59,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
   it('should emit changed time if it exists and available', fakeAsync(() => {
     const timeMock = { time: 1, angle: 30, disabled: false };
     let time = null;
-    component.timeList = [timeMock];
+    fixture.componentRef.setInput('timeList', [timeMock]);
     component.timeChanged.subscribe((t) => (time = t));
     component.time = '1';
     component.updateTime();
@@ -72,7 +72,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
   it('should not emit changed time if it does not exists', fakeAsync(() => {
     const timeMock = { time: 1, angle: 30 };
     let time = null;
-    component.timeList = [timeMock];
+    fixture.componentRef.setInput('timeList', [timeMock]);
     component.timeChanged.subscribe((t) => (time = t));
     component.time = '';
     component.updateTime();
@@ -94,13 +94,13 @@ describe('NgxMatTimepickerDialControlComponent', () => {
 
     beforeEach(() => {
       counter = 0;
-      component.timeList = getHours(24);
+      fixture.componentRef.setInput('timeList', getHours(24));
     });
 
     it('should call preventDefault if no time exist or time disabled', () => {
       const num1 = 49; // 1
-      component.timeList = [{ time: 1, angle: 30, disabled: true }];
       component.time = '1';
+      fixture.componentRef.setInput('timeList', [{ time: 1, angle: 30, disabled: true }]);
 
       component.changeTimeByKeyboard({ ...event, keyCode: num1 });
       expect(counter).toBe(1);
@@ -130,7 +130,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
 
     beforeEach(() => {
       counter = 0;
-      component.timeList = getHours(24);
+      fixture.componentRef.setInput('timeList', getHours(24));
     });
 
     it('should call preventDefault when trying to write not a number', () => {
@@ -170,7 +170,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
     it('should up time by 7', () => {
       const arrowUp = 38;
       component.time = '11';
-      component.minutesGap = 7;
+      fixture.componentRef.setInput('minutesGap', 7);
 
       component.onKeydown({ ...event, keyCode: arrowUp });
       expect(component.time).toBe('18');
@@ -179,7 +179,7 @@ describe('NgxMatTimepickerDialControlComponent', () => {
     it('should down time by 6', () => {
       const arrowDown = 40;
       component.time = '11';
-      component.minutesGap = 6;
+      fixture.componentRef.setInput('minutesGap', 6);
 
       component.onKeydown({ ...event, keyCode: arrowDown });
       expect(component.time).toBe('05');

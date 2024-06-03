@@ -35,49 +35,47 @@
           (minuteChanged)="onMinuteChange($event)"
         />
       </div>
-      <div class="timepicker__main-content">
-        <div class="timepicker__body">
-          @switch (activeTimeUnit) {
-            @case (timeUnit.HOUR) {
-              <div>
-                @if (data.format === 24) {
-                  <ngx-mat-timepicker-24-hours-face
-                    [color]="color()"
-                    [selectedHour]="selectedHour()"
-                    [minTime]="data.minTime"
-                    [maxTime]="data.maxTime"
-                    [format]="data.format"
-                    (hourChange)="onHourChange($event)"
-                    (hourSelected)="onHourSelected($event)"
-                  />
-                } @else {
-                  <ngx-mat-timepicker-12-hours-face
-                    [color]="color()"
-                    [selectedHour]="selectedHour()"
-                    [period]="selectedPeriod()"
-                    [minTime]="data.minTime"
-                    [maxTime]="data.maxTime"
-                    (hourChange)="onHourChange($event)"
-                    (hourSelected)="onHourSelected($event)"
-                  />
-                }
-              </div>
-            }
-            @case (timeUnit.MINUTE) {
-              <ngx-mat-timepicker-minutes-face
-                [color]="color()"
-                [selectedMinute]="selectedMinute()"
-                [selectedHour]="selectedHour()?.time"
-                [minTime]="data.minTime"
-                [maxTime]="data.maxTime"
-                [format]="data.format"
-                [period]="selectedPeriod()"
-                [minutesGap]="data.minutesGap"
-                (minuteChange)="onMinuteChange($event)"
-              />
-            }
+      <div class="timepicker-body">
+        @switch (activeTimeUnit) {
+          @case (timeUnit.HOUR) {
+            <div>
+              @if (data.format === 24) {
+                <ngx-mat-timepicker-24-hours-face
+                  [color]="color()"
+                  [selectedHour]="selectedHour()"
+                  [minTime]="data.minTime"
+                  [maxTime]="data.maxTime"
+                  [format]="data.format"
+                  (hourChange)="onHourChange($event)"
+                  (hourSelected)="onHourSelected($event)"
+                />
+              } @else {
+                <ngx-mat-timepicker-12-hours-face
+                  [color]="color()"
+                  [selectedHour]="selectedHour()"
+                  [period]="selectedPeriod()"
+                  [minTime]="data.minTime"
+                  [maxTime]="data.maxTime"
+                  (hourChange)="onHourChange($event)"
+                  (hourSelected)="onHourSelected($event)"
+                />
+              }
+            </div>
           }
-        </div>
+          @case (timeUnit.MINUTE) {
+            <ngx-mat-timepicker-minutes-face
+              [color]="color()"
+              [selectedMinute]="selectedMinute()"
+              [selectedHour]="selectedHour()?.time"
+              [minTime]="data.minTime"
+              [maxTime]="data.maxTime"
+              [format]="data.format"
+              [period]="selectedPeriod()"
+              [minutesGap]="data.minutesGap"
+              (minuteChange)="onMinuteChange($event)"
+            />
+          }
+        }
       </div>
     </div>
   </ngx-mat-timepicker-content>

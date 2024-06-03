@@ -1,28 +1,43 @@
+:host {
+  position: relative;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.825rem 1rem;
+
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  background-color: var(--mdc-filled-text-field-container-color);
+}
+
+.focused,
 .active {
+  border-color: var(--mdc-filled-text-field-focus-active-indicator-color);
   background-color: var(
     --mat-standard-button-toggle-selected-state-background-color
   );
 }
 
 .control {
-  border: none;
-  border-radius: 0.5rem;
-  background-color: var(--mdc-filled-text-field-container-color);
-  transition: background-color 0.2s;
-
   font-size: inherit;
   color: inherit; // Forces color inheritance because input may have user agent style
   text-align: center;
+  border: none;
+  background: transparent;
 
-  width: 6rem;
+  min-width: 0;
+  width: 60px;
   height: 100%;
-  padding: 1rem;
 
-  &:focus {
-    outline-color: var(--mdc-filled-text-field-focus-active-indicator-color);
-    background-color: var(
-      --mat-standard-button-toggle-selected-state-background-color
-    );
+  &:focus-visible {
+    outline: none;
   }
 
   &:disabled {

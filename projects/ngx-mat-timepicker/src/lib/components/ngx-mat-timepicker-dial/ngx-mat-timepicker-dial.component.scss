@@ -1,5 +1,7 @@
-.dial {
+:host {
+  display: block;
   text-align: center;
+  width: 100%;
 }
 
 .container {
@@ -14,6 +16,7 @@
   display: flex;
   align-items: center;
   line-height: normal;
+  flex: 1 0 auto;
   font-size: 3em;
 }
 
@@ -35,6 +38,6 @@
 }
 
 .seperator {
-  width: 1.5rem;
+  padding: 0.5rem;
   font-weight: 500;
 }

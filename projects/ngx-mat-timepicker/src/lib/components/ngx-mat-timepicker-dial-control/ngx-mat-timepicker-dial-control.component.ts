@@ -6,6 +6,9 @@ import {
   AfterViewInit,
   output,
   booleanAttribute,
+  inject,
+  ChangeDetectionStrategy,
+  input,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -24,8 +27,9 @@ function retainSelection(this: HTMLInputElement) {
   selector: 'ngx-mat-timepicker-dial-control',
   templateUrl: 'ngx-mat-timepicker-dial-control.component.html',
   styleUrls: ['ngx-mat-timepicker-dial-control.component.scss'],
-  providers: [NgxMatTimepickerParserPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  providers: [NgxMatTimepickerParserPipe],
   imports: [
     FormsModule,
     NgxMatTimepickerAutofocusDirective,
@@ -38,45 +42,45 @@ export class NgxMatTimepickerDialControlComponent
 {
   private get _selectedTime(): NgxMatTimepickerClockFace | undefined {
     if (this.time) {
-      return this.timeList.find((t) => t.time === +this.time);
+      return this.timeList().find((t) => t.time === +this.time);
     }
 
     return undefined;
   }
 
-  @Input({ transform: booleanAttribute })
-  disabled: boolean;
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly isActive = input(false, { transform: booleanAttribute });
+  readonly isEditable = input(false, { transform: booleanAttribute });
 
-  @Input({ transform: booleanAttribute })
-  isActive: boolean;
-
-  @Input({ transform: booleanAttribute })
-  isEditable: boolean;
-
-  @Input() minutesGap: number;
+  readonly minutesGap = input(1);
+  readonly timeList = input<NgxMatTimepickerClockFace[]>([]);
 
   previousTime: number | string;
 
   @Input() time: string;
 
-  @Input() timeList: NgxMatTimepickerClockFace[];
-
   @Input() timeUnit: NgxMatTimepickerUnits;
 
-  readonly focused = output<void>();
   readonly timeChanged = output<NgxMatTimepickerClockFace>();
   readonly timeUnitChanged = output<NgxMatTimepickerUnits>();
+  readonly focused = output<void>();
   readonly unfocused = output<void>();
 
-  constructor(
-    private _elRef: ElementRef,
-    private _timeParserPipe: NgxMatTimepickerParserPipe,
-  ) {}
+  private readonly _elRef = inject(ElementRef);
+  private readonly _timeParserPipe = inject(NgxMatTimepickerParserPipe);
+
+  focusChanged(value: boolean) {
+    if (value) {
+      this.focused.emit();
+    } else {
+      this.unfocused.emit();
+    }
+  }
 
   changeTimeByKeyboard(e: KeyboardEvent): void {
     const char = String.fromCharCode(e.keyCode);
 
-    if (isTimeDisabledToChange(this.time, char, this.timeList)) {
+    if (isTimeDisabledToChange(this.time, char, this.timeList())) {
       e.preventDefault();
     }
   }
@@ -112,7 +116,8 @@ export class NgxMatTimepickerDialControlComponent
     event.preventDefault();
     this.previousTime = this.time;
     this.timeUnitChanged.emit(unit);
-    this.focused.emit();
+
+    this.focusChanged(true);
   }
 
   updateTime(): void {
@@ -131,14 +136,14 @@ export class NgxMatTimepickerDialControlComponent
 
     // arrow up
     if (keyCode === 38) {
-      time = this._addTime(this.minutesGap || 1);
+      time = this._addTime(this.minutesGap() || 1);
     }
     // arrow down
     else if (keyCode === 40) {
-      time = this._addTime(-1 * (this.minutesGap || 1));
+      time = this._addTime(-1 * (this.minutesGap() || 1));
     }
 
-    if (!isTimeUnavailable(time, this.timeList)) {
+    if (!isTimeUnavailable(time, this.timeList())) {
       this.time = time;
       this.updateTime();
     }
