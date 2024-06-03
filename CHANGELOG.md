@@ -1,3 +1,8 @@
+# 18.0.1
+
+- fix: fixed alignment of input fileds
+- refactor: examples
+
 # 18.0.0
 
 This Release includes a major overhaul of the appearance and internal structure of the components.
