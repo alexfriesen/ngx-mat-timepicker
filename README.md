@@ -67,6 +67,7 @@ export class MyModule {}
 ```
 
 ## Theming
+
 This Package relies on an existing Angular Material Theme:
 
 ```scss
@@ -97,23 +98,16 @@ Selector: `ngxMatTimepicker`
 
 **Properties**
 
-| Name | Description |
-| ---- | ----------- |
-| @Input()  
- ngxMatTimepicker: NgxMatTimepickerComponent | The timepicker that this input is associated with. |  
-| @Input()  
- color: ThemePalette | The material palette to use. | | @Input()  
- disabled: boolean | Weather the timepicker popup should be disabled. |  
-| @Input()  
- value: string | Set a default value and time for a timepicker. The format of the time is in 12 hours notation `11:00 PM` or in 24 hours notation `23:00`. A Date string won't work. |  
-| @Input()  
- format: number | `12` or `24` . 12h/24h view for hour selection clock . `12` (AM/PM) format by default. |  
-| @Input()  
- min: string or DateTime | Set min time for timepicker (`11:15 pm` ) |  
-| @Input()  
- max: string or DateTime | Set max time for timepicker (`11:15 pm` ) |  
-| @Input()  
- disableClick: boolean | Set `true` to disable opening timepicker by clicking on the input |
+| Name                                                 | Description                                                                                                                                                         |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @Input() ngxMatTimepicker: NgxMatTimepickerComponent | The timepicker that this input is associated with.                                                                                                                  |
+| @Input() color: ThemePalette                         | The material palette to use.                                                                                                                                        |
+| @Input() disabled: boolean                           | Weather the timepicker popup should be disabled.                                                                                                                    |
+| @Input() value: string                               | Set a default value and time for a timepicker. The format of the time is in 12 hours notation `11:00 PM` or in 24 hours notation `23:00`. A Date string won't work. |
+| @Input() format: number                              | `12` or `24` . 12h/24h view for hour selection clock . `12` (AM/PM) format by default.                                                                              |
+| @Input() min: string or DateTime                     | Set min time for timepicker (`11:15 pm` )                                                                                                                           |
+| @Input() max: string or DateTime                     | Set max time for timepicker (`11:15 pm` )                                                                                                                           |
+| @Input() disableClick: boolean                       | Set `true` to disable opening timepicker by clicking on the input                                                                                                   |
 
 #### NgxMatTimepickerLocaleService
 
@@ -130,41 +124,25 @@ Selector: `ngx-mat-timepicker`
 
 **Properties**
 
-| Name | Description |
-| ---- | ----------- |
-| @Input()  
- cancelBtnTmpl: TemplateRef<Node> | Set if you want to change cancel button to your custom one. | | @Input()  
- confirmBtnTmpl: TemplateRef<Node> | Set if you want to change confirm button to your custom one. |  
-| @Input()  
- editableHintTmpl: TemplateRef<Node> | Set if you want to change dial hint to your custom one. Works only if `enableKeyboardInput = true` |  
-| @Input()  
- ESC: boolean | Disable or enable closing timepicker by ESC. |  
-| @Input()  
- enableKeyboardInput: boolean | To disable or enable changing time through a keyboard on the timepicker dial without interaction with a clock face. Set `false` by default |  
-| @Input()  
- minutesGap: number | To define a gap between minutes. Set `1` by default |  
-| @Input()  
- defaultTime: string | Set default time for a timepicker. `12:00 AM` by default |  
-| @Input()  
- preventOverlayClick: boolean | Set `true` to prevent closing the timepicker by overlay click. Uses `false` by default |  
-| @Input()  
- disableAnimation: boolean | Set `true` to prevent opening and closing timepicker animation. Uses `false` by default |  
-| @Input()  
- hoursOnly: boolean | Set `true` to prevent switching to minutes automatically once hour is selected. Uses `false` by default |  
-| @Input()  
- theme: NgxMatTimepickerTheme | Custom css properties which will override the defaults |  
-| @Input()  
- timepickerClass: string | To provide a custom css class for the timepicker |  
-| @Output()  
- timeSet: EventEmitter\<string\> | Emits time when that was set. |  
-| @Output()  
- opened: EventEmitter\<null\> | Emits after timepicker was opened. |  
-| @Output()  
- closed: EventEmitter\<null\> | Emits after timepicker was closed. |  
-| @Output()  
- hourSelected: EventEmitter\<number\> | Emits after hour was selected. |  
-| @Output()  
- timeChanged: EventEmitter\<string\> | Emits once time was changed. |
+| Name                                           | Description                                                                                                                                |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| @Input() cancelBtnTmpl: TemplateRef<Node>      | Set if you want to change cancel button to your custom one.                                                                                |
+| @Input() confirmBtnTmpl: TemplateRef<Node>     | Set if you want to change confirm button to your custom one.                                                                               |
+| @Input() editableHintTmpl: TemplateRef<Node>   | Set if you want to change dial hint to your custom one. Works only if `enableKeyboardInput = true`                                         |
+| @Input() ESC: boolean                          | Disable or enable closing timepicker by ESC.                                                                                               |
+| @Input() enableKeyboardInput: boolean          | To disable or enable changing time through a keyboard on the timepicker dial without interaction with a clock face. Set `false` by default |
+| @Input() minutesGap: number                    | To define a gap between minutes. Set `1` by default                                                                                        |
+| @Input() defaultTime: string                   | Set default time for a timepicker. `12:00 AM` by default                                                                                   |
+| @Input() preventOverlayClick: boolean          | Set `true` to prevent closing the timepicker by overlay click. Uses `false` by default                                                     |
+| @Input() disableAnimation: boolean             | Set `true` to prevent opening and closing timepicker animation. Uses `false` by default                                                    |
+| @Input() hoursOnly: boolean                    | Set `true` to prevent switching to minutes automatically once hour is selected. Uses `false` by default                                    |
+| @Input() theme: NgxMatTimepickerTheme          | Custom css properties which will override the defaults                                                                                     |
+| @Input() timepickerClass: string               | To provide a custom css class for the timepicker                                                                                           |
+| @Output() timeSet: EventEmitter\<string\>      | Emits time when that was set.                                                                                                              |
+| @Output() opened: EventEmitter\<null\>         | Emits after timepicker was opened.                                                                                                         |
+| @Output() closed: EventEmitter\<null\>         | Emits after timepicker was closed.                                                                                                         |
+| @Output() hourSelected: EventEmitter\<number\> | Emits after hour was selected.                                                                                                             |
+| @Output() timeChanged: EventEmitter\<string\>  | Emits once time was changed.                                                                                                               |
 
 #### NgxMatTimepickerFieldComponent
 
@@ -174,28 +152,20 @@ Selector: `ngx-mat-timepicker-field`
 
 **Properties**
 
-| Name | Description |
-| ---- | ----------- |
-| @Input()  
- disabled: boolean | Whether the timepicker is disabled |  
-| @Input()  
- floatLabel: 'never' or 'always' or 'auto' | Whether the labels of the fields should float, default to never | | @Input()  
- toggleIcon: TemplateRef\<HTMLObjectElement\> | Provide custom `svg` icon for toggle button |  
-| @Input()  
- buttonAlign: 'right' or 'left' | Positioning toggle button (`right` by default) |  
-| @Input()  
- clockTheme: NgxMatTimepickerTheme | Custom css properties which will override timepicker clock |  
-| @Input()  
- controlOnly: boolean | Hide or display toggle button with the timepicker clock |  
-| @Input()  
- format: number | `12` or `24` . Set format for timepicker. `12` (AM/PM) format by default. |  
-| @Input()  
- cancelBtnTmpl: TemplateRef\<Node\> | Set if you want to change cancel button for timepicker to your custom one. | | @Input()  
- confirmBtnTmpl: TemplateRef\<Node\> | Set if you want to change confirm button for timepicker to your custom one. |  
-| @Input()  
- min: string or DateTime | Set min time for timepicker (`11:15 pm` ) |  
-| @Input()  
- max: string or DateTime | Set max time for timepicker (`11:15 pm` ) |  
+| Name                                                  | Description                                                                 |
+| ----------------------------------------------------- | --------------------------------------------------------------------------- |
+| @Input() disabled: boolean                            | Whether the timepicker is disabled                                          |
+| @Input() floatLabel: 'never' or 'always' or 'auto'    | Whether the labels of the fields should float, default to never             |
+| @Input() toggleIcon: TemplateRef\<HTMLObjectElement\> | Provide custom `svg` icon for toggle button                                 |
+| @Input() buttonAlign: 'right' or 'left'               | Positioning toggle button (`right` by default)                              |
+| @Input() clockTheme: NgxMatTimepickerTheme            | Custom css properties which will override timepicker clock                  |
+| @Input() controlOnly: boolean                         | Hide or display toggle button with the timepicker clock                     |
+| @Input() format: number                               | `12` or `24` . Set format for timepicker. `12` (AM/PM) format by default.   |
+| @Input() cancelBtnTmpl: TemplateRef\<Node\>           | Set if you want to change cancel button for timepicker to your custom one.  |
+| @Input() confirmBtnTmpl: TemplateRef\<Node\>          | Set if you want to change confirm button for timepicker to your custom one. |
+| @Input() min: string or DateTime                      | Set min time for timepicker (`11:15 pm` )                                   |
+| @Input() max: string or DateTime                      | Set max time for timepicker (`11:15 pm` )                                   |
+
 | @Output()  
  timeChanged: EventEmitter\<string\> | Emit a new time once it is changed. |
 
@@ -207,11 +177,10 @@ Selector: `ngx-mat-timepicker-toggle`
 
 **Properties**
 
-| Name | Description |
-| ---- | ----------- |
-| @Input()  
- for: NgxMatTimepickerComponent | Timepicker instance that the button will toggle | | @Input()  
- disabled: boolean | Whether the toggle button is disabled |
+| Name                                    | Description                                     |
+| --------------------------------------- | ----------------------------------------------- |
+| @Input() for: NgxMatTimepickerComponent | Timepicker instance that the button will toggle |
+| @Input() disabled: boolean              | Whether the toggle button is disabled           |
 
 #### NgxMatTimepickerToggleIconDirective
 
@@ -221,10 +190,9 @@ Selector: `[ngxMatTimepickerToggleIcon]`
 
 **Properties**
 
-| Name | Description |
-| ---- | ----------- |
-| @Input()  
- ngxMatTimepickerTheme: NgxMatTimepickerTheme | Custom css properties which will override the defaults |
+| Name                                                  | Description                                            |
+| ----------------------------------------------------- | ------------------------------------------------------ |
+| @Input() ngxMatTimepickerTheme: NgxMatTimepickerTheme | Custom css properties which will override the defaults |
 
 ### Demo
 
