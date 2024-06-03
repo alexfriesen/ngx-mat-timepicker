@@ -1,0 +1,37 @@
+<div>
+  <h3>Min and Max validation</h3>
+  <p>add config to have min and/or max hour</p>
+  <div class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+    <mat-form-field>
+      <input
+        matInput
+        name="selected_time_g"
+        [format]="12"
+        [max]="maxTime"
+        [min]="minTime"
+        [(ngModel)]="selectedTime"
+        [ngxMatTimepicker]="pickerG"
+        placeholder="12:00"
+        readonly
+      />
+      <ngx-mat-timepicker-toggle [for]="pickerG" matSuffix />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      class="ngx-mtp-margin-top ngx-mtp-margin-bottom ngx-mtp-d-inline-block"
+      (click)="pickerG.open()"
+      color="primary"
+    >
+      Open picker
+    </button>
+    <button
+      mat-raised-button
+      class="ngx-mtp-margin-top ngx-mtp-margin-bottom ngx-mtp-d-inline-block"
+      (click)="selectedTime = '12:00'"
+      color="primary"
+    >
+      Invalidate
+    </button>
+    <ngx-mat-timepicker color="accent" #pickerG />
+  </div>
+</div>

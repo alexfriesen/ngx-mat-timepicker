@@ -1,0 +1,24 @@
+<h3>Picker with 12h format</h3>
+<p>using <span class="mat-color-primary">default</span> palette (primary)</p>
+
+<div class="ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+  <mat-form-field>
+    <input
+      matInput
+      name="selected_time_A"
+      [(ngModel)]="selectedTime"
+      [ngxMatTimepicker]="pickerA"
+      placeholder="4:00 PM"
+      readonly
+    />
+    <mat-icon matSuffix (click)="pickerA.open()">watch_later </mat-icon>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="selectedTime = undefined">
+    clear
+  </button>
+  <ngx-mat-timepicker
+    #pickerA
+    enableKeyboardInput
+    (timeSet)="onTimeSet($event)"
+  />
+</div>

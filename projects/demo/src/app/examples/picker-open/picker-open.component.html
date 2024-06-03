@@ -1,0 +1,27 @@
+<div>
+  <h3>Open programmatically</h3>
+  <p>use external button to open the picker</p>
+  <div class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+    <mat-form-field>
+      <input
+        matInput
+        name="selected_time_e"
+        [format]="24"
+        [(ngModel)]="selectedTime"
+        [ngxMatTimepicker]="pickerE"
+        placeholder="12:00"
+        readonly
+      />
+      <mat-icon matSuffix (click)="pickerE.open()">watch_later </mat-icon>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      class="ngx-mtp-margin-top ngx-mtp-margin-bottom ngx-mtp-d-inline-block"
+      (click)="pickerE.open()"
+      color="primary"
+    >
+      Open picker
+    </button>
+    <ngx-mat-timepicker color="accent" #pickerE />
+  </div>
+</div>

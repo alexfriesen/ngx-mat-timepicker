@@ -1,0 +1,24 @@
+<div>
+  <h3>Append to input</h3>
+  <p>using appendToInput</p>
+
+  <div class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+    <mat-form-field>
+      <input
+        matInput
+        name="selected_time_d"
+        [format]="24"
+        [(ngModel)]="selectedTime"
+        [ngxMatTimepicker]="pickerD"
+        [defaultValue]="selectedTime"
+        placeholder="23:59"
+        readonly
+      />
+      <mat-icon matSuffix (click)="pickerD.open()">watch_later </mat-icon>
+    </mat-form-field>
+    <div class="ngx-mtp-box-bordered">
+      <small>ngx-mat-timepicker is here</small>
+      <ngx-mat-timepicker color="accent" appendToInput #pickerD />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+  <h3>ngx-mat-timepicker-field</h3>
+  <p>using <span class="mat-color-warn">warn</span> palette</p>
+
+  <div class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+    <p><strong>format = 12</strong></p>
+    <ngx-mat-timepicker-field
+      color="warn"
+      [format]="12"
+      [max]="maxTime"
+      [min]="minTime"
+      [defaultTime]="'11:11 PM'"
+    />
+    <p><strong>format = 24</strong></p>
+    <ngx-mat-timepicker-field
+      color="warn"
+      [format]="24"
+      [defaultTime]="'23:11'"
+    />
+  </div>
+</div>

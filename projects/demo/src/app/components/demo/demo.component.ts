@@ -1,29 +1,30 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
+import {
+  MatButtonToggle,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateTime } from 'luxon';
 
-import {
-  NgxMatTimepickerComponent,
-  NgxMatTimepickerLocaleService,
-  NgxMatTimepickerToggleComponent,
-  NgxMatTimepickerFieldComponent,
-  NgxMatTimepickerDirective,
-} from '@alexfriesen/ngx-mat-timepicker';
+import { NgxMatTimepickerLocaleService } from '@alexfriesen/ngx-mat-timepicker';
 
-import { CodeViewerComponent } from '../code-viewer/code-viewer.component';
+import { ExampleFormat12Component } from '../../examples/format-12/format-12.component';
+import { ExampleFormat24Component } from '../../examples/format-24/format-24.component';
+import { ExampleAppendComponent } from '../../examples/append/append.component';
+import { ExamplePickerOpenComponent } from '../../examples/picker-open/picker-open.component';
+import { ExamplePickerToggleComponent } from '../../examples/picker-toggle/picker-toggle.component';
+import { ExampleFieldComponent } from '../../examples/field/field.component';
+import { ExampleValidationComponent } from '../../examples/validation/validation.component';
+import { ExampleCompletionComponent } from '../../examples/completion/completion.component';
+import { ExampleDialogComponent } from '../../examples/dialog/dialog.component';
 
 interface NgxMatTimepickerTheme {
   description: string;
   value: string;
-  dark: boolean;
   hexColor: string;
 }
 
@@ -33,25 +34,35 @@ interface NgxMatTimepickerTheme {
   styleUrls: ['demo.component.scss'],
   standalone: true,
   imports: [
-    FormsModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
+    MatAnchor,
+    MatButton,
+    MatIconButton,
     MatIcon,
-    MatInput,
-    MatMenuModule,
     MatToolbar,
-    NgxMatTimepickerDirective,
-    NgxMatTimepickerComponent,
-    NgxMatTimepickerFieldComponent,
-    NgxMatTimepickerToggleComponent,
-    CodeViewerComponent,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatCard,
+    MatCardContent,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+
+    ExampleFormat12Component,
+    ExampleFormat24Component,
+    ExampleAppendComponent,
+    ExamplePickerOpenComponent,
+    ExamplePickerToggleComponent,
+    ExampleFieldComponent,
+    ExampleValidationComponent,
+    ExampleCompletionComponent,
+    ExampleDialogComponent,
   ],
 })
-export class DemoComponent implements OnInit {
+export class DemoComponent {
   private readonly localeOverrideSrv = inject(NgxMatTimepickerLocaleService);
   private readonly document = inject(DOCUMENT, { optional: true });
 
+  private _nextLocale = 0;
   currentLocale = this.localeOverrideSrv.locale;
 
   get currentLocaleKey(): string {
@@ -61,13 +72,6 @@ export class DemoComponent implements OnInit {
   npmPackage = '@alexfriesen/ngx-mat-timepicker';
   npmLink = `https://www.npmjs.com/package/${this.npmPackage}`;
   githubLink = `https://github.com/alexfriesen/ngx-mat-timepicker`;
-
-  maxTime = DateTime.local().startOf('day').set({
-    hour: 16,
-    minute: 20,
-  });
-
-  minTime = this.maxTime.set({ hour: 14 });
 
   myLocaleKeys = ['en', 'it', 'es', 'fr'];
   myLocalesMaps: Record<string, string> = {
@@ -80,43 +84,15 @@ export class DemoComponent implements OnInit {
     Object.entries(this.myLocalesMaps).map((a) => a.reverse()),
   );
 
-  readonly themes: NgxMatTimepickerTheme[] = [
-    { value: '', description: 'Light', hexColor: '#fff', dark: false },
-    { value: 'dark-theme', description: 'Dark', hexColor: '#444', dark: true },
+  readonly colors: NgxMatTimepickerTheme[] = [
+    { value: 'default', description: 'Red', hexColor: '#f44336' },
+    { value: 'blue', description: 'Blue', hexColor: '#2196f3' },
+    { value: 'orange', description: 'Orange', hexColor: '#ff9800' },
   ];
-  @ViewChild('pickerH') pickerFreeInput: NgxMatTimepickerComponent;
-  selectedTheme: NgxMatTimepickerTheme;
+  readonly selectedColor = signal('default');
+  readonly isDark = signal(false);
 
-  selectedTimes: Record<'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H', string> =
-    {
-      A: undefined,
-      B: undefined,
-      C: undefined,
-      D: undefined,
-      E: undefined,
-      F: undefined,
-      G: undefined,
-      H: undefined,
-    };
-
-  showInput = true;
-  timeRegex = /([0-9]|1\d):[0-5]\d (AM|PM)/;
-  year = new Date().getFullYear();
-
-  private _nextLocale = 0;
-
-  ngOnInit(): void {
-    this.selectedTheme = this.themes[0];
-  }
-
-  onTimeSet($event: string): void {
-    console.info('TIME UPDATED', $event);
-  }
-
-  selectedTimeFreeInputChanged($event: string): void {
-    console.info('TIME CHANGED');
-    this.pickerFreeInput.updateTime($event);
-  }
+  readonly year = new Date().getFullYear();
 
   updateLocale(localeKey?: string): void {
     if (localeKey) {
@@ -130,14 +106,15 @@ export class DemoComponent implements OnInit {
     }
   }
 
-  updateTheme(theme: NgxMatTimepickerTheme): void {
-    this.selectedTheme = theme;
-    this.document?.body.classList.toggle('dark-theme', !!theme.value);
+  toggleTheme(): void {
+    this.isDark.set(!this.isDark());
+    this.document?.body.classList.toggle('dark', this.isDark());
   }
 
-  updateTime($event: string, targetProp: string): void {
-    console.info('TIME SET', $event);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this as any)[targetProp] = $event;
+  updateColor(value: string): void {
+    this.selectedColor.set(value);
+    for (const color of this.colors) {
+      this.document?.body.classList.toggle(color.value, color.value === value);
+    }
   }
 }

@@ -1,0 +1,20 @@
+<div>
+  <h3>Picker with 24h format</h3>
+  <p>using <span class="mat-color-accent">accent</span> palette</p>
+
+  <div class="example ngx-mtp-d-flex ngx-mtp-align-center ngx-mtp-flex-column">
+    <mat-form-field>
+      <input
+        matInput
+        name="selected_time_B"
+        [format]="24"
+        [(ngModel)]="selectedTime"
+        [ngxMatTimepicker]="pickerB"
+        placeholder="16:00"
+        readonly
+      />
+      <mat-icon matSuffix (click)="pickerB.open()"> watch_later </mat-icon>
+    </mat-form-field>
+    <ngx-mat-timepicker color="accent" #pickerB />
+  </div>
+</div>
