@@ -1,5 +1,9 @@
 # 18.0.1
 
+- fix: isEditable not considered
+
+# 18.0.1
+
 - fix: fixed alignment of input fileds
 - refactor: examples
 

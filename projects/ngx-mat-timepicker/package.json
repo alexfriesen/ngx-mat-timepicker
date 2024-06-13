@@ -1,6 +1,6 @@
 {
   "name": "@alexfriesen/ngx-mat-timepicker",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "license": "MIT",
   "description": "ngx-mat-timepicker is an Angular material 17+ extension to add time pickers!",
   "homepage": "https://alexfriesen.github.io/ngx-mat-timepicker",
