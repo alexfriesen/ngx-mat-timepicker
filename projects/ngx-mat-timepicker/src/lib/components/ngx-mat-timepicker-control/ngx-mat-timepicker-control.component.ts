@@ -64,6 +64,7 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
 
   id: number = NgxMatTimepickerControlComponent.nextId++;
   isFocused: boolean;
+
   @Input() max: number;
   @Input() min: number;
   @Input() placeholder: string;

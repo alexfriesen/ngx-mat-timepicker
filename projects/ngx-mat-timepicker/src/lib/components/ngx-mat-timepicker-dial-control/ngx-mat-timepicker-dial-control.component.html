@@ -1,5 +1,5 @@
 <div class="wrapper" [class.active]="isActive()">
-  @if (!isEditable) {
+  @if (!isEditable()) {
     <input
       readonly
       class="control"
