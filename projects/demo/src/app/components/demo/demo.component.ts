@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { afterNextRender, Component, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
@@ -62,27 +62,12 @@ export class DemoComponent {
   private readonly localeOverrideSrv = inject(NgxMatTimepickerLocaleService);
   private readonly document = inject(DOCUMENT, { optional: true });
 
-  private _nextLocale = 0;
-  currentLocale = this.localeOverrideSrv.locale;
+  readonly locales = ['en-GB', 'it-IT', 'es-ES', 'fr-FR', 'de-DE'];
+  readonly currentLocale = signal(this.localeOverrideSrv.locale);
 
-  get currentLocaleKey(): string {
-    return this.myLocalesReversed[this.currentLocale];
-  }
-
-  npmPackage = '@alexfriesen/ngx-mat-timepicker';
-  npmLink = `https://www.npmjs.com/package/${this.npmPackage}`;
-  githubLink = `https://github.com/alexfriesen/ngx-mat-timepicker`;
-
-  myLocaleKeys = ['en', 'it', 'es', 'fr'];
-  myLocalesMaps: Record<string, string> = {
-    en: 'en-GB',
-    it: 'it-IT',
-    es: 'es-ES',
-    fr: 'fr-FR',
-  };
-  myLocalesReversed = Object.fromEntries(
-    Object.entries(this.myLocalesMaps).map((a) => a.reverse()),
-  );
+  readonly npmPackage = '@alexfriesen/ngx-mat-timepicker';
+  readonly npmLink = `https://www.npmjs.com/package/${this.npmPackage}`;
+  readonly githubLink = `https://github.com/alexfriesen/ngx-mat-timepicker`;
 
   readonly colors: NgxMatTimepickerTheme[] = [
     { value: 'default', description: 'Red', hexColor: '#f44336' },
@@ -94,16 +79,28 @@ export class DemoComponent {
 
   readonly year = new Date().getFullYear();
 
-  updateLocale(localeKey?: string): void {
-    if (localeKey) {
-      this._nextLocale = this.myLocaleKeys.indexOf(localeKey) - 1;
+  constructor() {
+    afterNextRender(() => {
+      if (!this.locales.includes(this.currentLocale())) {
+        this.updateLocale(this.locales[0]);
+      }
+    });
+  }
+
+  updateLocale(locale: string): void {
+    this.localeOverrideSrv.updateLocale(locale);
+    this.currentLocale.set(locale);
+  }
+
+  nextLocale(): void {
+    let index = this.locales.indexOf(this.currentLocale());
+    index++;
+
+    if (index >= this.locales.length) {
+      index = 0;
     }
-    this.localeOverrideSrv.updateLocale(
-      this.myLocalesMaps[this.myLocaleKeys[++this._nextLocale]],
-    );
-    if (this._nextLocale >= this.myLocaleKeys.length - 1) {
-      this._nextLocale = -1;
-    }
+
+    this.updateLocale(this.locales[index]);
   }
 
   toggleTheme(): void {
