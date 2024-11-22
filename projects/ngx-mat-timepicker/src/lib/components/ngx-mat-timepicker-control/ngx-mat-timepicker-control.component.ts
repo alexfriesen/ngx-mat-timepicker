@@ -42,7 +42,6 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
   styleUrls: ['./ngx-mat-timepicker-control.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NgxMatTimepickerParserPipe],
-  standalone: true,
   imports: [
     FormsModule,
     MatFormField,
@@ -51,7 +50,7 @@ function concatTime(currentTime: string, nextTime: string): number | undefined {
     MatInput,
     NgxMatTimepickerParserPipe,
     NgxMatTimepickerTimeLocalizerPipe,
-  ],
+  ]
 })
 export class NgxMatTimepickerControlComponent implements OnChanges {
   static nextId = 0;
@@ -79,7 +78,7 @@ export class NgxMatTimepickerControlComponent implements OnChanges {
 
   private _previousTime: number;
 
-  constructor(private _timeParser: NgxMatTimepickerParserPipe) {}
+  constructor(private _timeParser: NgxMatTimepickerParserPipe) { }
 
   changeTime(event: InputEvent): void {
     event.stopPropagation();

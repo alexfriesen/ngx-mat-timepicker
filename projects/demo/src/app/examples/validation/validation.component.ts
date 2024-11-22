@@ -17,7 +17,6 @@ import {
   selector: 'app-example-validation',
   templateUrl: 'validation.component.html',
   styleUrls: ['validation.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -28,7 +27,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExampleValidationComponent {
   maxTime = DateTime.local().startOf('day').set({

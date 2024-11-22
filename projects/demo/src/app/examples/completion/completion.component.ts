@@ -17,7 +17,6 @@ import {
   selector: 'app-example-completion',
   templateUrl: 'completion.component.html',
   styleUrls: ['completion.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatButton,
@@ -28,7 +27,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExampleCompletionComponent {
   maxTime = DateTime.local().startOf('day').set({

@@ -45,7 +45,6 @@ import {
       ]),
     ]),
   ],
-  standalone: true,
   imports: [
     CdkOverlayOrigin,
     CdkConnectedOverlay,

@@ -51,7 +51,6 @@ import { NgxMatTimepickerControlComponent } from '../ngx-mat-timepicker-control/
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     FormsModule,

@@ -10,8 +10,7 @@ import { NgxMatTimepickerFaceComponent } from '../ngx-mat-timepicker-face/ngx-ma
   selector: 'ngx-mat-timepicker-12-hours-face',
   templateUrl: 'ngx-mat-timepicker-12-hours-face.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [NgxMatTimepickerFaceComponent],
+  imports: [NgxMatTimepickerFaceComponent]
 })
 export class NgxMatTimepicker12HoursFaceComponent extends NgxMatTimepickerHoursFaceDirective {
   readonly period = input<NgxMatTimepickerPeriods>();

@@ -32,7 +32,6 @@ interface NgxMatTimepickerTheme {
   selector: 'app-demo',
   templateUrl: 'demo.component.html',
   styleUrls: ['demo.component.scss'],
-  standalone: true,
   imports: [
     MatAnchor,
     MatButton,
@@ -46,7 +45,6 @@ interface NgxMatTimepickerTheme {
     MatCardContent,
     MatButtonToggleGroup,
     MatButtonToggle,
-
     ExampleFormat12Component,
     ExampleFormat24Component,
     ExampleAppendComponent,
@@ -56,7 +54,7 @@ interface NgxMatTimepickerTheme {
     ExampleValidationComponent,
     ExampleCompletionComponent,
     ExampleDialogComponent,
-  ],
+  ]
 })
 export class DemoComponent {
   private readonly localeOverrideSrv = inject(NgxMatTimepickerLocaleService);

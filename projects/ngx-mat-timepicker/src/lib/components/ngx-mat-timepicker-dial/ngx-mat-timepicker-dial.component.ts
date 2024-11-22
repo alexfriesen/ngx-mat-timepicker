@@ -31,12 +31,11 @@ import { NgxMatTimepickerDialControlComponent } from '../ngx-mat-timepicker-dial
   templateUrl: 'ngx-mat-timepicker-dial.component.html',
   styleUrls: ['ngx-mat-timepicker-dial.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     NgxMatTimepickerDialControlComponent,
     NgxMatTimepickerPeriodComponent,
-  ],
+  ]
 })
 export class NgxMatTimepickerDialComponent {
   private locale = inject(NgxMatTimepickerLocaleService).locale;

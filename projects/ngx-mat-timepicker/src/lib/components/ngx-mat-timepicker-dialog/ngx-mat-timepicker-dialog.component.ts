@@ -23,7 +23,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   selector: 'ngx-mat-timepicker-dialog',
   styleUrls: ['./ngx-mat-timepicker-dialog.component.scss'],
   templateUrl: './ngx-mat-timepicker-dialog.component.html',
-  standalone: true,
   imports: [
     // Common
     NgTemplateOutlet,

@@ -16,7 +16,6 @@ import {
   selector: 'app-example-append',
   templateUrl: 'append.component.html',
   styleUrls: ['append.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -26,7 +25,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExampleAppendComponent {
   maxTime = DateTime.local().startOf('day').set({

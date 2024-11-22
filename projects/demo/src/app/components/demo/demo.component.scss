@@ -1,5 +1,5 @@
-@import '../../../scss/responsive';
-@import '../../../scss/themes';
+@use '../../../scss/responsive' as responsive;
+@use '../../../scss/themes';
 
 :host {
   display: block;
@@ -48,19 +48,19 @@
         display: inline-block;
         margin-left: 8px;
 
-        @include respond-below(sm) {
+        @include responsive.respond-below(sm) {
           display: none;
         }
       }
     }
   }
 
-  @include respond-below(sm) {
+  @include responsive.respond-below(sm) {
     padding-left: 8px;
     padding-right: 8px;
   }
 
-  @include respond-below(xxs) {
+  @include responsive.respond-below(xxs) {
     flex-direction: column;
   }
 }
@@ -93,7 +93,7 @@
     width: 300px;
     height: 300px;
 
-    @include respond-below(sm) {
+    @include responsive.respond-below(sm) {
       right: calc(50% - 100px);
       opacity: 0.1;
     }
@@ -170,7 +170,7 @@ footer {
   margin-top: 8px;
   overflow: hidden;
   background-color: rgb(15, 15, 16);
-  @include respond-below(sm) {
+  @include responsive.respond-below(sm) {
     width: 100%;
   }
 }

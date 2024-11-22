@@ -66,7 +66,6 @@ const CLOCK_HAND_STYLES = {
   templateUrl: './ngx-mat-timepicker-face.component.html',
   styleUrls: ['./ngx-mat-timepicker-face.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     SlicePipe,
@@ -159,7 +158,8 @@ export class NgxMatTimepickerFaceComponent
     if (!this._isStarted && e instanceof MouseEvent && e.type !== 'click') {
       return;
     }
-    const clockFaceCords = this.clockFace().nativeElement.getBoundingClientRect();
+    const clockFaceCords =
+      this.clockFace().nativeElement.getBoundingClientRect();
 
     /* Get x0 and y0 of the circle */
     const centerX = clockFaceCords.left + clockFaceCords.width / 2;
@@ -219,12 +219,14 @@ export class NgxMatTimepickerFaceComponent
   }
 
   private _decreaseClockHand(): void {
-    this.clockHand().nativeElement.style.height = CLOCK_HAND_STYLES.small.height;
+    this.clockHand().nativeElement.style.height =
+      CLOCK_HAND_STYLES.small.height;
     this.clockHand().nativeElement.style.top = CLOCK_HAND_STYLES.small.top;
   }
 
   private _increaseClockHand(): void {
-    this.clockHand().nativeElement.style.height = CLOCK_HAND_STYLES.large.height;
+    this.clockHand().nativeElement.style.height =
+      CLOCK_HAND_STYLES.large.height;
     this.clockHand().nativeElement.style.top = CLOCK_HAND_STYLES.large.top;
   }
 
