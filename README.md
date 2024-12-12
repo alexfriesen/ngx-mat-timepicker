@@ -7,6 +7,8 @@
 
 A simple time picker module using Angular Material: it provides an Android style dialog for time selection and a handy input for time selection in Material style.
 
+<img width="371" alt="ngx-mat-datepicker preview" src="https://github.com/user-attachments/assets/1f891410-42c1-4c47-aee8-ac7cdc784adf" />
+
 ## Table of contents
 
 - [Getting started](#getting-started)
