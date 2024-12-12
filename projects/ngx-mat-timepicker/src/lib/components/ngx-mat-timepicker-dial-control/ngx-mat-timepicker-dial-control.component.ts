@@ -28,7 +28,6 @@ function retainSelection(this: HTMLInputElement) {
   templateUrl: 'ngx-mat-timepicker-dial-control.component.html',
   styleUrls: ['ngx-mat-timepicker-dial-control.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   providers: [NgxMatTimepickerParserPipe],
   imports: [
     FormsModule,

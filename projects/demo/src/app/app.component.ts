@@ -7,8 +7,7 @@ import { injectIcons } from './utils/inject-icons';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet]
 })
 export class AppComponent {
   constructor() {

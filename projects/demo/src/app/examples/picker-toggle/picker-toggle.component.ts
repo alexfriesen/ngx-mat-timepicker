@@ -18,7 +18,6 @@ import {
   selector: 'app-example-picker-toggle',
   templateUrl: 'picker-toggle.component.html',
   styleUrls: ['picker-toggle.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatButtonModule,
@@ -30,7 +29,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExamplePickerToggleComponent {
   maxTime = DateTime.local().startOf('day').set({

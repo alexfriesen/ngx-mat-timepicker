@@ -209,7 +209,7 @@ describe('NgxMatTimepickerFieldComponent', () => {
 
       expect(component.timepickerTime.toLowerCase()).toBe(time);
 
-      tick();
+      fixture.detectChanges();
 
       component.hour$.subscribe((hour) => expect(hour.time).toBe(10));
       component.minute$.subscribe((minute) => expect(minute.time).toBe(13));
@@ -245,7 +245,8 @@ describe('NgxMatTimepickerFieldComponent', () => {
     component.timeChanged.subscribe((time) => expect(time).toBe(expected));
     component.changeHour(1);
 
-    tick();
+    fixture.detectChanges();
+
     component.hour$.subscribe((selectedHour) =>
       expect(selectedHour.time).toBe(hour.time),
     );
@@ -261,7 +262,8 @@ describe('NgxMatTimepickerFieldComponent', () => {
     component.timeChanged.subscribe((time) => expect(time).toBe(expected));
     component.changeMinute(15);
 
-    tick();
+    fixture.detectChanges();
+
     component.minute$.subscribe((selectedMinute) =>
       expect(selectedMinute.time).toBe(minute.time),
     );

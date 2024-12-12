@@ -53,8 +53,7 @@ let config: NgxMatTimepickerConfig;
       },
     },
   ],
-  standalone: true,
-  imports: [CdkConnectedOverlay, NgxMatTimepickerStandaloneComponent],
+  imports: [CdkConnectedOverlay, NgxMatTimepickerStandaloneComponent]
 })
 export class NgxMatTimepickerComponent implements NgxMatTimepickerRef {
   private readonly _dialog = inject(MatDialog);

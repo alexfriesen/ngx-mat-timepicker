@@ -16,7 +16,6 @@ import {
   selector: 'app-example-field',
   templateUrl: 'field.component.html',
   styleUrls: ['field.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -26,7 +25,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExampleFieldComponent {
   maxTime = DateTime.local().startOf('day').set({

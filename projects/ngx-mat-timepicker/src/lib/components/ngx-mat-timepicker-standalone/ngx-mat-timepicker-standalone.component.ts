@@ -22,7 +22,6 @@ import { NgxMatTimepickerContentComponent } from '../ngx-mat-timepicker-content/
   host: {
     class: 'mat-app-background',
   },
-  standalone: true,
   imports: [
     NgTemplateOutlet,
     A11yModule,

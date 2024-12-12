@@ -17,7 +17,6 @@ import {
   selector: 'app-example-format-12',
   templateUrl: 'format-12.component.html',
   styleUrls: ['format-12.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatButton,
@@ -28,7 +27,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExampleFormat12Component {
   maxTime = DateTime.local().startOf('day').set({

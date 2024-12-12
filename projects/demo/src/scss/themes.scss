@@ -9,10 +9,11 @@
           primary: $palette,
           // tertiary: $tertiary-palette,
           // use-system-variables: true,
+          system-variables-prefix: sys,
         ),
         density: (
           scale: 0,
-        ),
+        )
       )
     )
   );
@@ -33,4 +34,3 @@ $blue-dark: dark-theme(mat.$blue-palette);
 
 $orange-light: light-theme(mat.$orange-palette);
 $orange-dark: dark-theme(mat.$orange-palette);
-

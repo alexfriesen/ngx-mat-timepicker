@@ -41,7 +41,6 @@ import {
       <ngx-mat-timepicker appendToInput="true" #pickerA></ngx-mat-timepicker>
     </div>
   `,
-  standalone: true,
   imports: [
     FormsModule,
     MatDialogTitle,
@@ -53,7 +52,7 @@ import {
     MatIcon,
     NgxMatTimepickerDirective,
     NgxMatTimepickerComponent,
-  ],
+  ]
 })
 export class NgxMatTimepickerTestDialogComponent {
   date = '2:00';
@@ -63,8 +62,7 @@ export class NgxMatTimepickerTestDialogComponent {
   selector: 'app-example-dialog',
   templateUrl: 'dialog.component.html',
   styleUrls: ['dialog.component.scss'],
-  standalone: true,
-  imports: [MatButton],
+  imports: [MatButton]
 })
 export class ExampleDialogComponent {
   private readonly matDialog = inject(MatDialog);

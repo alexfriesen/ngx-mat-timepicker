@@ -17,7 +17,6 @@ import {
   selector: 'app-example-picker-open',
   templateUrl: 'picker-open.component.html',
   styleUrls: ['picker-open.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     MatFormFieldModule,
@@ -28,7 +27,7 @@ import {
     NgxMatTimepickerComponent,
     NgxMatTimepickerFieldComponent,
     NgxMatTimepickerToggleComponent,
-  ],
+  ]
 })
 export class ExamplePickerOpenComponent {
   maxTime = DateTime.local().startOf('day').set({

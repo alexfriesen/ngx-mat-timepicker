@@ -1,28 +1,29 @@
 @use '@angular/material' as mat;
-@import 'scss/fonts';
-@import 'scss/themes';
+@use 'scss/fonts';
+@use 'scss/themes' as themes;
 
 // Include the default theme styles.
-@include mat.core();
-@include mat.typography-hierarchy($red-light);
+@include mat.elevation-classes();
+@include mat.app-background();
+@include mat.typography-hierarchy(themes.$red-light);
 :root {
-  @include mat.all-component-themes($red-light);
+  @include mat.all-component-themes(themes.$red-light);
 }
 .dark {
-  @include mat.all-component-colors($red-dark);
+  @include mat.all-component-colors(themes.$red-dark);
 }
 
 .blue {
-  @include mat.all-component-colors($blue-light);
+  @include mat.all-component-colors(themes.$blue-light);
   &.dark {
-    @include mat.all-component-colors($blue-dark);
+    @include mat.all-component-colors(themes.$blue-dark);
   }
 }
 
 .orange {
-  @include mat.all-component-colors($orange-light);
+  @include mat.all-component-colors(themes.$orange-light);
   &.dark {
-    @include mat.all-component-colors($orange-dark);
+    @include mat.all-component-colors(themes.$orange-dark);
   }
 }
 

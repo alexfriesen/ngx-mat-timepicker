@@ -8,7 +8,6 @@ import { NgxMatTimepickerComponent } from '../ngx-mat-timepicker/ngx-mat-timepic
   selector: 'ngx-mat-timepicker-toggle',
   templateUrl: 'ngx-mat-timepicker-toggle.component.html',
   styleUrls: ['ngx-mat-timepicker-toggle.component.scss'],
-  standalone: true,
   imports: [MatIconButton],
 })
 export class NgxMatTimepickerToggleComponent {
