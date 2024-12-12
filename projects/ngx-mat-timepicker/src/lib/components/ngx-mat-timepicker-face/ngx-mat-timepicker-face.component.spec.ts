@@ -347,18 +347,21 @@ describe('NgxMatTimepickerFaceComponent', () => {
       expect(selectedTime).toEqual({ time: 1, angle: 5 });
     }));
 
-    it('should emit selected time once user stop interaction with clock face', fakeAsync(() => {
-      component.faceTime = minutesFaceTime;
-      component.unit = NgxMatTimepickerUnits.MINUTE;
+    it('should emit selected time once user stop interaction with clock face', fakeAsync(
+      () => {
+        component.faceTime = minutesFaceTime;
+        component.unit = NgxMatTimepickerUnits.MINUTE;
 
-      subscription.add(
-        component.timeSelected.subscribe((time) => expect(time).toBe(55)),
-      );
-      component.onMouseup(mouseClickEvent);
-      component.selectTime(
-        new MouseEvent('click', { clientX: 20, clientY: 20 }),
-      );
-    }));
+        subscription.add(
+          component.timeSelected.subscribe((time) => expect(time).toBe(55)),
+        );
+        component.onMouseup(mouseClickEvent);
+        component.selectTime(
+          new MouseEvent('click', { clientX: 20, clientY: 20 }),
+        );
+      },
+      { flush: false },
+    ));
   });
 });
 
