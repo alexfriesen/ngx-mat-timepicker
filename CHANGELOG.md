@@ -1,4 +1,11 @@
-# 18.0.1
+# 19.0.0
+
+This Release adds support for Angular 19.
+
+- Angular 19 support
+- Add Node 22 to test matrix
+
+# 18.0.2
 
 - fix: isEditable not considered
 
