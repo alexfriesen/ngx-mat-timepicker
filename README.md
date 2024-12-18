@@ -211,11 +211,9 @@ Run `npm test` to run tests once.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-### Thanks to
+### Fork
 
-[LayZeeDK](https://github.com/LayZeeDK) - For his great work on the unit tests and upgrades for v15 "legacy"
-
-[Agranom](https://github.com/Agranom) for setting up the original repo.
+This Project is a fork of: https://github.com/tonysamperi/ngx-mat-timepicker
 
 [badge-bundle]: https://img.shields.io/bundlephobia/minzip/@alexfriesen/ngx-mat-timepicker
 [badge-ci-state]: https://github.com/alexfriesen/ngx-mat-timepicker/actions/workflows/main.yml/badge.svg
